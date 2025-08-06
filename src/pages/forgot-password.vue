@@ -2,22 +2,17 @@
 import { useTheme } from 'vuetify'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/utils/auth'
-import { getRedirectAfterLogin } from '@/utils/authGuard'
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 
 const logo = '/logo_lafaom.png'
 import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
-import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
-import authV1Tree from '@images/pages/auth-v1-tree.png'
 
 const router = useRouter()
-const { login, isLoading, error, clearError } = useAuth()
+const { forgotPassword, isLoading, error, clearError, success } = useAuth()
 
 const form = ref({
   email: '',
-  password: '',
-  remember: false,
 })
 
 const vuetifyTheme = useTheme()
@@ -28,39 +23,34 @@ const authThemeMask = computed(() => {
     : authV1MaskDark
 })
 
-const isPasswordVisible = ref(false)
-
 // Validation du formulaire
 const isFormValid = computed(() => {
-  return form.value.email && form.value.password && form.value.email.includes('@')
+  return form.value.email.includes('@')
 })
 
-// Fonction de connexion
-const handleLogin = async () => {
+// Fonction de réinitialisation
+const handleForgotPassword = async () => {
   if (!isFormValid.value) {
     return
   }
 
-  // Effacer les erreurs précédentes seulement lors d'une nouvelle tentative
+  // Effacer les erreurs précédentes
   clearError()
 
   try {
-    await login({
-      email: form.value.email,
-      password: form.value.password,
+    await forgotPassword({
+      email: form.value.email.trim(),
     })
     
-    // Gestion de "Se souvenir de moi"
-    if (form.value.remember) {
-      localStorage.setItem('rememberMe', 'true')
-    }
+    // Le message de succès sera affiché automatiquement
+    // Optionnel : redirection après quelques secondes
+    setTimeout(() => {
+      router.push('/login')
+    }, 3000)
     
-    // Redirection vers la route demandée ou le tableau de bord
-    const redirectPath = getRedirectAfterLogin()
-    router.push(redirectPath)
   } catch (err) {
     // L'erreur est déjà gérée par le service d'authentification
-    console.error('Erreur de connexion:', err)
+    console.error('Erreur de réinitialisation:', err)
   }
 }
 
@@ -68,8 +58,7 @@ const handleLogin = async () => {
 onMounted(() => {
   const token = localStorage.getItem('authToken')
   if (token) {
-    const redirectPath = getRedirectAfterLogin()
-    router.push(redirectPath)
+    router.push('/dashboard')
   }
 })
 </script>
@@ -80,7 +69,7 @@ onMounted(() => {
   <div class="auth-wrapper d-flex align-center justify-center pa-4">
     <VCard
       class="auth-card pa-4 pt-7"
-      max-width="448"
+      max-width="500"
     >
       <VCardItem class="justify-center">
         <RouterLink
@@ -102,15 +91,15 @@ onMounted(() => {
 
       <VCardText class="pt-2">
         <h4 class="text-h4 mb-1">
-          Bienvenue à LAFAOM-MAO! 👋🏻
+          Mot de passe oublié? 🔐
         </h4>
         <p class="mb-0">
-          Institut de formation et d'intervention sociale dans l'univers carcéral
+          Entrez votre adresse email et nous vous enverrons les instructions pour réinitialiser votre mot de passe
         </p>
       </VCardText>
 
       <VCardText>
-        <VForm @submit.prevent="handleLogin">
+        <VForm @submit.prevent="handleForgotPassword">
           <VRow>
             <!-- Message d'erreur -->
             <VCol cols="12" v-if="error">
@@ -125,18 +114,41 @@ onMounted(() => {
                   <VIcon icon="ri-error-warning-line" />
                 </template>
                 <div>
-                  <div class="font-weight-medium mb-1">Erreur de connexion</div>
+                  <div class="font-weight-medium mb-1">Erreur de réinitialisation</div>
                   <div class="text-body-2">{{ error }}</div>
                 </div>
               </VAlert>
             </VCol>
 
-            <!-- email -->
+            <!-- Message de succès -->
+            <VCol cols="12" v-if="success">
+              <VAlert
+                type="success"
+                variant="tonal"
+                closable
+                @click:close="clearError"
+                class="mb-4"
+              >
+                <template #prepend>
+                  <VIcon icon="ri-check-line" />
+                </template>
+                <div>
+                  <div class="font-weight-medium mb-1">Email envoyé avec succès!</div>
+                  <div class="text-body-2">{{ success }}</div>
+                  <div class="text-caption mt-2">
+                    Vous allez être redirigé vers la page de connexion dans quelques secondes...
+                  </div>
+                </div>
+              </VAlert>
+            </VCol>
+
+            <!-- Email -->
             <VCol cols="12">
               <VTextField
                 v-model="form.email"
                 label="Adresse email"
                 type="email"
+                placeholder="Entrez votre adresse email"
                 :disabled="isLoading"
                 :rules="[
                   v => !!v || 'L\'email est requis',
@@ -146,42 +158,8 @@ onMounted(() => {
               />
             </VCol>
 
-            <!-- password -->
+            <!-- Bouton d'envoi -->
             <VCol cols="12">
-              <VTextField
-                v-model="form.password"
-                label="Mot de passe"
-                placeholder="············"
-                :type="isPasswordVisible ? 'text' : 'password'"
-                autocomplete="current-password"
-                :disabled="isLoading"
-                :append-inner-icon="isPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
-                @click:append-inner="isPasswordVisible = !isPasswordVisible"
-                :rules="[
-                  v => !!v || 'Le mot de passe est requis',
-                  v => v.length >= 6 || 'Le mot de passe doit contenir au moins 6 caractères'
-                ]"
-                required
-              />
-
-              <!-- remember me checkbox -->
-              <div class="d-flex align-center justify-space-between flex-wrap my-6">
-                <VCheckbox
-                  v-model="form.remember"
-                  label="Se souvenir de moi"
-                  :disabled="isLoading"
-                />
-
-                <RouterLink
-                  class="text-primary"
-                  to="/forgot-password"
-                  :class="{ 'disabled': isLoading }"
-                >
-                  Mot de passe oublié?
-                </RouterLink>
-              </div>
-
-              <!-- login button -->
               <VBtn
                 block
                 type="submit"
@@ -196,22 +174,22 @@ onMounted(() => {
                   class="me-2"
                   start
                 />
-                {{ isLoading ? 'Connexion en cours...' : 'Se connecter' }}
+                {{ isLoading ? 'Envoi en cours...' : 'Envoyer le lien de réinitialisation' }}
               </VBtn>
             </VCol>
 
-            <!-- create account -->
+            <!-- Retour à la connexion -->
             <VCol
               cols="12"
               class="text-center text-base"
             >
-              <span>Nouveau sur notre plateforme?</span>
               <RouterLink
-                class="text-primary ms-2"
-                to="/register"
+                class="text-primary d-flex align-center justify-center gap-2"
+                to="/login"
                 :class="{ 'disabled': isLoading }"
               >
-                Créer un compte
+                <VIcon icon="ri-arrow-left-line" size="small" />
+                Retour à la connexion
               </RouterLink>
             </VCol>
 
@@ -219,18 +197,9 @@ onMounted(() => {
               cols="12"
               class="d-flex align-center"
             >
-              <VDivider />
-              <span class="mx-4">ou</span>
-              <VDivider />
+              
             </VCol>
-
-            <!-- auth providers -->
-            <VCol
-              cols="12"
-              class="text-center"
-            >
-              <AuthProvider />
-            </VCol>
+           
           </VRow>
         </VForm>
       </VCardText>
@@ -252,7 +221,7 @@ onMounted(() => {
   opacity: 0.6;
 }
 
-// Animation pour les alertes d'erreur
+// Animation pour les alertes d'erreur et de succès
 .v-alert {
   animation: slideInDown 0.3s ease-out;
 }
@@ -268,10 +237,19 @@ onMounted(() => {
   }
 }
 
-// Amélioration du style du bouton de connexion
+// Amélioration du style du bouton
 .v-btn--size-large {
   height: 48px;
   font-size: 1rem;
   font-weight: 500;
 }
-</style>
+
+// Style pour le lien de retour
+.text-primary {
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+</style> 

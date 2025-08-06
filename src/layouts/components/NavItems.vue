@@ -2,284 +2,367 @@
 import VerticalNavSectionTitle from '@/@layouts/components/VerticalNavSectionTitle.vue'
 import VerticalNavGroup from '@layouts/components/VerticalNavGroup.vue'
 import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
+import { useAuth } from '@/utils/auth'
+import { useRouter } from 'vue-router'
+
+const { logout } = useAuth()
+const router = useRouter()
+
+// Fonction de déconnexion
+const handleLogout = async () => {
+  try {
+    await logout()
+    router.push('/login')
+  } catch (error) {
+    console.error('Erreur lors de la déconnexion:', error)
+    // Redirection forcée vers la page de connexion
+    router.push('/login')
+  }
+}
 </script>
 
 <template>
-  <!-- 👉 Dashboards -->
+  <!-- 👉 Tableau de bord -->
+  <VerticalNavLink
+    :item="{
+      title: 'Tableau de bord',
+      icon: 'ri-dashboard-line',
+      to: '/dashboard',
+    }"
+  />
+
+  <!-- 👉 Gestion des Apprenants -->
   <VerticalNavGroup
     :item="{
-      title: 'Dashboards',
-      badgeContent: '5',
-      badgeClass: 'bg-error',
-      icon: 'ri-home-smile-line',
+      title: 'Apprenants',
+      icon: 'ri-user-star-line',
     }"
   >
     <VerticalNavLink
       :item="{
-        title: 'Analytics',
-        to: '/dashboard',
+        title: 'Liste complète',
+        to: '/apprenants',
       }"
     />
     <VerticalNavLink
       :item="{
-        title: 'CRM',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/dashboards/crm',
-        target: '_blank',
-        badgeContent: 'Pro',
-        badgeClass: 'bg-light-primary text-primary',
+        title: 'Inscriptions',
+        to: '/apprenants/inscriptions',
       }"
     />
     <VerticalNavLink
       :item="{
-        title: 'ECommerce',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/dashboards/ecommerce',
-        target: '_blank',
-        badgeContent: 'Pro',
-        badgeClass: 'bg-light-primary text-primary',
+        title: 'Parcours individuel',
+        to: '/apprenants/parcours',
       }"
     />
     <VerticalNavLink
       :item="{
-        title: 'Academy',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/dashboards/academy',
-        target: '_blank',
-        badgeContent: 'Pro',
-        badgeClass: 'bg-light-primary text-primary',
+        title: 'Chefs-d\'œuvre',
+        to: '/apprenants/chefs-oeuvre',
       }"
     />
     <VerticalNavLink
       :item="{
-        title: 'Logistics',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/dashboards/logistics',
-        target: '_blank',
-        badgeContent: 'Pro',
-        badgeClass: 'bg-light-primary text-primary',
+        title: 'Livret de compétences',
+        to: '/apprenants/competences',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Accréditations',
+        to: '/apprenants/accreditations',
       }"
     />
   </VerticalNavGroup>
 
-  <!-- 👉 Front Pages -->
+  <!-- 👉 Formation et Pédagogie -->
   <VerticalNavGroup
     :item="{
-      title: 'Front Pages',
-      icon: 'ri-file-copy-line',
-      badgeContent: 'Pro',
-      badgeClass: 'bg-light-primary text-primary',
+      title: 'Formation',
+      icon: 'ri-book-open-line',
     }"
   >
     <VerticalNavLink
       :item="{
-        title: 'Landing',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/front-pages/landing-page',
-        target: '_blank',
+        title: 'Modules de formation',
+        to: '/formation/modules',
       }"
     />
     <VerticalNavLink
       :item="{
-        title: 'Pricing',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/front-pages/pricing',
-        target: '_blank',
+        title: 'Supports pédagogiques',
+        to: '/formation/supports',
       }"
     />
     <VerticalNavLink
       :item="{
-        title: 'Payment',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/front-pages/payment',
-        target: '_blank',
+        title: 'Exercices et évaluations',
+        to: '/formation/exercices',
       }"
     />
     <VerticalNavLink
       :item="{
-        title: 'Checkout',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/front-pages/checkout',
-        target: '_blank',
-      }"
-    />
-    <VerticalNavLink
-      :item="{
-        title: 'Help Center',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/front-pages/help-center',
-        target: '_blank',
+        title: 'Suivi des apprentissages',
+        to: '/formation/suivi',
       }"
     />
   </VerticalNavGroup>
 
-  <!-- 👉 Apps & Pages -->
-  <VerticalNavSectionTitle
+  <!-- 👉 Projets Pédagogiques -->
+  <VerticalNavGroup
     :item="{
-      heading: 'Apps & Pages',
+      title: 'Projets',
+      icon: 'ri-folder-user-line',
     }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Email',
-      icon: 'ri-mail-line',
-      href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/apps/email',
-      target: '_blank',
-      badgeContent: 'Pro',
-      badgeClass: 'bg-light-primary text-primary',
-    }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Chat',
-      icon: 'ri-wechat-line',
-      href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/apps/chat',
-      target: '_blank',
-      badgeContent: 'Pro',
-      badgeClass: 'bg-light-primary text-primary',
-    }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Calendar',
-      icon: 'ri-calendar-line',
-      href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/apps/calendar',
-      target: '_blank',
-      badgeContent: 'Pro',
-      badgeClass: 'bg-light-primary text-primary',
-    }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Kanban',
-      icon: 'ri-drag-drop-line',
-      href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/apps/kanban',
-      target: '_blank',
-      badgeContent: 'Pro',
-      badgeClass: 'bg-light-primary text-primary',
-    }"
-  />
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Chefs-d\'œuvre individuels',
+        to: '/projets/chefs-oeuvre',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Projets collectifs',
+        to: '/projets/collectifs',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Équipes de travail',
+        to: '/projets/equipes',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Archives des réalisations',
+        to: '/projets/archives',
+      }"
+    />
+  </VerticalNavGroup>
 
-  <VerticalNavLink
+  <!-- 👉 Interventions Sociales -->
+  <VerticalNavGroup
     :item="{
-      title: 'Account Settings',
+      title: 'Interventions',
+      icon: 'ri-heart-line',
+    }"
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Stages en milieu carcéral',
+        to: '/interventions/stages',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Missions humanitaires',
+        to: '/interventions/humanitaires',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Partenaires associatifs',
+        to: '/interventions/partenaires',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Rapports d\'intervention',
+        to: '/interventions/rapports',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Cartographie des actions',
+        to: '/interventions/cartographie',
+      }"
+    />
+  </VerticalNavGroup>
+
+  <!-- 👉 Équipe Pédagogique -->
+  <VerticalNavGroup
+    :item="{
+      title: 'Formateurs',
       icon: 'ri-user-settings-line',
-      to: '/account-settings',
     }"
-  />
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Équipe pédagogique',
+        to: '/formateurs',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Planning des interventions',
+        to: '/formateurs/planning',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Suivi d\'activité',
+        to: '/formateurs/activite',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Communication interne',
+        to: '/formateurs/communication',
+      }"
+    />
+  </VerticalNavGroup>
 
-  <VerticalNavLink
+  <!-- 👉 Administration -->
+  <VerticalNavGroup
     :item="{
-      title: 'Login',
-      icon: 'ri-login-box-line',
-      to: '/login',
+      title: 'Administration',
+      icon: 'ri-file-list-3-line',
     }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Register',
-      icon: 'ri-user-add-line',
-      to: '/register',
-    }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Error',
-      icon: 'ri-information-line',
-      to: '/no-existence',
-    }"
-  />
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Dossiers administratifs',
+        to: '/admin/dossiers',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Documents officiels',
+        to: '/admin/documents',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Gestion des absences',
+        to: '/admin/absences',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Discipline et sanctions',
+        to: '/admin/discipline',
+      }"
+    />
+  </VerticalNavGroup>
 
-  <!-- 👉 User Interface -->
-  <VerticalNavSectionTitle
+  <!-- 👉 Gestion Financière -->
+  <VerticalNavGroup
     :item="{
-      heading: 'User Interface',
+      title: 'Finances',
+      icon: 'ri-bank-card-line',
     }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Typography',
-      icon: 'ri-text',
-      to: '/typography',
-    }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Icons',
-      icon: 'ri-remixicon-line',
-      to: '/icons',
-    }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Cards',
-      icon: 'ri-bar-chart-box-line',
-      to: '/cards',
-    }"
-  />
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Gestion des paiements',
+        to: '/finances/paiements',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Forfaits de formation',
+        to: '/finances/forfaits',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Sessions présentiel',
+        to: '/finances/presentiel',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Logistique et transport',
+        to: '/finances/logistique',
+      }"
+    />
+  </VerticalNavGroup>
 
-  <!-- 👉 Forms & Tables -->
-  <VerticalNavSectionTitle
+  <!-- 👉 Système -->
+  <VerticalNavGroup
     :item="{
-      heading: 'Forms & Tables',
+      title: 'Système',
+      icon: 'ri-settings-3-line',
     }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Form Layouts',
-      icon: 'ri-layout-4-line',
-      to: '/form-layouts',
-    }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Form Validation',
-      icon: 'ri-checkbox-multiple-line',
-      href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/forms/form-validation',
-      target: '_blank',
-      badgeContent: 'Pro',
-      badgeClass: 'bg-light-primary text-primary',
-    }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Form Wizard',
-      icon: 'ri-git-commit-line',
-      href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/forms/form-wizard-numbered',
-      target: '_blank',
-      badgeContent: 'Pro',
-      badgeClass: 'bg-light-primary text-primary',
-    }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Tables',
-      icon: 'ri-table-alt-line',
-      to: '/tables',
-    }"
-  />
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Gestion des utilisateurs',
+        to: '/system/utilisateurs',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Rôles et permissions',
+        to: '/system/roles',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Sécurité et audit',
+        to: '/system/securite',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Journal d\'activité',
+        to: '/system/journal',
+      }"
+    />
+  </VerticalNavGroup>
 
-  <!-- 👉 Others -->
-  <VerticalNavSectionTitle
+  <!-- 👉 Communication -->
+  <VerticalNavGroup
     :item="{
-      heading: 'Others',
+      title: 'Communication',
+      icon: 'ri-message-3-line',
     }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Access Control',
-      icon: 'ri-shield-line',
-      href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/demo-1/access-control',
-      target: '_blank',
-      badgeContent: 'Pro',
-      badgeClass: 'bg-light-primary text-primary',
-    }"
-  />
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Site web institutionnel',
+        to: '/communication/site',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Blog et actualités',
+        to: '/communication/blog',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Médias et ressources',
+        to: '/communication/medias',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Notifications',
+        to: '/communication/notifications',
+      }"
+    />
+  </VerticalNavGroup>
+
+  <!-- 👉 Documentation -->
   <VerticalNavLink
     :item="{
       title: 'Documentation',
       icon: 'ri-article-line',
-      href: 'https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/documentation/',
-      target: '_blank',
+      to: '/documentation',
     }"
   />
+
+  <!-- 👉 Déconnexion -->
   <VerticalNavLink
     :item="{
-      title: 'Raise Support',
-      href: 'https://github.com/themeselection/materio-vuetify-vuejs-admin-template-free/issues',
-      icon: 'ri-lifebuoy-line',
-      target: '_blank',
+      title: 'Déconnexion',
+      icon: 'ri-logout-box-r-line',
+      to: '#',
     }"
+    @click="handleLogout"
   />
+
 </template>

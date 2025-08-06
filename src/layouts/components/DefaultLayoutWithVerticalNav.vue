@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import NavItems from '@/layouts/components/NavItems.vue'
-import logo from '@images/logo.svg?raw'
+const logo = '/logo_lafaom.png'
 import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue'
 
 // Components
@@ -63,15 +63,16 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
         to="/"
         class="app-logo app-title-wrapper"
       >
-        <!-- eslint-disable vue/no-v-html -->
-        <div
-          class="d-flex"
-          v-html="logo"
+        <VImg
+          :src="logo"
+          alt="Lafaom-MAO Logo"
+          width="100"
+          height="35"
+          contain
         />
-        <!-- eslint-enable -->
 
         <h1 class="font-weight-medium leading-normal text-xl text-uppercase">
-          Materio
+          Lafaom-MAO
         </h1>
       </RouterLink>
 
@@ -110,7 +111,7 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
 .app-logo {
   display: flex;
   align-items: center;
-  column-gap: 0.75rem;
+  column-gap: 0.25rem;
 
   .app-logo-title {
     font-size: 1.25rem;

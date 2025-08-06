@@ -39,10 +39,7 @@ const authThemeMask = computed(() => {
     </div>
 
     <!-- 👉 Footer -->
-    <VImg
-      :src="tree"
-      class="misc-footer-tree d-none d-md-block"
-    />
+  
 
     <VImg
       :src="authThemeMask"

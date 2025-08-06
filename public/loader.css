@@ -36,7 +36,7 @@ html {
   border: 3px solid transparent;
   border-radius: 50%;
   block-size: 100%;
-  border-inline-start: 3px solid var(--initial-loader-color, #eee);
+  border-inline-start: 3px solid var(--initial-loader-color, #792445);
   inline-size: 100%;
 }
 
