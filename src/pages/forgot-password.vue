@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { useTheme } from 'vuetify'
-import { useRouter } from 'vue-router'
 import { useAuth } from '@/utils/auth'
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
-
-const logo = '/logo_lafaom.png'
 import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
+import { useRouter } from 'vue-router'
+import { useTheme } from 'vuetify'
+
+const logo = '/logo_lafaom.png'
 
 const router = useRouter()
 const { forgotPassword, isLoading, error, clearError, success } = useAuth()
@@ -89,7 +88,7 @@ onMounted(() => {
         </RouterLink>
       </VCardItem>
 
-      <VCardText class="pt-2">
+      <VCardText class="pt-2  text-center">
         <h4 class="text-h4 mb-1">
           Mot de passe oublié? 🔐
         </h4>

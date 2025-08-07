@@ -100,10 +100,7 @@ onMounted(() => {
         </RouterLink>
       </VCardItem>
 
-      <VCardText class="pt-2">
-        <h4 class="text-h4 mb-1">
-          Bienvenue à LAFAOM-MAO! 👋🏻
-        </h4>
+      <VCardText class="pt-2 text-center">
         <p class="mb-0">
           Institut de formation et d'intervention sociale dans l'univers carcéral
         </p>
@@ -213,23 +210,6 @@ onMounted(() => {
               >
                 Créer un compte
               </RouterLink>
-            </VCol>
-
-            <VCol
-              cols="12"
-              class="d-flex align-center"
-            >
-              <VDivider />
-              <span class="mx-4">ou</span>
-              <VDivider />
-            </VCol>
-
-            <!-- auth providers -->
-            <VCol
-              cols="12"
-              class="text-center"
-            >
-              <AuthProvider />
             </VCol>
           </VRow>
         </VForm>
