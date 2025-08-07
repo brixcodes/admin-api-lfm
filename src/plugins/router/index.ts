@@ -1,4 +1,4 @@
-import { requireAuth } from '@/utils/authGuard'
+// import { requireAuth } from '@/utils/authGuard'
 import type { App } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from './routes'
@@ -9,10 +9,11 @@ const router = createRouter({
 })
 
 // Middleware de protection des routes
-router.beforeEach(requireAuth)
+// router.beforeEach(requireAuth)
 
 export default function (app: App) {
   app.use(router)
 }
 
 export { router }
+
