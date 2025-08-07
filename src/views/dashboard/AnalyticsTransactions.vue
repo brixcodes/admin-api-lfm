@@ -1,43 +1,45 @@
 <script setup lang="ts">
 const statistics = [
   {
-    title: 'Sales',
-    stats: '245k',
-    icon: 'ri-pie-chart-2-line',
+    title: 'Apprenants',
+    stats: '132',
+    icon: 'ri-user-3-line',
     color: 'primary',
   },
   {
-    title: 'Customers',
-    stats: '12.5k',
-    icon: 'ri-group-line',
-    color: 'success',
-  },
-  {
-    title: 'Product',
-    stats: '1.54k',
-    icon: 'ri-macbook-line',
+    title: 'Projets en cours',
+    stats: '47',
+    icon: 'ri-folder-line',
     color: 'warning',
   },
   {
-    title: 'Revenue',
-    stats: '$88k',
-    icon: 'ri-money-dollar-circle-line',
+    title: 'Articles publiés',
+    stats: '89',
+    icon: 'ri-article-line',
+    color: 'success',
+  },
+  {
+    title: 'Missions actives',
+    stats: '12',
+    icon: 'ri-earth-line',
     color: 'info',
   },
 ]
 
 const moreList = [
-  { title: 'Share', value: 'Share' },
-  { title: 'Refresh', value: 'Refresh' },
-  { title: 'Update', value: 'Update' },
+  { title: 'Partager', value: 'Share' },
+  { title: 'Rafraîchir', value: 'Refresh' },
+  { title: 'Mettre à jour', value: 'Update' },
 ]
 </script>
 
 <template>
-  <VCard title="Transactions">
+  <VCard title="Statistiques générales">
     <template #subtitle>
       <p class="text-body-1 mb-0">
-        <span class="d-inline-block font-weight-medium text-high-emphasis">Total 48.5% Growth</span> <span class="text-high-emphasis">😎</span> this month
+        <span class="d-inline-block font-weight-medium text-high-emphasis">
+          Suivi global des activités de l’Institut
+        </span>
       </p>
     </template>
 

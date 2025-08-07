@@ -55,9 +55,8 @@ const handleLogin = async () => {
       localStorage.setItem('rememberMe', 'true')
     }
     
-    // Redirection vers la route demandée ou le tableau de bord
-    const redirectPath = getRedirectAfterLogin()
-    router.push(redirectPath)
+    // Redirection vers la page d'accueil après connexion
+    router.push('/dashboard')
   } catch (err) {
     // L'erreur est déjà gérée par le service d'authentification
     console.error('Erreur de connexion:', err)

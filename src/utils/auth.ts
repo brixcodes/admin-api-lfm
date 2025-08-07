@@ -105,11 +105,14 @@ class AuthService {
         }
       }
 
-      const data: LoginResponse = await response.json()
+      const data: any = await response.json()
       
-      if (data.token) {
-        this.setToken(data.token)
-        return data
+      // Accepte 'token' ou 'access_token' comme clé du JWT
+      const token = data.token || data.access_token
+      if (token) {
+        this.setToken(token)
+        // On retourne le même objet mais on ajoute 'token' pour la cohérence du frontend
+        return { ...data, token }
       } else {
         throw { message: 'Réponse invalide du serveur - token manquant' } as AuthError
       }

@@ -5,7 +5,7 @@ const publicRoutes = [
   '/login',
   '/register',
   '/forgot-password',
-  '/reset-password',
+  '/change-password',
 ]
 
 /**
