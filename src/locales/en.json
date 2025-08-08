@@ -145,19 +145,157 @@
     },
     "roles": {
       "admin": "Admin",
-      "coordinator": "Coordinator",
-      "trainer": "Trainer",
-      "referent": "Referent",
-      "learner": "Learner"
+      "coordinator": "Educational Coordinator",
+      "trainer": "Reference Trainer",
+      "referent": "Specialty Referent",
+      "learner": "Life Assistant Trainee",
+      "technical_assistant": "Technical Assistant",
+      "penitentiary_support": "Penitentiary Services Support",
+      "reception_support": "Reception, Listening and Support"
     },
     "actions": {
       "edit": "Edit",
       "delete": "Delete",
       "view": "View"
     },
+    "deleteDialog": {
+      "title": "Confirm Deletion",
+      "message": "Are you sure you want to delete user {name}? This action cannot be undone."
+    },
+    "addDialog": {
+      "title": "Add User",
+      "form": {
+        "lastName": "Last Name",
+        "firstName": "First Name",
+        "email": "Email",
+        "gender": "Gender",
+        "role": "Role",
+        "genderOptions": {
+          "male": "Male",
+          "female": "Female"
+        }
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "add": "Add"
+      }
+    },
     "errors": {
       "fetchFailed": "Failed to fetch users",
-      "deleteFailed": "Failed to delete user"
+      "deleteFailed": "Failed to delete user",
+      "addFailed": "Failed to add user"
+    },
+    "count": {
+      "single": "user",
+      "plural": "users",
+      "filtered": "{count} of {total}"
+    },
+    "specialties": {
+      "title": "Specialties",
+      "technical_assistant": {
+        "name": "Technical Assistant",
+        "description": "Construction and viability of sponsor network, financial accountability management"
+      },
+      "penitentiary_support": {
+        "name": "Penitentiary Services Support",
+        "description": "Facilitating access to insertion and probation services"
+      },
+      "reception_support": {
+        "name": "Reception, Listening and Support",
+        "description": "Maintaining sociality and psycho-social support"
+      }
+    },
+    "training": {
+      "duration": "12 months training",
+      "location": "Lafaom-Mao Institute, Ziguinchor, Senegal",
+      "phases": {
+        "integration": "2 months integration",
+        "masterpiece": "Masterpiece selection",
+        "collective_project": "4 months collective project",
+        "humanitarian_mission": "3 months humanitarian mission"
+      }
+    },
+    "profile": {
+      "title": "User Profile",
+      "backButton": "Back",
+      "details": "Details",
+      "personalInfo": "Personal Information",
+      "statistics": {
+        "completedTrainings": "Completed Trainings",
+        "activeProjects": "Active Projects"
+      },
+      "fields": {
+        "email": "Email",
+        "status": "Status",
+        "gender": "Gender",
+        "createdAt": "Created At",
+        "noRole": "No Role"
+      },
+      "actions": {
+        "edit": "Edit",
+        "suspend": "Suspend",
+        "reactivate": "Reactivate"
+      },
+      "tabs": {
+        "overview": "Overview",
+        "projects": "Projects",
+        "activity": "Activity",
+        "permissions": "Permissions"
+      },
+      "overview": {
+        "recentProjects": "Recent Projects",
+        "recentActivity": "Recent Activity"
+      },
+      "projects": {
+        "title": "Project List",
+        "searchPlaceholder": "Search project",
+        "headers": {
+          "project": "PROJECT",
+          "type": "TYPE",
+          "tasks": "TASKS",
+          "progress": "PROGRESS",
+          "hours": "HOURS"
+        }
+      },
+      "activity": {
+        "title": "Activity Timeline"
+      },
+      "permissions": {
+        "title": "Permissions and Roles",
+        "info": "Permissions are managed through roles. Contact an administrator to modify permissions.",
+        "currentRole": "Current Role",
+        "associatedPermissions": "Associated Permissions",
+        "permissionTypes": {
+          "read": "Read",
+          "write": "Write",
+          "edit": "Edit",
+          "delete": "Delete"
+        }
+      }
+    },
+    "edit": {
+      "title": "Edit User",
+      "subtitle": "Modify user information",
+      "personalInfo": "Personal Information",
+      "form": {
+        "lastName": "Last Name",
+        "firstName": "First Name",
+        "email": "Email",
+        "gender": "Gender",
+        "role": "Role",
+        "status": "Status",
+        "required": "required"
+      },
+      "actions": {
+        "save": "Save Changes",
+        "cancel": "Cancel"
+      },
+      "validation": {
+        "lastNameRequired": "Last name is required",
+        "firstNameRequired": "First name is required",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Email must be valid"
+      }
     }
   },
   "formations": {
@@ -313,7 +451,8 @@
     "error": "An error occurred",
     "required": "This field is required",
     "invalid_email": "Invalid email",
-    "invalid_format": "Invalid format"
+    "invalid_format": "Invalid format",
+    "refresh": "Refresh"
   },
   "genetique": {
     "individuel": {

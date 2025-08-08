@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Imports
 import { useAuth } from '@/utils/auth'
 import { getRedirectAfterLogin } from '@/utils/authGuard'
 import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
@@ -6,10 +7,12 @@ import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
 import { useRouter } from 'vue-router'
 import { useTheme } from 'vuetify'
 
+// Constants and refs
 const logo = '/logo_lafaom.png'
-
 const router = useRouter()
 const { login, isLoading, error, clearError } = useAuth()
+const vuetifyTheme = useTheme()
+const isPasswordVisible = ref(false)
 
 const form = ref({
   email: '',
@@ -17,28 +20,19 @@ const form = ref({
   remember: false,
 })
 
-const vuetifyTheme = useTheme()
-
+// Computed properties
 const authThemeMask = computed(() => {
-  return vuetifyTheme.global.name.value === 'light'
-    ? authV1MaskLight
-    : authV1MaskDark
+  return vuetifyTheme.global.name.value === 'light' ? authV1MaskLight : authV1MaskDark
 })
 
-const isPasswordVisible = ref(false)
-
-// Validation du formulaire
 const isFormValid = computed(() => {
   return form.value.email && form.value.password && form.value.email.includes('@')
 })
 
-// Fonction de connexion
+// Methods
 const handleLogin = async () => {
-  if (!isFormValid.value) {
-    return
-  }
+  if (!isFormValid.value) return
 
-  // Effacer les erreurs précédentes seulement lors d'une nouvelle tentative
   clearError()
 
   try {
@@ -47,89 +41,60 @@ const handleLogin = async () => {
       password: form.value.password,
     })
     
-    // Gestion de "Se souvenir de moi"
     if (form.value.remember) {
       localStorage.setItem('rememberMe', 'true')
     }
     
-    // Redirection vers la page d'accueil après connexion
     router.push('/dashboard')
   } catch (err) {
-    // L'erreur est déjà gérée par le service d'authentification
     console.error('Erreur de connexion:', err)
   }
 }
 
-// Vérification si l'utilisateur est déjà connecté
+// Lifecycle hooks
 onMounted(() => {
   const token = localStorage.getItem('authToken')
   if (token) {
-    const redirectPath = getRedirectAfterLogin()
-    router.push(redirectPath)
+    router.push(getRedirectAfterLogin())
   }
 })
 </script>
 
 <template>
-  <!-- eslint-disable vue/no-v-html -->
-
   <div class="auth-wrapper d-flex align-center justify-center pa-4">
-    <VCard
-      class="auth-card pa-4 pt-7"
-      max-width="448"
-    >
+    <!-- Login Card -->
+    <VCard class="auth-card pa-4 pt-7" max-width="448">
+      <!-- Header -->
       <VCardItem class="justify-center">
-        <RouterLink
-          to="/"
-          class="d-flex align-center gap-1"
-        >
-          <VImg
-            :src="logo"
-            :alt="$t('login.title') + ' Logo'"
-            width="60"
-            height="40"
-            contain
-          />
-          <h2 class="font-weight-medium text-2xl ">
-            {{$t('login.title')}}
-          </h2>
+        <RouterLink to="/" class="d-flex align-center gap-1">
+          <VImg :src="logo" :alt="$t('login.title') + ' Logo'" width="60" height="40" contain />
+          <h2 class="font-weight-medium text-2xl">{{$t('login.title')}}</h2>
         </RouterLink>
       </VCardItem>
 
+      <!-- Subtitle -->
       <VCardText class="pt-2 text-center">
-        <p class="mb-0">
-          {{$t('login.subtitle')}}
-        </p>
+        <p class="mb-0">{{$t('login.subtitle')}}</p>
       </VCardText>
 
+      <!-- Login Form -->
       <VCardText>
         <VForm @submit.prevent="handleLogin">
           <VRow>
-            <!-- Message d'erreur -->
+            <!-- Error Alert -->
             <VCol cols="12" v-if="error">
-              <VAlert
-                type="error"
-                variant="tonal"
-                closable
-                @click:close="clearError"
-                class="mb-4"
-              >
+              <VAlert type="error" variant="tonal" closable @click:close="clearError" class="mb-4">
                 <template #prepend>
                   <VIcon icon="ri-error-warning-line" />
                 </template>
                 <div>
-<<<<<<< HEAD
-                <div class="font-weight-medium mb-1">{{$t('login.errorTitle')}}</div>
-                <div class="text-body-2">{{ error }}</div>
-=======
-                  <div class="font-weight-medium mb-1">{{ $t('auth.login.title') }}</div>
+                  <div class="font-weight-medium mb-1">{{$t('login.errorTitle')}}</div>
                   <div class="text-body-2">{{ error }}</div>
->>>>>>> e7755b392bfcc912fbf0679b114ece63610622d7
                 </div>
               </VAlert>
             </VCol>
 
-            <!-- email -->
+            <!-- Email Field -->
             <VCol cols="12">
               <VTextField
                 v-model="form.email"
@@ -144,7 +109,7 @@ onMounted(() => {
               />
             </VCol>
 
-            <!-- password -->
+            <!-- Password Field -->
             <VCol cols="12">
               <VTextField
                 v-model="form.password"
@@ -162,24 +127,15 @@ onMounted(() => {
                 required
               />
 
-              <!-- remember me checkbox -->
+              <!-- Remember Me & Forgot Password -->
               <div class="d-flex align-center justify-space-between flex-wrap my-6">
-                <VCheckbox
-                  v-model="form.remember"
-                  :label="$t('login.remember')"
-                  :disabled="isLoading"
-                />
-
-                <RouterLink
-                  class="text-primary"
-                  to="/forgot-password"
-                  :class="{ 'disabled': isLoading }"
-                >
+                <VCheckbox v-model="form.remember" :label="$t('login.remember')" :disabled="isLoading" />
+                <RouterLink class="text-primary" to="/forgot-password" :class="{ 'disabled': isLoading }">
                   {{$t('login.forgot')}}
                 </RouterLink>
               </div>
 
-              <!-- login button -->
+              <!-- Login Button -->
               <VBtn
                 block
                 type="submit"
@@ -188,31 +144,15 @@ onMounted(() => {
                 color="primary"
                 size="large"
               >
-                <VIcon
-                  v-if="isLoading"
-                  icon="ri-loader-4-line"
-                  class="me-2"
-                  start
-                />
+                <VIcon v-if="isLoading" icon="ri-loader-4-line" class="me-2" start />
                 {{ isLoading ? $t('login.loading') : $t('login.login') }}
               </VBtn>
             </VCol>
 
-            <!-- create account -->
-            <VCol
-              cols="12"
-              class="text-center text-base"
-            >
-<<<<<<< HEAD
+            <!-- Register Link -->
+            <VCol cols="12" class="text-center text-base">
               <span>{{$t('login.newHere')}}</span>
-=======
-              <span>{{ $t('auth.login.register_link') }}</span>
->>>>>>> e7755b392bfcc912fbf0679b114ece63610622d7
-              <RouterLink
-                class="text-primary ms-2"
-                to="/register"
-                :class="{ 'disabled': isLoading }"
-              >
+              <RouterLink class="text-primary ms-2" to="/register" :class="{ 'disabled': isLoading }">
                 {{$t('login.createAccount')}}
               </RouterLink>
             </VCol>
@@ -221,11 +161,8 @@ onMounted(() => {
       </VCardText>
     </VCard>
 
-    <!-- bg img -->
-    <VImg
-      class="auth-footer-mask d-none d-md-block"
-      :src="authThemeMask"
-    />
+    <!-- Background Image -->
+    <VImg class="auth-footer-mask d-none d-md-block" :src="authThemeMask" />
   </div>
 </template>
 
@@ -237,7 +174,6 @@ onMounted(() => {
   pointer-events: none;
 }
 
-// Animation pour les alertes d'erreur
 .v-alert {
   animation: slideInDown 0.3s ease-out;
 }
@@ -254,7 +190,6 @@ onMounted(() => {
   }
 }
 
-// Amélioration du style du bouton de connexion
 .v-btn--size-large {
   block-size: 48px;
   font-size: 1rem;

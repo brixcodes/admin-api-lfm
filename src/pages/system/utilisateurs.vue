@@ -50,6 +50,35 @@ const headers = [
   { title: 'ACTIONS', key: 'actions', sortable: false },
 ]
 
+// Utilisateurs filtrés
+const filteredUsers = computed(() => {
+  let filtered = [...users.value]
+
+  // Filtrage par rôle
+  if (selectedRole.value) {
+    filtered = filtered.filter(user => {
+      const userRole = user.role?.nom?.toLowerCase() || ''
+      return userRole === selectedRole.value.toLowerCase()
+    })
+  }
+
+  // Filtrage par recherche
+  if (searchQuery.value && searchQuery.value.trim()) {
+    const query = searchQuery.value.toLowerCase().trim()
+    filtered = filtered.filter(user => {
+      const fullName = user.fullName.toLowerCase()
+      const email = user.email.toLowerCase()
+      const role = (user.role?.nom || '').toLowerCase()
+
+      return fullName.includes(query) ||
+             email.includes(query) ||
+             role.includes(query)
+    })
+  }
+
+  return filtered
+})
+
 // Fonction pour récupérer les utilisateurs
 const fetchUsers = async () => {
   isLoading.value = true
@@ -79,7 +108,7 @@ const deleteUser = async () => {
     showDeleteDialog.value = false
     userToDelete.value = null
   } catch (err: any) {
-    error.value = err.message || 'Erreur lors de la suppression de l\'utilisateur'
+    error.value = err.message || t('users.errors.deleteFailed')
     console.error('Erreur lors de la suppression:', err)
   }
 }
@@ -105,7 +134,7 @@ const addUser = async () => {
       role_name: 'admin',
     }
   } catch (err: any) {
-    error.value = err.message || 'Erreur lors de l\'ajout de l\'utilisateur'
+    error.value = err.message || t('users.errors.addFailed')
     console.error('Erreur lors de l\'ajout:', err)
   }
 }
@@ -167,10 +196,10 @@ onMounted(() => {
     <div class="d-flex justify-space-between align-center mb-6">
       <div>
         <h4 class="text-h4 mb-1">
-          Gestion des Utilisateurs
+          {{ t('users.title') }}
         </h4>
         <p class="text-body-1 mb-0">
-          Trouvez tous les comptes administrateurs de votre entreprise et leurs rôles associés.
+          {{ t('users.subtitle') }}
         </p>
       </div>
 
@@ -179,7 +208,7 @@ onMounted(() => {
         @click="showAddUserDialog = true"
       >
         <VIcon start icon="ri-add-line" />
-        Ajouter un utilisateur
+        {{ t('users.addUser') }}
       </VBtn>
     </div>
 
@@ -199,7 +228,13 @@ onMounted(() => {
             <VSelect
               v-model="selectedRole"
               :label="t('users.filterByRole')"
-              :items="['admin', 'coordonnateur', 'formateur', 'referent', 'apprenant']"
+              :items="[
+                { title: t('users.roles.admin'), value: 'admin' },
+                { title: t('users.roles.coordinator'), value: 'coordonnateur' },
+                { title: t('users.roles.trainer'), value: 'formateur' },
+                { title: t('users.roles.referent'), value: 'referent' },
+                { title: t('users.roles.learner'), value: 'apprenant' }
+              ]"
               clearable
             />
           </VCol>
@@ -231,12 +266,31 @@ onMounted(() => {
 
     <!-- Tableau des utilisateurs -->
     <VCard>
+      <VCardTitle class="d-flex justify-space-between align-center">
+        <span>{{ t('users.title') }}</span>
+        <VChip
+          v-if="filteredUsers.length !== users.length"
+          color="primary"
+          variant="tonal"
+          size="small"
+        >
+          {{ t('users.count.filtered', { count: filteredUsers.length, total: users.length }) }}
+        </VChip>
+        <VChip
+          v-else
+          color="success"
+          variant="tonal"
+          size="small"
+        >
+          {{ users.length }} {{ users.length === 1 ? t('users.count.single') : t('users.count.plural') }}
+        </VChip>
+      </VCardTitle>
+
       <VDataTable
         v-model="selectedUsers"
         :headers="headers"
-        :items="users"
+        :items="filteredUsers"
         :loading="isLoading"
-        :search="searchQuery"
         :items-per-page="10"
         show-select
         class="text-no-wrap"
@@ -252,9 +306,14 @@ onMounted(() => {
               <span class="text-sm">{{ avatarText(item.fullName) }}</span>
             </VAvatar>
             <div class="d-flex flex-column ms-3">
-              <span class="d-block font-weight-medium text-high-emphasis text-truncate">
-                {{ item.fullName }}
-              </span>
+              <RouterLink
+                :to="`/system/users/${item.id}`"
+                class="text-decoration-none"
+              >
+                <span class="d-block font-weight-medium text-primary text-truncate cursor-pointer">
+                  {{ item.fullName }}
+                </span>
+              </RouterLink>
               <small>{{ item.email }}</small>
             </div>
           </div>
@@ -363,7 +422,7 @@ onMounted(() => {
             color="error"
             @click="deleteUser"
           >
-            Supprimer
+            {{ t('users.actions.delete') }}
           </VBtn>
         </VCardActions>
       </VCard>
@@ -376,7 +435,7 @@ onMounted(() => {
     >
       <VCard>
         <VCardTitle class="text-h6">
-          Ajouter un utilisateur
+          {{ t('users.addDialog.title') }}
         </VCardTitle>
 
         <VCardText>
@@ -385,20 +444,20 @@ onMounted(() => {
               <VCol cols="12" md="6">
                 <VTextField
                   v-model="userForm.nom"
-                  label="Nom"
+                  :label="t('users.addDialog.form.lastName')"
                   required
                 />
               </VCol>
               <VCol cols="12" md="6">
                 <VTextField
                   v-model="userForm.prenom"
-                  label="Prénom"
+                  :label="t('users.addDialog.form.firstName')"
                 />
               </VCol>
               <VCol cols="12">
                 <VTextField
                   v-model="userForm.email"
-                  label="Email"
+                  :label="t('users.addDialog.form.email')"
                   type="email"
                   required
                 />
@@ -406,10 +465,10 @@ onMounted(() => {
               <VCol cols="12" md="6">
                 <VSelect
                   v-model="userForm.sexe"
-                  label="Sexe"
+                  :label="t('users.addDialog.form.gender')"
                   :items="[
-                    { title: 'Homme', value: 'homme' },
-                    { title: 'Femme', value: 'femme' }
+                    { title: t('users.addDialog.form.genderOptions.male'), value: 'homme' },
+                    { title: t('users.addDialog.form.genderOptions.female'), value: 'femme' }
                   ]"
                   required
                 />
@@ -417,7 +476,7 @@ onMounted(() => {
               <VCol cols="12" md="6">
                 <VSelect
                   v-model="userForm.role_name"
-                  label="Rôle"
+                  :label="t('users.addDialog.form.role')"
                   :items="roles.map(r => ({ title: r.label, value: r.nom }))"
                   required
                 />
@@ -434,14 +493,14 @@ onMounted(() => {
             variant="outlined"
             @click="showAddUserDialog = false"
           >
-            Annuler
+            {{ t('users.addDialog.actions.cancel') }}
           </VBtn>
 
           <VBtn
             color="primary"
             @click="addUser"
           >
-            Ajouter
+            {{ t('users.addDialog.actions.add') }}
           </VBtn>
         </VCardActions>
       </VCard>

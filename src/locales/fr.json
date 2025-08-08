@@ -145,19 +145,75 @@
     },
     "roles": {
       "admin": "Administrateur",
-      "coordinator": "Coordinateur",
-      "trainer": "Formateur",
-      "referent": "Référent",
-      "learner": "Apprenant"
+      "coordinator": "Coordinateur pédagogique",
+      "trainer": "Formateur référent",
+      "referent": "Référent de spécialité",
+      "learner": "Apprenant auxiliaire de vie",
+      "technical_assistant": "Technicien d'assistance",
+      "penitentiary_support": "Appui aux services pénitentiaires",
+      "reception_support": "Accueil, écoute et accompagnement"
     },
     "actions": {
       "edit": "Modifier",
       "delete": "Supprimer",
       "view": "Voir"
     },
+    "deleteDialog": {
+      "title": "Confirmer la suppression",
+      "message": "Êtes-vous sûr de vouloir supprimer l'utilisateur {name} ? Cette action est irréversible."
+    },
+    "addDialog": {
+      "title": "Ajouter un utilisateur",
+      "form": {
+        "lastName": "Nom",
+        "firstName": "Prénom",
+        "email": "Email",
+        "gender": "Sexe",
+        "role": "Rôle",
+        "genderOptions": {
+          "male": "Homme",
+          "female": "Femme"
+        }
+      },
+      "actions": {
+        "cancel": "Annuler",
+        "add": "Ajouter"
+      }
+    },
     "errors": {
       "fetchFailed": "Erreur lors de la récupération des utilisateurs",
-      "deleteFailed": "Erreur lors de la suppression de l'utilisateur"
+      "deleteFailed": "Erreur lors de la suppression de l'utilisateur",
+      "addFailed": "Erreur lors de l'ajout de l'utilisateur"
+    },
+    "count": {
+      "single": "utilisateur",
+      "plural": "utilisateurs",
+      "filtered": "{count} sur {total}"
+    },
+    "specialties": {
+      "title": "Spécialités",
+      "technical_assistant": {
+        "name": "Technicien d'assistance",
+        "description": "Construction et viabilisation du réseau-parrain, gestion de la redevabilité financière"
+      },
+      "penitentiary_support": {
+        "name": "Appui aux services pénitentiaires",
+        "description": "Facilitation de l'accès aux services d'insertion et de probation"
+      },
+      "reception_support": {
+        "name": "Accueil, écoute et accompagnement",
+        "description": "Maintien de la socialité et accompagnement psycho-social"
+      }
+    },
+    "training": {
+      "duration": "12 mois de formation",
+      "location": "Institut Lafaom-Mao, Ziguinchor, Sénégal",
+      "phases": {
+        "integration": "2 mois d'intégration",
+        "masterpiece": "Choix du chef d'œuvre",
+        "collective_project": "4 mois de projet collectif",
+        "humanitarian_mission": "3 mois de mission humanitaire"
+      }
     }
   },
   "formations": {
@@ -314,7 +370,8 @@
     "error": "Une erreur s'est produite",
     "required": "Ce champ est requis",
     "invalid_email": "Email invalide",
-    "invalid_format": "Format invalide"
+    "invalid_format": "Format invalide",
+    "refresh": "Actualiser"
   },
   "genetique": {
     "individuel": {
