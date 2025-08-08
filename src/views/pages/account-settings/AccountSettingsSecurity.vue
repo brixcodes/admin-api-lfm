@@ -1,16 +1,113 @@
 <script lang="ts" setup>
+import { useUserProfile } from '@/composables/useUserProfile'
+import { AuthApi } from '@/utils/services'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const { user, fetchUserProfile } = useUserProfile()
+
+// Charger les données utilisateur au montage
+onMounted(async () => {
+  await fetchUserProfile()
+})
+
 const isCurrentPasswordVisible = ref(false)
 const isNewPasswordVisible = ref(false)
 const isConfirmPasswordVisible = ref(false)
-const currentPassword = ref('12345678')
-const newPassword = ref('87654321')
-const confirmPassword = ref('87654321')
+const currentPassword = ref('')
+const newPassword = ref('')
+const confirmPassword = ref('')
 
-const passwordRequirements = [
-  'Minimum 8 characters long - the more, the better',
-  'At least one lowercase character',
-  'At least one number, symbol, or whitespace character',
-]
+// États pour la gestion du changement de mot de passe
+const isChangingPassword = ref(false)
+const passwordChangeError = ref<string | null>(null)
+const passwordChangeSuccess = ref(false)
+
+const passwordRequirements = computed(() => [
+  t('security.requirements.minLength'),
+  t('security.requirements.lowercase'),
+  t('security.requirements.numberOrSymbol'),
+])
+
+// Validation du formulaire de mot de passe
+const isPasswordFormValid = computed(() => {
+  return (
+    currentPassword.value.length > 0 &&
+    newPassword.value.length >= 8 &&
+    confirmPassword.value === newPassword.value &&
+    user.value?.id
+  )
+})
+
+// Fonction pour changer le mot de passe
+const handlePasswordChange = async () => {
+  if (!isPasswordFormValid.value || !user.value?.id) {
+    passwordChangeError.value = t('security.currentPasswordRequired')
+    return
+  }
+
+  isChangingPassword.value = true
+  passwordChangeError.value = null
+  passwordChangeSuccess.value = false
+
+  try {
+    const payload = {
+      utilisateur_id: user.value.id,
+      current_password: currentPassword.value,
+      new_password: newPassword.value,
+    }
+
+    console.log('Sending password change request for user ID:', user.value.id)
+
+    await AuthApi.changePassword(payload)
+
+    // Succès - réinitialiser le formulaire
+    currentPassword.value = ''
+    newPassword.value = ''
+    confirmPassword.value = ''
+    passwordChangeSuccess.value = true
+
+    // Masquer le message de succès après 5 secondes
+    setTimeout(() => {
+      passwordChangeSuccess.value = false
+    }, 5000)
+
+  } catch (error: any) {
+    console.error('Password change error:', error)
+
+    // Gestion d'erreurs plus détaillée
+    if (error.response?.status === 422) {
+      const errorData = error.response?.data
+      if (errorData?.detail) {
+        // Si l'API renvoie des détails d'erreur
+        if (Array.isArray(errorData.detail)) {
+          passwordChangeError.value = errorData.detail.map((err: any) => err.msg).join(', ')
+        } else {
+          passwordChangeError.value = errorData.detail
+        }
+      } else if (errorData?.message) {
+        passwordChangeError.value = errorData.message
+      } else {
+        passwordChangeError.value = t('security.invalidCredentials')
+      }
+    } else if (error.response?.status === 401) {
+      passwordChangeError.value = t('security.wrongCurrentPassword')
+    } else {
+      passwordChangeError.value = error.message || t('security.changePasswordError')
+    }
+  } finally {
+    isChangingPassword.value = false
+  }
+}
+
+// Fonction pour réinitialiser le formulaire
+const resetPasswordForm = () => {
+  currentPassword.value = ''
+  newPassword.value = ''
+  confirmPassword.value = ''
+  passwordChangeError.value = null
+  passwordChangeSuccess.value = false
+}
 
 const serverKeys = [
   {
@@ -33,12 +130,12 @@ const serverKeys = [
   },
 ]
 
-const recentDevicesHeaders = [
-  { title: 'BROWSER', key: 'browser' },
-  { title: 'DEVICE', key: 'device' },
-  { title: 'LOCATION', key: 'location' },
-  { title: 'RECENT ACTIVITY', key: 'recentActivity' },
-]
+const recentDevicesHeaders = computed(() => [
+  { title: t('security.browser').toUpperCase(), key: 'browser' },
+  { title: t('security.device').toUpperCase(), key: 'device' },
+  { title: t('security.location').toUpperCase(), key: 'location' },
+  { title: t('security.recentActivity').toUpperCase(), key: 'recentActivity' },
+])
 
 const recentDevices = [
   {
@@ -90,9 +187,28 @@ const recentDevices = [
   <VRow>
     <!-- SECTION: Change Password -->
     <VCol cols="12">
-      <VCard title="Change Password">
-        <VForm>
+      <VCard :title="$t('security.changePassword')">
+        <VForm @submit.prevent="handlePasswordChange">
           <VCardText>
+            <!-- 👉 Success Alert -->
+            <VAlert
+              v-if="passwordChangeSuccess"
+              type="success"
+              variant="tonal"
+              class="mb-4"
+            >
+              {{ $t('security.changePasswordSuccess') }}
+            </VAlert>
+
+            <!-- 👉 Error Alert -->
+            <VAlert
+              v-if="passwordChangeError"
+              type="error"
+              variant="tonal"
+              class="mb-4"
+            >
+              {{ passwordChangeError }}
+            </VAlert>
             <!-- 👉 Current Password -->
             <VRow class="mb-3">
               <VCol
@@ -105,8 +221,13 @@ const recentDevices = [
                   :type="isCurrentPasswordVisible ? 'text' : 'password'"
                   :append-inner-icon="isCurrentPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
                   autocomplete="on"
-                  label="Current Password"
+                  :label="$t('security.currentPassword')"
                   placeholder="············"
+                  :disabled="isChangingPassword"
+                  :rules="[
+                    v => !!v || $t('security.currentPasswordRequired')
+                  ]"
+                  required
                   @click:append-inner="isCurrentPasswordVisible = !isCurrentPasswordVisible"
                 />
               </VCol>
@@ -123,9 +244,15 @@ const recentDevices = [
                   v-model="newPassword"
                   :type="isNewPasswordVisible ? 'text' : 'password'"
                   :append-inner-icon="isNewPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
-                  label="New Password"
+                  :label="$t('security.newPassword')"
                   autocomplete="on"
                   placeholder="············"
+                  :disabled="isChangingPassword"
+                  :rules="[
+                    v => !!v || $t('security.newPasswordRequired'),
+                    v => v.length >= 8 || $t('security.requirements.minLength')
+                  ]"
+                  required
                   @click:append-inner="isNewPasswordVisible = !isNewPasswordVisible"
                 />
               </VCol>
@@ -140,8 +267,14 @@ const recentDevices = [
                   :type="isConfirmPasswordVisible ? 'text' : 'password'"
                   :append-inner-icon="isConfirmPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
                   autocomplete="on"
-                  label="Confirm New Password"
+                  :label="$t('security.confirmPassword')"
                   placeholder="············"
+                  :disabled="isChangingPassword"
+                  :rules="[
+                    v => !!v || $t('security.newPasswordRequired'),
+                    v => v === newPassword || $t('security.passwordMismatch')
+                  ]"
+                  required
                   @click:append-inner="isConfirmPasswordVisible = !isConfirmPasswordVisible"
                 />
               </VCol>
@@ -151,7 +284,7 @@ const recentDevices = [
           <!-- 👉 Password Requirements -->
           <VCardText>
             <p class="text-base font-weight-medium mt-2">
-              Password Requirements:
+              {{ $t('security.passwordRequirements') }}
             </p>
 
             <ul class="d-flex flex-column gap-y-3">
@@ -174,14 +307,22 @@ const recentDevices = [
 
           <!-- 👉 Action Buttons -->
           <VCardText class="d-flex flex-wrap gap-4">
-            <VBtn>Save changes</VBtn>
+            <VBtn
+              type="submit"
+              :loading="isChangingPassword"
+              :disabled="!isPasswordFormValid || isChangingPassword"
+            >
+              {{ isChangingPassword ? $t('common.loading') : $t('account.saveChanges') }}
+            </VBtn>
 
             <VBtn
               type="reset"
               color="secondary"
               variant="outlined"
+              :disabled="isChangingPassword"
+              @click="resetPasswordForm"
             >
-              Reset
+              {{ $t('account.reset') }}
             </VBtn>
           </VCardText>
         </VForm>
@@ -191,21 +332,21 @@ const recentDevices = [
 
     <!-- SECTION Two-steps verification -->
     <VCol cols="12">
-      <VCard title="Two-steps verification">
+      <VCard :title="$t('security.twoFactorAuth')">
         <VCardText>
           <p class="font-weight-semibold">
-            Two factor authentication is not enabled yet.
+            {{ $t('security.twoFactorNotEnabled') }}
           </p>
           <p>
-            Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to log in.
+            {{ $t('security.twoFactorDescription') }}
             <a
               href="javascript:void(0)"
               class="text-decoration-none"
-            >Learn more.</a>
+            >{{ $t('account.learnMore') }}.</a>
           </p>
 
           <VBtn>
-            Enable two-factor authentication
+            {{ $t('security.enableTwoFactor') }}
           </VBtn>
         </VCardText>
       </VCard>
@@ -214,7 +355,7 @@ const recentDevices = [
 
     <VCol cols="12">
       <!-- SECTION: Create an API key -->
-      <VCard title="Create an API key">
+      <VCard :title="$t('security.createApiKey')">
         <VRow>
           <!-- 👉 Choose API Key -->
           <VCol
@@ -229,8 +370,8 @@ const recentDevices = [
                   <!-- 👉 Choose API Key -->
                   <VCol cols="12">
                     <VSelect
-                      label="Choose the API key type you want to create"
-                      placeholder="Select API key type"
+                      :label="$t('security.chooseApiKeyType')"
+                      :placeholder="$t('security.selectApiKeyType')"
                       :items="['Full Control', 'Modify', 'Read & Execute', 'List Folder Contents', 'Read Only', 'Read & Write']"
                     />
                   </VCol>
@@ -238,8 +379,8 @@ const recentDevices = [
                   <!-- 👉 Name the API Key -->
                   <VCol cols="12">
                     <VTextField
-                      label="Name the API key"
-                      placeholder="Name the API key"
+                      :label="$t('security.nameApiKey')"
+                      :placeholder="$t('security.nameApiKey')"
                     />
                   </VCol>
 
@@ -249,7 +390,7 @@ const recentDevices = [
                       type="submit"
                       block
                     >
-                      Create Key
+                      {{ $t('security.createKey') }}
                     </VBtn>
                   </VCol>
                 </VRow>

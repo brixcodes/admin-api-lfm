@@ -1,25 +1,43 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { useUserProfile } from '@/composables/useUserProfile'
+import { useAuth } from '@/utils/auth'
 import avatar1 from '@images/avatars/avatar-1.png'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
-const user = ref({ prenom: '', nom: '', role: { nom: '' }, email: '' })
+const { t } = useI18n()
+const { user, isLoading, error, fetchUserProfile, clearUserProfile } = useUserProfile()
+const { logout, isLoading: isLoggingOut } = useAuth()
+const router = useRouter()
 
-onMounted(async () => {
-  const token = localStorage.getItem('authToken')
-  if (!token) return
+// État pour la boîte de dialogue de confirmation
+const showLogoutDialog = ref(false)
+
+// Fonction pour afficher la confirmation de déconnexion
+const confirmLogout = () => {
+  showLogoutDialog.value = true
+}
+
+// Fonction de déconnexion
+const handleLogout = async () => {
+  showLogoutDialog.value = false
+
   try {
-    const response = await fetch(`http://localhost:8000/users/me?token=${token}`, {
-      headers: {
-        'accept': 'application/json',
-      },
-    })
-    if (response.ok) {
-      const data = await response.json()
-      user.value = data
-    }
-  } catch (e) {
-    // Optionally handle error
+    await logout()
+    // Nettoyer les données utilisateur du composable
+    clearUserProfile()
+    // Rediriger vers la page de connexion
+    await router.push('/login')
+  } catch (error) {
+    console.error('Erreur lors de la déconnexion:', error)
+    // Redirection forcée vers la page de connexion même en cas d'erreur
+    await router.push('/login')
   }
+}
+
+// Charger les données utilisateur au montage
+onMounted(async () => {
+  await fetchUserProfile()
 })
 </script>
 
@@ -69,16 +87,18 @@ onMounted(async () => {
             </template>
 
             <VListItemTitle class="font-weight-semibold">
-              {{ user.prenom }} {{ user.nom }}
+              <span v-if="isLoading">{{ t('common.loading') }}...</span>
+              <span v-else-if="error">{{ t('common.error') }}</span>
+              <span v-else>{{ user?.prenom }} {{ user?.nom }}</span>
             </VListItemTitle>
             <VListItemSubtitle>
-              {{ user.role?.nom }}
+              <span v-if="!isLoading && !error">{{ user?.role?.nom }}</span>
             </VListItemSubtitle>
           </VListItem>
           <VDivider class="my-2" />
 
           <!-- 👉 Profile -->
-          <VListItem link>
+          <VListItem to="/profil">
             <template #prepend>
               <VIcon
                 class="me-2"
@@ -87,7 +107,7 @@ onMounted(async () => {
               />
             </template>
 
-            <VListItemTitle>Profile</VListItemTitle>
+            <VListItemTitle>{{ $t('userProfile.profile') }}</VListItemTitle>
           </VListItem>
 
           <!-- 👉 Settings -->
@@ -100,7 +120,7 @@ onMounted(async () => {
               />
             </template>
 
-            <VListItemTitle>Settings</VListItemTitle>
+            <VListItemTitle>{{ $t('userProfile.settings') }}</VListItemTitle>
           </VListItem>
 
           <!-- 👉 Pricing -->
@@ -113,7 +133,7 @@ onMounted(async () => {
               />
             </template>
 
-            <VListItemTitle>Pricing</VListItemTitle>
+            <VListItemTitle>{{ $t('userProfile.pricing') }}</VListItemTitle>
           </VListItem>
 
           <!-- 👉 FAQ -->
@@ -126,14 +146,17 @@ onMounted(async () => {
               />
             </template>
 
-            <VListItemTitle>FAQ</VListItemTitle>
+            <VListItemTitle>{{ $t('userProfile.faq') }}</VListItemTitle>
           </VListItem>
 
           <!-- Divider -->
           <VDivider class="my-2" />
 
           <!-- 👉 Logout -->
-          <VListItem to="/login">
+          <VListItem
+            @click="confirmLogout"
+            :disabled="isLoggingOut"
+          >
             <template #prepend>
               <VIcon
                 class="me-2"
@@ -142,11 +165,51 @@ onMounted(async () => {
               />
             </template>
 
-            <VListItemTitle>Logout</VListItemTitle>
+            <VListItemTitle>
+              {{ isLoggingOut ? $t('common.loading') : $t('userProfile.logout') }}
+            </VListItemTitle>
           </VListItem>
         </VList>
       </VMenu>
       <!-- !SECTION -->
     </VAvatar>
   </VBadge>
+
+  <!-- 👉 Logout Confirmation Dialog -->
+  <VDialog
+    v-model="showLogoutDialog"
+    max-width="400"
+  >
+    <VCard>
+      <VCardTitle class="text-h6">
+        {{ $t('userProfile.confirmLogout') }}
+      </VCardTitle>
+
+      <VCardText>
+        {{ $t('userProfile.logoutMessage') }}
+      </VCardText>
+
+      <VCardActions>
+        <VSpacer />
+
+        <VBtn
+          color="grey"
+          variant="outlined"
+          @click="showLogoutDialog = false"
+          :disabled="isLoggingOut"
+        >
+          {{ $t('common.cancel') }}
+        </VBtn>
+
+        <VBtn
+          color="error"
+          @click="handleLogout"
+          :loading="isLoggingOut"
+          :disabled="isLoggingOut"
+        >
+          {{ $t('userProfile.logout') }}
+        </VBtn>
+      </VCardActions>
+    </VCard>
+  </VDialog>
 </template>

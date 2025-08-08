@@ -3,6 +3,7 @@ import { useAuth } from '@/utils/auth'
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useTheme } from 'vuetify'
 
@@ -10,6 +11,7 @@ const logo = '/logo_lafaom.png'
 
 const router = useRouter()
 const { register, isLoading, error, clearError } = useAuth()
+const { t } = useI18n()
 
 const form = ref({
   nom: '',
@@ -28,38 +30,38 @@ const authThemeMask = computed(() => {
 })
 
 // Options pour les sélecteurs
-const sexeOptions = [
-  { title: 'Homme', value: 'homme' },
-  { title: 'Femme', value: 'femme' },
-]
+const sexeOptions = computed(() => [
+  { title: t('register.male'), value: 'homme' },
+  { title: t('register.female'), value: 'femme' },
+])
 
-const roleOptions = [
-  { 
-    title: 'Apprenant - Étudiant/apprenant', 
+const roleOptions = computed(() => [
+  {
+    title: t('register.student'),
     value: 'apprenant',
-    subtitle: 'Accès aux formations et projets pédagogiques'
+    subtitle: t('register.studentDesc')
   },
-  { 
-    title: 'Formateur - Formateur/enseignant', 
+  {
+    title: t('register.trainer'),
     value: 'formateur',
-    subtitle: 'Gestion des modules et évaluation des apprenants'
+    subtitle: t('register.trainerDesc')
   },
-  { 
-    title: 'Référent - Formateur référent', 
+  {
+    title: t('register.referent'),
     value: 'referent',
-    subtitle: 'Accompagnement personnalisé et suivi des parcours'
+    subtitle: t('register.referentDesc')
   },
-  { 
-    title: 'Coordonnateur - Responsable de programme', 
+  {
+    title: t('register.coordinator'),
     value: 'coordonnateur',
-    subtitle: 'Coordination des formations et gestion des équipes'
+    subtitle: t('register.coordinatorDesc')
   },
-  { 
-    title: 'Administrateur - Administrateur du système', 
+  {
+    title: t('register.admin'),
     value: 'admin',
-    subtitle: 'Gestion complète de la plateforme et des utilisateurs'
+    subtitle: t('register.adminDesc')
   },
-]
+])
 
 // Validation du formulaire
 const isFormValid = computed(() => {
@@ -135,10 +137,10 @@ onMounted(() => {
 
       <VCardText class="pt-2">
         <h4 class="text-h4 mb-1">
-          Rejoignez LAFAOM-MAO! 🚀
+          {{ $t('register.welcomeTitle') }}
         </h4>
         <p class="mb-0">
-          Formation et intervention sociale dans l'univers carcéral
+          {{ $t('register.welcomeSubtitle') }}
         </p>
       </VCardText>
 
@@ -158,7 +160,7 @@ onMounted(() => {
                   <VIcon icon="ri-error-warning-line" />
                 </template>
                 <div>
-                  <div class="font-weight-medium mb-1">Erreur d'inscription</div>
+                  <div class="font-weight-medium mb-1">{{ $t('register.errorTitle') }}</div>
                   <div class="text-body-2">{{ error }}</div>
                 </div>
               </VAlert>
@@ -168,11 +170,11 @@ onMounted(() => {
             <VCol cols="12" md="6">
               <VTextField
                 v-model="form.prenom"
-                label="Prénom"
+                :label="$t('register.firstName')"
                 :disabled="isLoading"
                 :rules="[
-                  v => !!v || 'Le prénom est requis',
-                  v => v.length >= 2 || 'Le prénom doit contenir au moins 2 caractères'
+                  v => !!v || $t('register.validation.firstNameRequired'),
+                  v => v.length >= 2 || $t('register.validation.firstNameMinLength')
                 ]"
                 required
               />
@@ -182,11 +184,11 @@ onMounted(() => {
             <VCol cols="12" md="6">
               <VTextField
                 v-model="form.nom"
-                label="Nom"
+                :label="$t('register.lastName')"
                 :disabled="isLoading"
                 :rules="[
-                  v => !!v || 'Le nom est requis',
-                  v => v.length >= 2 || 'Le nom doit contenir au moins 2 caractères'
+                  v => !!v || $t('register.validation.lastNameRequired'),
+                  v => v.length >= 2 || $t('register.validation.lastNameMinLength')
                 ]"
                 required
               />
@@ -196,12 +198,12 @@ onMounted(() => {
             <VCol cols="12">
               <VTextField
                 v-model="form.email"
-                label="Adresse email"
+                :label="$t('register.email')"
                 type="email"
                 :disabled="isLoading"
                 :rules="[
-                  v => !!v || 'L\'email est requis',
-                  v => /.+@.+\..+/.test(v) || 'Format d\'email invalide'
+                  v => !!v || $t('register.validation.emailRequired'),
+                  v => /.+@.+\..+/.test(v) || $t('register.validation.emailInvalid')
                 ]"
                 required
               />
@@ -211,13 +213,13 @@ onMounted(() => {
             <VCol cols="12" md="6">
               <VSelect
                 v-model="form.sexe"
-                label="Sexe"
+                :label="$t('register.gender')"
                 :items="sexeOptions"
                 item-title="title"
                 item-value="value"
                 :disabled="isLoading"
                 :rules="[
-                  v => !!v || 'Le sexe est requis'
+                  v => !!v || $t('register.validation.genderRequired')
                 ]"
                 required
               />
@@ -227,13 +229,13 @@ onMounted(() => {
             <VCol cols="12" md="6">
               <VSelect
                 v-model="form.role_name"
-                label="Rôle dans le système"
+                :label="$t('register.roleInSystem')"
                 :items="roleOptions"
                 item-title="title"
                 item-value="value"
                 :disabled="isLoading"
                 :rules="[
-                  v => !!v || 'Le rôle est requis'
+                  v => !!v || $t('register.validation.roleRequired')
                 ]"
                 required
               >
@@ -251,7 +253,7 @@ onMounted(() => {
             <VCol cols="12">
               <VCheckbox
                 :model-value="true"
-                label="J'accepte les conditions d'utilisation et la politique de confidentialité"
+                :label="$t('register.acceptTerms')"
                 :disabled="isLoading"
                 required
               />
@@ -273,7 +275,7 @@ onMounted(() => {
                   class="me-2"
                   start
                 />
-                {{ isLoading ? 'Inscription en cours...' : 'S\'inscrire' }}
+                {{ isLoading ? $t('register.signingUp') : $t('register.signUp') }}
               </VBtn>
             </VCol>
 
@@ -282,25 +284,17 @@ onMounted(() => {
               cols="12"
               class="text-center text-base"
             >
-              <span>Vous avez déjà un compte?</span>
+                              <span>{{ $t('register.alreadyHaveAccount') }}</span>
               <RouterLink
                 class="text-primary ms-2"
                 to="/login"
                 :class="{ 'disabled': isLoading }"
               >
-                Se connecter
+                {{ $t('register.login') }}
               </RouterLink>
             </VCol>
 
-            <VCol
-              cols="12"
-              class="d-flex align-center"
-            >
-              <VDivider />
-              <span class="mx-4">ou</span>
-              <VDivider />
-            </VCol>
-
+            
             <!-- auth providers -->
             <VCol
               cols="12"

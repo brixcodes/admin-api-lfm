@@ -72,6 +72,7 @@ export const UsersApi = {
   assignPermissions: (userId: number, permission_ids: number[]) => apiClient.post<string, { permission_ids: number[] }>(`/users/${userId}/assign-permissions`, { permission_ids }),
   revokePermissions: (userId: number, permission_ids: number[]) => apiClient.post<string, { permission_ids: number[] }>(`/users/${userId}/revoke-permissions`, { permission_ids }),
   me: (token: string) => apiClient.get<Utilisateur>(`/users/me`, { token }),
+  updateProfile: (userId: number, data: UtilisateurUpdate) => apiClient.put<Utilisateur>(`/users/${userId}`, data),
 }
 
 export const RolesApi = {
@@ -112,7 +113,7 @@ export const ActualitesApi = createRestService<ActualiteT, ActualiteCreate, Actu
 // ---------------------- Auth endpoints ----------------------
 export const AuthApi = {
   login: (body: { email: string; password: string }) => apiClient.post<{ access_token: string; token_type: string }, typeof body>('/login', body),
-  changePassword: (body: { email: string; old_password: string; new_password: string }) => apiClient.post<{ message: string }, typeof body>('/users/change-password', body),
+  changePassword: (body: { utilisateur_id: number; current_password: string; new_password: string }) => apiClient.post<{ message: string }, typeof body>('/users/change-password', body),
   resetPasswordRequest: (body: { email: string }) => apiClient.post<{ message: string }, typeof body>('/reset-password-request', body),
   resetPasswordConfirm: (query: { token: string; new_password: string }) => apiClient.get<{ message: string }>('/reset-password-confirm', query),
 }

@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 const firstName = ref('')
 const email = ref('')
 const mobile = ref<number>()
@@ -16,7 +20,7 @@ const checkbox = ref(false)
             cols="12"
             md="3"
           >
-            <label for="firstName">First Name</label>
+            <label for="firstName">{{ $t('ui.forms.firstName') }}</label>
           </VCol>
 
           <VCol
@@ -40,7 +44,7 @@ const checkbox = ref(false)
             cols="12"
             md="3"
           >
-            <label for="email">Email</label>
+            <label for="email">{{ $t('ui.forms.email') }}</label>
           </VCol>
 
           <VCol
@@ -64,7 +68,7 @@ const checkbox = ref(false)
             cols="12"
             md="3"
           >
-            <label for="mobile">Mobile</label>
+            <label for="mobile">{{ $t('ui.forms.mobile') }}</label>
           </VCol>
 
           <VCol
@@ -89,7 +93,7 @@ const checkbox = ref(false)
             cols="12"
             md="3"
           >
-            <label for="password">Password</label>
+            <label for="password">{{ $t('ui.forms.password') }}</label>
           </VCol>
 
           <VCol

@@ -1,12 +1,17 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
+
 <template>
   <VCard>
     <VCardTitle>
       <VIcon icon="ri-music-2-line" class="me-2" />
-      Audios
+      {{ $t('files.audios.title') }}
     </VCardTitle>
     <VCardText>
-      <p>Liste des audios (liés à /static/audios).</p>
+      <p>{{ $t('files.audios.description') }}</p>
     </VCardText>
   </VCard>
 </template>

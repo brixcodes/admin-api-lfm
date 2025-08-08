@@ -1,57 +1,59 @@
 <script lang="ts" setup>
-const recentDevices = ref(
-  [
-    {
-      type: 'New for you',
-      email: true,
-      browser: true,
-      app: true,
-    },
-    {
-      type: 'Account activity',
-      email: true,
-      browser: true,
-      app: true,
-    },
-    {
-      type: 'A new browser used to sign in',
-      email: true,
-      browser: true,
-      app: false,
-    },
-    {
-      type: 'A new device is linked',
-      email: true,
-      browser: false,
-      app: false,
-    },
-  ],
-)
+import { useI18n } from 'vue-i18n'
 
-const selectedNotification = ref('Only when I\'m online')
+const { t } = useI18n()
+
+const recentDevices = ref([
+  {
+    type: 'newForYou',
+    email: true,
+    browser: true,
+    app: true,
+  },
+  {
+    type: 'accountActivity',
+    email: true,
+    browser: true,
+    app: true,
+  },
+  {
+    type: 'newBrowserSignIn',
+    email: true,
+    browser: true,
+    app: false,
+  },
+  {
+    type: 'newDeviceLinked',
+    email: true,
+    browser: false,
+    app: false,
+  },
+])
+
+const selectedNotification = ref('onlyOnline')
 </script>
 
 <template>
-  <VCard title="Recent Devices">
+  <VCard :title="$t('notifications.recentDevices')">
     <VCardText>
-      We need permission from your browser to show notifications.
-      <a href="javascript:void(0)">Request Permission</a>
+      {{ $t('notifications.permissionRequest') }}
+      <a href="javascript:void(0)">{{ $t('notifications.requestPermission') }}</a>
     </VCardText>
 
     <VTable class="text-no-wrap">
       <thead>
         <tr>
           <th scope="col">
-            Type
+            {{ $t('notifications.type') }}
           </th>
           <th scope="col">
-            EMAIL
+            {{ $t('notifications.email') }}
           </th>
           <th scope="col">
-            BROWSER
+            {{ $t('notifications.browser') }}
           </th>
           <th scope="col">
-            App
+            {{ $t('notifications.app') }}
           </th>
         </tr>
       </thead>
@@ -61,7 +63,7 @@ const selectedNotification = ref('Only when I\'m online')
           :key="device.type"
         >
           <td>
-            {{ device.type }}
+            {{ $t(`notifications.types.${device.type}`) }}
           </td>
           <td>
             <VCheckbox v-model="device.email" />

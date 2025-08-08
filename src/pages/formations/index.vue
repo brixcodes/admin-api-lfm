@@ -1,12 +1,17 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
+
 <template>
   <VCard>
     <VCardTitle>
       <VIcon icon="ri-book-open-line" class="me-2" />
-      Formations
+      {{ $t('formations.title') }}
     </VCardTitle>
     <VCardText>
-      <p>Catalogue des formations.</p>
+      <p>{{ $t('formations.description') }}</p>
     </VCardText>
   </VCard>
 </template>

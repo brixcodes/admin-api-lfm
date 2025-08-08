@@ -2,6 +2,7 @@
 import { useAuth } from '@/utils/auth'
 import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useTheme } from 'vuetify'
 
@@ -9,6 +10,7 @@ const logo = '/logo_lafaom.png'
 
 const router = useRouter()
 const { forgotPassword, isLoading, error, clearError, success } = useAuth()
+const { t } = useI18n()
 
 const form = ref({
   email: '',
@@ -90,10 +92,10 @@ onMounted(() => {
 
       <VCardText class="pt-2  text-center">
         <h4 class="text-h4 mb-1">
-          Mot de passe oublié? 🔐
+          {{ $t('forgotPassword.title') }}
         </h4>
         <p class="mb-0">
-          Entrez votre adresse email et nous vous enverrons les instructions pour réinitialiser votre mot de passe
+          {{ $t('forgotPassword.subtitle') }}
         </p>
       </VCardText>
 
@@ -113,7 +115,7 @@ onMounted(() => {
                   <VIcon icon="ri-error-warning-line" />
                 </template>
                 <div>
-                  <div class="font-weight-medium mb-1">Erreur de réinitialisation</div>
+                  <div class="font-weight-medium mb-1">{{ $t('password.resetError') }}</div>
                   <div class="text-body-2">{{ error }}</div>
                 </div>
               </VAlert>
@@ -132,10 +134,10 @@ onMounted(() => {
                   <VIcon icon="ri-check-line" />
                 </template>
                 <div>
-                  <div class="font-weight-medium mb-1">Email envoyé avec succès!</div>
+                  <div class="font-weight-medium mb-1">{{ $t('password.resetSuccess') }}</div>
                   <div class="text-body-2">{{ success }}</div>
                   <div class="text-caption mt-2">
-                    Vous allez être redirigé vers la page de connexion dans quelques secondes...
+                    {{ $t('forgotPassword.redirectMessage') }}
                   </div>
                 </div>
               </VAlert>
@@ -145,13 +147,19 @@ onMounted(() => {
             <VCol cols="12">
               <VTextField
                 v-model="form.email"
+<<<<<<< HEAD
+                :label="$t('forgotPassword.email')"
+                type="email"
+                :placeholder="$t('forgotPassword.emailPlaceholder')"
+=======
                 :label="$t('auth.forgot.email')"
                 type="email"
                 :placeholder="$t('auth.forgot.subtitle')"
+>>>>>>> e7755b392bfcc912fbf0679b114ece63610622d7
                 :disabled="isLoading"
                 :rules="[
-                  v => !!v || 'L\'email est requis',
-                  v => /.+@.+\..+/.test(v) || 'Format d\'email invalide'
+                  v => !!v || $t('forgotPassword.emailRequired'),
+                  v => /.+@.+\..+/.test(v) || $t('forgotPassword.emailInvalid')
                 ]"
                 required
               />
@@ -173,7 +181,7 @@ onMounted(() => {
                   class="me-2"
                   start
                 />
-                {{ isLoading ? 'Envoi en cours...' : 'Envoyer le lien de réinitialisation' }}
+                {{ isLoading ? $t('forgotPassword.sending') : $t('forgotPassword.sendButton') }}
               </VBtn>
             </VCol>
 
@@ -188,7 +196,7 @@ onMounted(() => {
                 :class="{ 'disabled': isLoading }"
               >
                 <VIcon icon="ri-arrow-left-line" size="small" />
-                Retour à la connexion
+                {{ $t('forgotPassword.backToLogin') }}
               </RouterLink>
             </VCol>
 

@@ -1,13 +1,25 @@
 <script lang="ts" setup>
 import { useAuth } from '@/utils/auth'
 import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
-const { logout } = useAuth()
+const { logout, isLoading: isLoggingOut } = useAuth()
 const router = useRouter()
+const { t } = useI18n()
+
+// État pour la boîte de dialogue de confirmation
+const showLogoutDialog = ref(false)
+
+// Fonction pour afficher la confirmation de déconnexion
+const confirmLogout = () => {
+  showLogoutDialog.value = true
+}
 
 // Fonction de déconnexion
 const handleLogout = async () => {
+  showLogoutDialog.value = false
+
   try {
     await logout()
     router.push('/login')
@@ -46,5 +58,49 @@ const handleLogout = async () => {
   <VerticalNavLink :item="{ title: $t('nav.infos'), icon: 'ri-megaphone-line', to: '/infos' }" />
 
   <!-- 👉 Déconnexion -->
-  <VerticalNavLink :item="{ title: 'Déconnexion', icon: 'ri-logout-box-r-line', }" @click="handleLogout" />
+  <VerticalNavLink
+    :item="{
+      title: isLoggingOut ? $t('common.loading') : $t('userProfile.logout'),
+      icon: 'ri-logout-box-r-line'
+    }"
+    @click="confirmLogout"
+  />
+
+  <!-- 👉 Logout Confirmation Dialog -->
+  <VDialog
+    v-model="showLogoutDialog"
+    max-width="400"
+  >
+    <VCard>
+      <VCardTitle class="text-h6">
+        {{ $t('userProfile.confirmLogout') }}
+      </VCardTitle>
+
+      <VCardText>
+        {{ $t('userProfile.logoutMessage') }}
+      </VCardText>
+
+      <VCardActions>
+        <VSpacer />
+
+        <VBtn
+          color="grey"
+          variant="outlined"
+          @click="showLogoutDialog = false"
+          :disabled="isLoggingOut"
+        >
+          {{ $t('common.cancel') }}
+        </VBtn>
+
+        <VBtn
+          color="error"
+          @click="handleLogout"
+          :loading="isLoggingOut"
+          :disabled="isLoggingOut"
+        >
+          {{ $t('userProfile.logout') }}
+        </VBtn>
+      </VCardActions>
+    </VCard>
+  </VDialog>
 </template>

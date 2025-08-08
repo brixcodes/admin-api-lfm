@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
+
 <template>
   <div class="h-100 d-flex align-center justify-md-space-between justify-center">
     <!-- 👉 Footer: left content -->
@@ -23,19 +29,19 @@
       <a
         href="https://themeselection.com/license/"
         target="noopener noreferrer"
-      >License</a>
+      >{{ $t('footer.license') }}</a>
       <a
         href="https://themeselection.com/"
         target="noopener noreferrer"
-      >More Themes</a>
+      >{{ $t('footer.moreThemes') }}</a>
       <a
         href="https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/documentation/"
         target="noopener noreferrer"
-      >Documentation</a>
+      >{{ $t('footer.documentation') }}</a>
       <a
         href="https://themeselection.com/support/"
         target="noopener noreferrer"
-      >Support</a>
+      >{{ $t('footer.support') }}</a>
     </span>
   </div>
 </template>

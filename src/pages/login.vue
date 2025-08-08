@@ -85,20 +85,20 @@ onMounted(() => {
         >
           <VImg
             :src="logo"
-            alt="Lafaom-MAO Logo"
+            :alt="$t('login.title') + ' Logo'"
             width="60"
             height="40"
             contain
           />
           <h2 class="font-weight-medium text-2xl ">
-            Lafaom-MAO
+            {{$t('login.title')}}
           </h2>
         </RouterLink>
       </VCardItem>
 
       <VCardText class="pt-2 text-center">
         <p class="mb-0">
-          Institut de formation et d'intervention sociale dans l'univers carcéral
+          {{$t('login.subtitle')}}
         </p>
       </VCardText>
 
@@ -118,8 +118,13 @@ onMounted(() => {
                   <VIcon icon="ri-error-warning-line" />
                 </template>
                 <div>
+<<<<<<< HEAD
+                <div class="font-weight-medium mb-1">{{$t('login.errorTitle')}}</div>
+                <div class="text-body-2">{{ error }}</div>
+=======
                   <div class="font-weight-medium mb-1">{{ $t('auth.login.title') }}</div>
                   <div class="text-body-2">{{ error }}</div>
+>>>>>>> e7755b392bfcc912fbf0679b114ece63610622d7
                 </div>
               </VAlert>
             </VCol>
@@ -128,7 +133,7 @@ onMounted(() => {
             <VCol cols="12">
               <VTextField
                 v-model="form.email"
-                label="Adresse email"
+                :label="$t('login.email')"
                 type="email"
                 :disabled="isLoading"
                 :rules="[
@@ -143,7 +148,7 @@ onMounted(() => {
             <VCol cols="12">
               <VTextField
                 v-model="form.password"
-                label="Mot de passe"
+                :label="$t('login.password')"
                 placeholder="············"
                 :type="isPasswordVisible ? 'text' : 'password'"
                 autocomplete="current-password"
@@ -161,7 +166,7 @@ onMounted(() => {
               <div class="d-flex align-center justify-space-between flex-wrap my-6">
                 <VCheckbox
                   v-model="form.remember"
-                  label="Se souvenir de moi"
+                  :label="$t('login.remember')"
                   :disabled="isLoading"
                 />
 
@@ -170,7 +175,7 @@ onMounted(() => {
                   to="/forgot-password"
                   :class="{ 'disabled': isLoading }"
                 >
-                  Mot de passe oublié?
+                  {{$t('login.forgot')}}
                 </RouterLink>
               </div>
 
@@ -189,7 +194,7 @@ onMounted(() => {
                   class="me-2"
                   start
                 />
-                {{ isLoading ? 'Connexion en cours...' : 'Se connecter' }}
+                {{ isLoading ? $t('login.loading') : $t('login.login') }}
               </VBtn>
             </VCol>
 
@@ -198,13 +203,17 @@ onMounted(() => {
               cols="12"
               class="text-center text-base"
             >
+<<<<<<< HEAD
+              <span>{{$t('login.newHere')}}</span>
+=======
               <span>{{ $t('auth.login.register_link') }}</span>
+>>>>>>> e7755b392bfcc912fbf0679b114ece63610622d7
               <RouterLink
                 class="text-primary ms-2"
                 to="/register"
                 :class="{ 'disabled': isLoading }"
               >
-                Créer un compte
+                {{$t('login.createAccount')}}
               </RouterLink>
             </VCol>
           </VRow>

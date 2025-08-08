@@ -1,12 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n()
+</script>
 <template>
   <VCard>
     <VCardTitle>
       <VIcon icon="ri-clipboard-line" class="me-2" />
-      Plan d'intervention individualisé
+      {{ $t('pages.genetique.planIntervention.title') }} {{ $t('pages.genetique.planIntervention.individualized') }}
     </VCardTitle>
     <VCardText>
-      <p>Plans d'intervention personnalisés.</p>
+      <p>{{ $t('pages.genetique.planIntervention.description') }}</p>
     </VCardText>
   </VCard>
 </template>

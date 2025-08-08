@@ -16,7 +16,7 @@ const checkbox = ref(false)
             cols="12"
             md="3"
           >
-            <label for="firstNameHorizontalIcons">First Name</label>
+            <label for="firstNameHorizontalIcons">{{ $t('ui.forms.firstName') }}</label>
           </VCol>
 
           <VCol
@@ -41,7 +41,7 @@ const checkbox = ref(false)
             cols="12"
             md="3"
           >
-            <label for="emailHorizontalIcons">Email</label>
+            <label for="emailHorizontalIcons">{{ $t('ui.forms.email') }}</label>
           </VCol>
 
           <VCol
@@ -66,7 +66,7 @@ const checkbox = ref(false)
             cols="12"
             md="3"
           >
-            <label for="mobileHorizontalIcons">Mobile</label>
+            <label for="mobileHorizontalIcons">{{ $t('ui.forms.mobile') }}</label>
           </VCol>
 
           <VCol
@@ -92,7 +92,7 @@ const checkbox = ref(false)
             cols="12"
             md="3"
           >
-            <label for="passwordHorizontalIcons">Password</label>
+            <label for="passwordHorizontalIcons">{{ $t('ui.forms.password') }}</label>
           </VCol>
 
           <VCol

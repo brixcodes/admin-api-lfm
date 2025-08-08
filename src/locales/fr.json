@@ -123,7 +123,46 @@
       "apprenant": "Apprenant"
     }
   },
+  "users": {
+    "title": "Gestion des Utilisateurs",
+    "subtitle": "Trouvez tous les comptes administrateurs de votre entreprise et leurs rôles associés.",
+    "addUser": "Ajouter un utilisateur",
+    "searchPlaceholder": "Rechercher un utilisateur",
+    "filterByRole": "Filtrer par rôle",
+    "noRole": "Aucun rôle",
+    "table": {
+      "name": "UTILISATEUR",
+      "email": "EMAIL",
+      "role": "RÔLE",
+      "status": "STATUT",
+      "createdAt": "DATE CRÉATION",
+      "actions": "ACTIONS"
+    },
+    "status": {
+      "active": "Actif",
+      "inactive": "Inactif",
+      "suspended": "Suspendu"
+    },
+    "roles": {
+      "admin": "Administrateur",
+      "coordinator": "Coordinateur",
+      "trainer": "Formateur",
+      "referent": "Référent",
+      "learner": "Apprenant"
+    },
+    "actions": {
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "view": "Voir"
+    },
+    "errors": {
+      "fetchFailed": "Erreur lors de la récupération des utilisateurs",
+      "deleteFailed": "Erreur lors de la suppression de l'utilisateur"
+    }
+  },
   "formations": {
+    "title": "Formations",
+    "description": "Catalogue des formations.",
     "tabs": {
       "catalog": "Catalogue",
       "modules": "Modules",
@@ -138,18 +177,21 @@
     },
     "modules": {
       "title": "Modules de formation",
+      "description": "Gestion des modules par formation.",
       "add": "Ajouter un module",
       "edit": "Modifier le module",
       "delete": "Supprimer le module"
     },
     "resources": {
       "title": "Ressources pédagogiques",
+      "description": "Documents, images, vidéos et audios liés aux formations.",
       "add": "Ajouter une ressource",
       "edit": "Modifier la ressource",
       "delete": "Supprimer la ressource"
     },
     "assessments": {
       "title": "Évaluations",
+      "description": "Questions, propositions et résultats d'évaluation.",
       "add": "Ajouter une évaluation",
       "edit": "Modifier l'évaluation",
       "delete": "Supprimer l'évaluation"
@@ -198,9 +240,27 @@
       "audios": "Audios",
       "videos": "Vidéos"
     },
-    "upload": "Téléverser",
-    "delete": "Supprimer",
-    "download": "Télécharger"
+    "documents": {
+      "title": "Documents",
+      "description": "Liste des documents (liés à /static/documents)."
+    },
+    "images": {
+      "title": "Images",
+      "description": "Liste des images (liées à /static/images)."
+    },
+    "audios": {
+      "title": "Audios",
+      "description": "Liste des audios (liés à /static/audios)."
+    },
+    "videos": {
+      "title": "Vidéos",
+      "description": "Liste des vidéos (liées à /static/videos)."
+    },
+    "actions": {
+      "upload": "Téléverser",
+      "delete": "Supprimer",
+      "download": "Télécharger"
+    }
   },
   "infos": {
     "tabs": {
@@ -273,14 +333,6 @@
       "title": "Plan d'intervention individualisé"
     }
   },
-  "dashboard": {
-    "welcome": "Bienvenue",
-    "stats": "Statistiques",
-    "users": "Utilisateurs",
-    "revenue": "Revenus",
-    "activity": "Activité",
-    "view_more": "Voir plus"
-  },
   "validation": {
     "required": "Ce champ est requis",
     "email": "Adresse email invalide",
@@ -338,5 +390,327 @@
       "imageAspectRatio": "{name}: ratio d'image hors plage autorisée ({min}-{max})",
       "imageLoad": "Impossible de lire les dimensions de l'image"
     }
+  },
+  "login": {
+    "title": "Lafaom-MAO",
+    "subtitle": "Institut de formation et d'intervention sociale dans l'univers carcéral",
+    "email": "Adresse email",
+    "password": "Mot de passe",
+    "remember": "Se souvenir de moi",
+    "forgot": "Mot de passe oublié?",
+    "login": "Se connecter",
+    "loading": "Connexion en cours...",
+    "errorTitle": "Erreur de connexion",
+    "errorMessage": "{{error}}",
+    "createAccount": "Créer un compte",
+    "newHere": "Nouveau sur notre plateforme?"
+  },
+  "dashboard": {
+    "welcome": {
+      "title": "Bienvenue sur le tableau de bord",
+      "message": "Bienvenue sur la plateforme LAFAOM-MAO.",
+      "actionLabel": "En savoir plus"
+    },
+    "stats": {
+      "general": "Statistiques générales"
+    },
+    "statistics": {
+      "title": "Statistiques",
+      "subtitle": "Aperçu des données importantes de la plateforme"
+    },
+    "weeklyOverview": "Aperçu hebdomadaire",
+    "totalEarning": "Gains totaux",
+    "salesByCountries": "Ventes par pays",
+    "deposit": "Dépôt",
+    "withdraw": "Retrait",
+    "viewAll": "Voir tout",
+    "details": "Détails",
+    "submit": "Soumettre",
+    "reset": "Réinitialiser",
+    "rememberMe": "Se souvenir de moi"
+  },
+  "account": {
+    "details": "Détails du compte",
+    "deactivate": "Désactiver le compte",
+    "deactivateTitle": "Désactiver le compte",
+    "deactivateConfirm": "Je confirme la désactivation de mon compte",
+    "changePassword": "Changer le mot de passe",
+    "twoFactor": "Vérification en deux étapes",
+    "apiKey": "Créer une clé API",
+    "apiKeyList": "Liste des clés API et accès",
+    "recentDevices": "Appareils récents",
+    "uploadPhoto": "Télécharger une nouvelle photo",
+    "reset": "Réinitialiser",
+    "saveChanges": "Enregistrer les modifications",
+    "learnMore": "En savoir plus",
+    "requestPermission": "Demander la permission",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "E-mail",
+    "organization": "Organisation",
+    "phone": "Numéro de téléphone",
+    "address": "Adresse",
+    "state": "État/Province",
+    "zipCode": "Code postal",
+    "country": "Pays",
+    "language": "Langue",
+    "timezone": "Fuseau horaire",
+    "currency": "Devise",
+    "placeholders": {
+      "firstName": "Jean",
+      "lastName": "Dupont",
+      "email": "jean.dupont@example.com",
+      "organization": "Mon Organisation",
+      "phone": "+33 1 23 45 67 89",
+      "address": "123 Rue de la Paix, Paris",
+      "state": "Île-de-France",
+      "zipCode": "75001",
+      "selectCountry": "Sélectionner un pays",
+      "selectLanguage": "Sélectionner une langue",
+      "selectTimezone": "Sélectionner un fuseau horaire",
+      "selectCurrency": "Sélectionner une devise"
+    },
+    "allowedFormats": "Formats autorisés : JPG, GIF ou PNG. Taille max : 800Ko"
+  },
+  "security": {
+    "changePassword": "Changer le mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le nouveau mot de passe",
+    "passwordRequirements": "Exigences du mot de passe :",
+    "requirements": {
+      "minLength": "Minimum 8 caractères - plus c'est long, mieux c'est",
+      "lowercase": "Au moins un caractère minuscule",
+      "numberOrSymbol": "Au moins un chiffre, symbole ou espace"
+    },
+    "browser": "Navigateur",
+    "device": "Appareil",
+    "location": "Localisation",
+    "recentActivity": "Activité récente",
+    "changePasswordError": "Erreur lors du changement de mot de passe",
+    "changePasswordSuccess": "Mot de passe modifié avec succès",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "currentPasswordRequired": "Le mot de passe actuel est requis",
+    "newPasswordRequired": "Le nouveau mot de passe est requis",
+    "invalidCredentials": "Identifiants invalides",
+    "wrongCurrentPassword": "Le mot de passe actuel est incorrect",
+    "twoFactorAuth": "Authentification à deux facteurs",
+    "twoFactorNotEnabled": "L'authentification à deux facteurs n'est pas encore activée.",
+    "twoFactorDescription": "L'authentification à deux facteurs ajoute une couche de sécurité supplémentaire à votre compte en exigeant plus qu'un simple mot de passe pour se connecter.",
+    "enableTwoFactor": "Activer l'authentification à deux facteurs",
+    "createApiKey": "Créer une clé API",
+    "chooseApiKeyType": "Choisissez le type de clé API que vous souhaitez créer",
+    "selectApiKeyType": "Sélectionner le type de clé API",
+    "nameApiKey": "Nommer la clé API",
+    "createKey": "Créer la clé",
+    "apiKeyList": "Liste des clés API et accès",
+    "apiKeyDescription": "Une clé API est une chaîne cryptée simple qui identifie une application sans principal. Elles sont utiles pour accéder aux données publiques de manière anonyme et sont utilisées pour associer les requêtes API à votre projet pour les quotas et la facturation.",
+    "recentDevicesTitle": "Appareils récents"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "recentDevices": "Appareils récents",
+    "permissionRequest": "Nous avons besoin de l'autorisation de votre navigateur pour afficher les notifications.",
+    "requestPermission": "Demander l'autorisation",
+    "type": "Type",
+    "email": "EMAIL",
+    "browser": "NAVIGATEUR",
+    "app": "APPLICATION",
+    "types": {
+      "newForYou": "Nouveau pour vous",
+      "accountActivity": "Activité du compte",
+      "newBrowserSignIn": "Un nouveau navigateur utilisé pour se connecter",
+      "newDeviceLinked": "Un nouvel appareil est lié"
+    },
+    "whenToNotify": "Quand vous notifier",
+    "options": {
+      "onlyOnline": "Seulement quand je suis en ligne",
+      "always": "Toujours",
+      "never": "Jamais"
+    }
+  },
+  "userProfile": {
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "pricing": "Tarification",
+    "faq": "FAQ",
+    "logout": "Déconnexion",
+    "confirmLogout": "Confirmer la déconnexion",
+    "logoutMessage": "Êtes-vous sûr de vouloir vous déconnecter ?"
+  },
+  "footer": {
+    "themeSelection": "Sélection de thème",
+    "license": "Licence",
+    "moreThemes": "Plus de thèmes",
+    "documentation": "Documentation",
+    "support": "Support"
+  },
+  "password": {
+    "title": "Changer le mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "rules": {
+      "minLength": "Au moins {{minLength}} caractères",
+      "uppercase": "Au moins une majuscule",
+      "lowercase": "Au moins une minuscule",
+      "number": "Au moins un chiffre",
+      "special": "Au moins un caractère spécial"
+    },
+    "validate": "Valider",
+    "resetError": "Erreur de réinitialisation",
+    "resetSuccess": "Email envoyé avec succès!"
+  },
+  "forgotPassword": {
+    "title": "Mot de passe oublié? 🔐",
+    "subtitle": "Entrez votre adresse email et nous vous enverrons les instructions pour réinitialiser votre mot de passe",
+    "email": "Adresse email",
+    "emailPlaceholder": "Entrez votre adresse email",
+    "emailRequired": "L'email est requis",
+    "emailInvalid": "Format d'email invalide",
+    "sendButton": "Envoyer le lien de réinitialisation",
+    "sending": "Envoi en cours...",
+    "backToLogin": "Retour à la connexion",
+    "redirectMessage": "Vous allez être redirigé vers la page de connexion dans quelques secondes..."
+  },
+  "register": {
+    "title": "Créer un compte",
+    "subtitle": "Rejoignez notre plateforme de formation",
+    "welcomeTitle": "Rejoignez LAFAOM-MAO! 🚀",
+    "welcomeSubtitle": "Formation et intervention sociale dans l'univers carcéral",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Adresse email",
+    "gender": "Sexe",
+    "male": "Homme",
+    "female": "Femme",
+    "role": "Rôle",
+    "roleInSystem": "Rôle dans le système",
+    "student": "Apprenant - Étudiant/apprenant",
+    "studentDesc": "Accès aux formations et projets pédagogiques",
+    "trainer": "Formateur - Formateur/enseignant",
+    "trainerDesc": "Gestion des modules et évaluation des apprenants",
+    "referent": "Référent - Formateur référent",
+    "referentDesc": "Accompagnement personnalisé et suivi des parcours",
+    "coordinator": "Coordonnateur - Responsable de programme",
+    "coordinatorDesc": "Coordination des formations et gestion des équipes",
+    "admin": "Administrateur - Administrateur du système",
+    "adminDesc": "Gestion complète de la plateforme et des utilisateurs",
+    "register": "Créer le compte",
+    "signUp": "S'inscrire",
+    "loading": "Création en cours...",
+    "signingUp": "Inscription en cours...",
+    "errorTitle": "Erreur de création",
+    "errorMessage": "{{error}}",
+    "alreadyHaveAccount": "Vous avez déjà un compte?",
+    "login": "Se connecter",
+    "or": "ou",
+    "acceptTerms": "J'accepte les conditions d'utilisation et la politique de confidentialité",
+    "validation": {
+      "firstNameRequired": "Le prénom est requis",
+      "firstNameMinLength": "Le prénom doit contenir au moins 2 caractères",
+      "lastNameRequired": "Le nom est requis",
+      "lastNameMinLength": "Le nom doit contenir au moins 2 caractères",
+      "emailRequired": "L'email est requis",
+      "emailInvalid": "Format d'email invalide",
+      "genderRequired": "Le sexe est requis",
+      "roleRequired": "Le rôle est requis"
+    }
+  },
+  "pages": {
+    "actualites": {
+      "title": "Actualités",
+      "description": "Actualités et communications."
+    },
+    "accreditations": {
+      "title": "Accréditations",
+      "description": "Gestion des accréditations."
+    },
+    "paiements": {
+      "title": "Paiements",
+      "description": "Gestion des paiements et transactions."
+    },
+    "inscriptions": {
+      "title": "Inscriptions",
+      "description": "Suivi des inscriptions aux formations."
+    },
+    "utilisateurs": {
+      "title": "Utilisateurs",
+      "description": "Liste, création et gestion des utilisateurs."
+    },
+    "roles": {
+      "title": "Rôles",
+      "description": "Configuration des rôles et des permissions."
+    },
+    "permissions": {
+      "title": "Permissions",
+      "description": "Gestion des permissions."
+    },
+    "journal": {
+      "title": "Journal",
+      "description": "Historique des actions et audits."
+    },
+    "genetique": {
+      "ascendance": {
+        "title": "Ascendance",
+        "description": "Gestion de l'ascendance génétique."
+      },
+      "education": {
+        "title": "Éducation",
+        "description": "Parcours éducatif lié au génotype."
+      },
+      "sante": {
+        "title": "Santé",
+        "description": "Données de santé liées au génotype."
+      },
+      "individuel": {
+        "title": "Individuel",
+        "description": "Gestion des données individuelles (génotype).",
+        "genotype": "Génotype"
+      },
+      "planIntervention": {
+        "title": "Plan d'intervention",
+        "description": "Plans d'intervention personnalisés.",
+        "individualized": "individualisé"
+      }
+    },
+    "projets": {
+      "collectifs": {
+        "title": "Collectifs",
+        "description": "Groupes, missions et réalisations collectives."
+      },
+      "chefsOeuvre": {
+        "title": "Chefs-d'œuvres",
+        "description": "Gestion des projets individuels (chefs-d'œuvre)."
+      }
+    }
+  },
+  "ui": {
+    "typography": {
+      "headlines": "Titres",
+      "texts": "Textes"
+    },
+    "tables": {
+      "dessert": "Dessert",
+      "calories": "Calories",
+      "fat": "Matières grasses",
+      "carbs": "Glucides",
+      "protein": "Protéines"
+    },
+    "cards": {
+      "solid": "Carte solide",
+      "navigation": "Navigation",
+      "users": "Utilisateurs"
+    },
+    "forms": {
+      "firstName": "Prénom",
+      "email": "Email",
+      "mobile": "Mobile",
+      "password": "Mot de passe"
+    }
+  },
+  "error": {
+    "notFound": "Page non trouvée ⚠️",
+    "notFoundMessage": "Désolé, la page que vous recherchez n'existe pas."
   }
 }
