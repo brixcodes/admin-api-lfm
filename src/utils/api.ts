@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { authService } from './auth'
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+const baseURL = import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? '/api' : 'https://lafaom-mao.vertex-cam.com')
 
 export const $api = axios.create({
   baseURL,

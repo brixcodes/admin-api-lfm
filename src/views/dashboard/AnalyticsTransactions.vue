@@ -1,25 +1,41 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t, locale } = useI18n()
+
 const statistics = [
   {
-    title: 'Apprenants',
+    title: {
+      fr: 'Apprenants',
+      en: 'Students'
+    },
     stats: '132',
     icon: 'ri-user-3-line',
     color: 'primary',
   },
   {
-    title: 'Projets en cours',
+    title: {
+      fr: 'Projets',
+      en: 'Projects'
+    },
     stats: '47',
     icon: 'ri-folder-line',
     color: 'warning',
   },
   {
-    title: 'Articles publiés',
+    title: {
+      fr: 'Articles',
+      en: 'Articles'
+    },
     stats: '89',
     icon: 'ri-article-line',
     color: 'success',
   },
   {
-    title: 'Missions actives',
+    title: {
+      fr: 'Missions actives',
+      en: 'Active Missions'
+    },
     stats: '12',
     icon: 'ri-earth-line',
     color: 'info',
@@ -27,18 +43,36 @@ const statistics = [
 ]
 
 const moreList = [
-  { title: 'Partager', value: 'Share' },
-  { title: 'Rafraîchir', value: 'Refresh' },
-  { title: 'Mettre à jour', value: 'Update' },
+  { 
+    title: {
+      fr: 'Partager',
+      en: 'Share'
+    },
+    value: 'Share'
+  },
+  {
+    title: {
+      fr: 'Rafraîchir',
+      en: 'Refresh'
+    },
+    value: 'Refresh'
+  },
+  {
+    title: {
+      fr: 'Mettre à jour',
+      en: 'Update'
+    },
+    value: 'Update'
+  },
 ]
 </script>
 
 <template>
-  <VCard title="Statistiques générales">
+  <VCard :title="t('dashboard.statistics.title')">
     <template #subtitle>
       <p class="text-body-1 mb-0">
         <span class="d-inline-block font-weight-medium text-high-emphasis">
-          Suivi global des activités de l’Institut
+          {{ t('dashboard.statistics.subtitle') }}
         </span>
       </p>
     </template>
@@ -51,7 +85,7 @@ const moreList = [
       <VRow>
         <VCol
           v-for="item in statistics"
-          :key="item.title"
+          :key="item.title[locale]"
           cols="12"
           sm="6"
           md="3"
@@ -71,7 +105,7 @@ const moreList = [
 
             <div class="d-flex flex-column">
               <div class="text-body-1">
-                {{ item.title }}
+                {{ item.title[locale] }}
               </div>
               <h5 class="text-h5">
                 {{ item.stats }}

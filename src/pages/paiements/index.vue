@@ -6,7 +6,7 @@
       Paiements
     </VCardTitle>
     <VCardText>
-      <p>Gestion des paiements et transactions.</p>
+      <p>{{ $t('pages.paiements.description') }}</p>
     </VCardText>
   </VCard>
 </template>

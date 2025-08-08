@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -9,7 +12,7 @@
           <template #prepend>
             <VAvatar color="primary" variant="tonal" size="40"><VIcon icon="ri-folder-3-line"/></VAvatar>
           </template>
-          <VCardTitle>Navigation</VCardTitle>
+          <VCardTitle>{{ $t('ui.cards.navigation') }}</VCardTitle>
           <template #append>
             <VBtn icon="ri-arrow-right-line" variant="text" />
           </template>
@@ -22,7 +25,7 @@
           <template #prepend>
             <VAvatar color="secondary" variant="tonal" size="40"><VIcon icon="ri-user-3-line"/></VAvatar>
           </template>
-          <VCardTitle>Users</VCardTitle>
+          <VCardTitle>{{ $t('ui.cards.users') }}</VCardTitle>
           <template #append>
             <VBtn icon="ri-arrow-right-line" variant="text" />
           </template>

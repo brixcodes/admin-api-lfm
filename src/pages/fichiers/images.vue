@@ -1,12 +1,17 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
+
 <template>
   <VCard>
     <VCardTitle>
       <VIcon icon="ri-image-line" class="me-2" />
-      Images
+      {{ $t('files.images.title') }}
     </VCardTitle>
     <VCardText>
-      <p>Liste des images (liées à /static/images).</p>
+      <p>{{ $t('files.images.description') }}</p>
     </VCardText>
   </VCard>
 </template>

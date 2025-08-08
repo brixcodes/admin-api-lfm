@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
 <template>
   <VCard>
     <VCardTitle>
@@ -6,7 +10,7 @@
       Projets collectifs
     </VCardTitle>
     <VCardText>
-      <p>Groupes, missions et réalisations collectives.</p>
+      <p>{{ $t('pages.projets.collectifs.description') }}</p>
     </VCardText>
   </VCard>
 </template>

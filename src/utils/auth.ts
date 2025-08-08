@@ -1,5 +1,5 @@
 // Service d'authentification pour LAFAOM-MAO
-const API_BASE_URL = 'http://localhost:8000'
+const API_BASE_URL = import.meta.env.DEV ? '/api' : 'https://lafaom-mao.vertex-cam.com'
 
 export interface LoginCredentials {
   email: string

@@ -1,29 +1,69 @@
 <script lang="ts" setup>
+import { useUserProfile } from '@/composables/useUserProfile'
 import avatar1 from '@images/avatars/avatar-1.png'
+import { useI18n } from 'vue-i18n'
 
-const accountData = {
-  avatarImg: avatar1,
-  firstName: 'john',
-  lastName: 'Doe',
-  email: 'johnDoe@example.com',
-  org: 'ThemeSelection',
-  phone: '+1 (917) 543-9876',
-  address: '123 Main St, New York, NY 10001',
-  state: 'New York',
-  zip: '10001',
-  country: 'USA',
-  language: 'English',
-  timezone: '(GMT-11:00) International Date Line West',
-  currency: 'USD',
-}
+const { t } = useI18n()
+const { user, isLoading, error, fetchUserProfile, updateUserProfile } = useUserProfile()
 
 const refInputEl = ref<HTMLElement>()
-
-const accountDataLocal = ref(structuredClone(accountData))
 const isAccountDeactivated = ref(false)
 
+// Données du formulaire basées sur les données utilisateur
+const accountDataLocal = ref({
+  avatarImg: avatar1,
+  firstName: '',
+  lastName: '',
+  email: '',
+  org: '',
+  phone: '',
+  address: '',
+  state: '',
+  zip: '',
+  country: '',
+  language: 'Français',
+  timezone: '(GMT+01:00) Paris',
+  currency: 'EUR',
+})
+
+// Synchroniser les données utilisateur avec le formulaire
+watch(user, (newUser) => {
+  if (newUser) {
+    accountDataLocal.value.firstName = newUser.prenom || ''
+    accountDataLocal.value.lastName = newUser.nom || ''
+    accountDataLocal.value.email = newUser.email || ''
+    // Les autres champs peuvent être ajoutés selon les besoins
+  }
+}, { immediate: true })
+
+// Charger les données utilisateur au montage
+onMounted(async () => {
+  await fetchUserProfile()
+})
+
 const resetForm = () => {
-  accountDataLocal.value = structuredClone(accountData)
+  if (user.value) {
+    accountDataLocal.value.firstName = user.value.prenom || ''
+    accountDataLocal.value.lastName = user.value.nom || ''
+    accountDataLocal.value.email = user.value.email || ''
+  }
+}
+
+// Fonction pour sauvegarder les modifications
+const saveChanges = async () => {
+  if (!user.value) return
+
+  try {
+    await updateUserProfile({
+      prenom: accountDataLocal.value.firstName,
+      nom: accountDataLocal.value.lastName,
+      email: accountDataLocal.value.email,
+    })
+    // Optionnel: afficher un message de succès
+  } catch (err) {
+    // L'erreur est déjà gérée par le composable
+    console.error('Erreur lors de la sauvegarde:', err)
+  }
 }
 
 // changeAvatar function
@@ -106,7 +146,7 @@ const currencies = [
 <template>
   <VRow>
     <VCol cols="12">
-      <VCard title="Account Details">
+      <VCard :title="$t('account.details')">
         <VCardText class="d-flex">
           <!-- 👉 Avatar -->
           <VAvatar
@@ -127,7 +167,7 @@ const currencies = [
                   icon="ri-upload-cloud-line"
                   class="d-sm-none"
                 />
-                <span class="d-none d-sm-block">Upload new photo</span>
+                <span class="d-none d-sm-block">{{ $t('account.uploadPhoto') }}</span>
               </VBtn>
 
               <input
@@ -145,7 +185,7 @@ const currencies = [
                 variant="outlined"
                 @click="resetAvatar"
               >
-                <span class="d-none d-sm-block">Reset</span>
+                                 <span class="d-none d-sm-block">{{ $t('account.reset') }}</span>
                 <VIcon
                   icon="ri-refresh-line"
                   class="d-sm-none"
@@ -154,7 +194,7 @@ const currencies = [
             </div>
 
             <p class="text-body-1 mb-0">
-              Allowed JPG, GIF or PNG. Max size of 800K
+              {{ $t('account.allowedFormats') }}
             </p>
           </form>
         </VCardText>
@@ -162,6 +202,16 @@ const currencies = [
         <VDivider />
 
         <VCardText>
+          <!-- 👉 Error Alert -->
+          <VAlert
+            v-if="error"
+            type="error"
+            variant="tonal"
+            class="mb-4"
+          >
+            {{ error }}
+          </VAlert>
+
           <!-- 👉 Form -->
           <VForm class="mt-6">
             <VRow>
@@ -172,8 +222,9 @@ const currencies = [
               >
                 <VTextField
                   v-model="accountDataLocal.firstName"
-                  placeholder="John"
-                  label="First Name"
+                  :placeholder="$t('account.placeholders.firstName')"
+                  :label="$t('account.firstName')"
+                  :disabled="isLoading"
                 />
               </VCol>
 
@@ -184,8 +235,9 @@ const currencies = [
               >
                 <VTextField
                   v-model="accountDataLocal.lastName"
-                  placeholder="Doe"
-                  label="Last Name"
+                  :placeholder="$t('account.placeholders.lastName')"
+                  :label="$t('account.lastName')"
+                  :disabled="isLoading"
                 />
               </VCol>
 
@@ -196,9 +248,10 @@ const currencies = [
               >
                 <VTextField
                   v-model="accountDataLocal.email"
-                  label="E-mail"
-                  placeholder="johndoe@gmail.com"
+                  :label="$t('account.email')"
+                  :placeholder="$t('account.placeholders.email')"
                   type="email"
+                  :disabled="isLoading"
                 />
               </VCol>
 
@@ -209,8 +262,9 @@ const currencies = [
               >
                 <VTextField
                   v-model="accountDataLocal.org"
-                  label="Organization"
-                  placeholder="ThemeSelection"
+                  :label="$t('account.organization')"
+                  :placeholder="$t('account.placeholders.organization')"
+                  :disabled="isLoading"
                 />
               </VCol>
 
@@ -221,8 +275,9 @@ const currencies = [
               >
                 <VTextField
                   v-model="accountDataLocal.phone"
-                  label="Phone Number"
-                  placeholder="+1 (917) 543-9876"
+                  :label="$t('account.phone')"
+                  :placeholder="$t('account.placeholders.phone')"
+                  :disabled="isLoading"
                 />
               </VCol>
 
@@ -233,8 +288,9 @@ const currencies = [
               >
                 <VTextField
                   v-model="accountDataLocal.address"
-                  label="Address"
-                  placeholder="123 Main St, New York, NY 10001"
+                  :label="$t('account.address')"
+                  :placeholder="$t('account.placeholders.address')"
+                  :disabled="isLoading"
                 />
               </VCol>
 
@@ -245,8 +301,9 @@ const currencies = [
               >
                 <VTextField
                   v-model="accountDataLocal.state"
-                  label="State"
-                  placeholder="New York"
+                  :label="$t('account.state')"
+                  :placeholder="$t('account.placeholders.state')"
+                  :disabled="isLoading"
                 />
               </VCol>
 
@@ -257,8 +314,9 @@ const currencies = [
               >
                 <VTextField
                   v-model="accountDataLocal.zip"
-                  label="Zip Code"
-                  placeholder="10001"
+                  :label="$t('account.zipCode')"
+                  :placeholder="$t('account.placeholders.zipCode')"
+                  :disabled="isLoading"
                 />
               </VCol>
 
@@ -269,9 +327,10 @@ const currencies = [
               >
                 <VSelect
                   v-model="accountDataLocal.country"
-                  label="Country"
-                  :items="['USA', 'Canada', 'UK', 'India', 'Australia']"
-                  placeholder="Select Country"
+                  :label="$t('account.country')"
+                  :items="['France', 'Canada', 'Belgique', 'Suisse', 'Maroc']"
+                  :placeholder="$t('account.placeholders.selectCountry')"
+                  :disabled="isLoading"
                 />
               </VCol>
 
@@ -282,9 +341,10 @@ const currencies = [
               >
                 <VSelect
                   v-model="accountDataLocal.language"
-                  label="Language"
-                  placeholder="Select Language"
-                  :items="['English', 'Spanish', 'Arabic', 'Hindi', 'Urdu']"
+                  :label="$t('account.language')"
+                  :placeholder="$t('account.placeholders.selectLanguage')"
+                  :items="['Français', 'English', 'العربية']"
+                  :disabled="isLoading"
                 />
               </VCol>
 
@@ -295,10 +355,11 @@ const currencies = [
               >
                 <VSelect
                   v-model="accountDataLocal.timezone"
-                  label="Timezone"
-                  placeholder="Select Timezone"
+                  :label="$t('account.timezone')"
+                  :placeholder="$t('account.placeholders.selectTimezone')"
                   :items="timezones"
                   :menu-props="{ maxHeight: 200 }"
+                  :disabled="isLoading"
                 />
               </VCol>
 
@@ -309,10 +370,11 @@ const currencies = [
               >
                 <VSelect
                   v-model="accountDataLocal.currency"
-                  label="Currency"
-                  placeholder="Select Currency"
+                  :label="$t('account.currency')"
+                  :placeholder="$t('account.placeholders.selectCurrency')"
                   :items="currencies"
                   :menu-props="{ maxHeight: 200 }"
+                  :disabled="isLoading"
                 />
               </VCol>
 
@@ -321,15 +383,22 @@ const currencies = [
                 cols="12"
                 class="d-flex flex-wrap gap-4"
               >
-                <VBtn>Save changes</VBtn>
+                <VBtn
+                  :loading="isLoading"
+                  :disabled="isLoading"
+                  @click="saveChanges"
+                >
+                  {{ $t('account.saveChanges') }}
+                </VBtn>
 
                 <VBtn
                   color="secondary"
                   variant="outlined"
                   type="reset"
+                  :disabled="isLoading"
                   @click.prevent="resetForm"
                 >
-                  Reset
+                  {{ $t('account.reset') }}
                 </VBtn>
               </VCol>
             </VRow>
@@ -340,12 +409,12 @@ const currencies = [
 
     <VCol cols="12">
       <!-- 👉 Deactivate Account -->
-      <VCard title="Deactivate Account">
+      <VCard :title="$t('account.deactivateTitle')">
         <VCardText>
           <div>
             <VCheckbox
               v-model="isAccountDeactivated"
-              label="I confirm my account deactivation"
+              :label="$t('account.deactivateConfirm')"
             />
           </div>
 
@@ -354,7 +423,7 @@ const currencies = [
             color="error"
             class="mt-3"
           >
-            Deactivate Account
+            {{ $t('account.deactivate') }}
           </VBtn>
         </VCardText>
       </VCard>
