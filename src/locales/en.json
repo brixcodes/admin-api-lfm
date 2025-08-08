@@ -12,6 +12,55 @@
     "search": "Search",
     "notifications": "Notifications"
   },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Sign in to your account",
+      "email": "Email",
+      "password": "Password",
+      "remember": "Remember me",
+      "forgot": "Forgot password?",
+      "submit": "Sign in",
+      "register_link": "Create an account",
+      "error_required": "This field is required",
+      "error_email": "Invalid email"
+    },
+    "register": {
+      "title": "Register",
+      "subtitle": "Create your account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "confirm_password": "Confirm password",
+      "birth_date": "Birth date",
+      "gender": "Gender",
+      "role": "System role",
+      "terms": "I agree to the Terms of Service and Privacy Policy",
+      "submit": "Register",
+      "login_link": "Already have an account? Sign in",
+      "success": "Registration successful! You can now sign in."
+    },
+    "forgot": {
+      "title": "Forgot password",
+      "subtitle": "Enter your email to receive a reset link",
+      "email": "Email",
+      "submit": "Send link",
+      "back": "Back to login",
+      "success": "Email sent! Check your inbox."
+    },
+    "change_password": {
+      "title": "Change password",
+      "subtitle": "Set a new password",
+      "new_password": "New password",
+      "confirm_password": "Confirm password",
+      "submit": "Submit",
+      "success": "Password changed successfully. Redirecting...",
+      "error_required": "All fields are required.",
+      "error_criteria": "Password does not meet the criteria.",
+      "error_match": "Passwords do not match."
+    }
+  },
   "profile": {
     "tabs": {
       "profile": "Profile",
@@ -30,6 +79,27 @@
       "roles": "Roles",
       "permissions": "Permissions",
       "journal": "Activity log"
+    },
+    "users": {
+      "title": "User management",
+      "add": "Add user",
+      "edit": "Edit user",
+      "delete": "Delete user",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "roles": {
+      "title": "Role management",
+      "add": "Add role",
+      "edit": "Edit role",
+      "delete": "Delete role"
+    },
+    "permissions": {
+      "title": "Permission management",
+      "init_all": "Initialize all permissions",
+      "add": "Add permission",
+      "edit": "Edit permission",
+      "delete": "Delete permission"
     }
   },
   "formations": {
@@ -38,18 +108,66 @@
       "modules": "Modules",
       "resources": "Resources",
       "assessments": "Assessments"
+    },
+    "catalog": {
+      "title": "Training catalog",
+      "add": "Add training",
+      "edit": "Edit training",
+      "delete": "Delete training"
+    },
+    "modules": {
+      "title": "Training modules",
+      "add": "Add module",
+      "edit": "Edit module",
+      "delete": "Delete module"
+    },
+    "resources": {
+      "title": "Resources",
+      "add": "Add resource",
+      "edit": "Edit resource",
+      "delete": "Delete resource"
+    },
+    "assessments": {
+      "title": "Assessments",
+      "add": "Add assessment",
+      "edit": "Edit assessment",
+      "delete": "Delete assessment"
     }
   },
   "gestion": {
     "tabs": {
       "enrollments": "Enrollments",
       "payments": "Payments"
+    },
+    "enrollments": {
+      "title": "Enrollment management",
+      "add": "Add enrollment",
+      "edit": "Edit enrollment",
+      "delete": "Delete enrollment"
+    },
+    "payments": {
+      "title": "Payment management",
+      "add": "Add payment",
+      "edit": "Edit payment",
+      "delete": "Delete payment"
     }
   },
   "projects": {
     "tabs": {
       "masterpieces": "Masterpieces",
       "collective": "Collective"
+    },
+    "masterpieces": {
+      "title": "Masterpieces",
+      "add": "Add masterpiece",
+      "edit": "Edit masterpiece",
+      "delete": "Delete masterpiece"
+    },
+    "collective": {
+      "title": "Collective projects",
+      "add": "Add collective project",
+      "edit": "Edit collective project",
+      "delete": "Delete collective project"
     }
   },
   "files": {
@@ -58,13 +176,129 @@
       "images": "Images",
       "audios": "Audios",
       "videos": "Videos"
-    }
+    },
+    "upload": "Upload",
+    "delete": "Delete",
+    "download": "Download"
   },
   "infos": {
     "tabs": {
       "news": "News",
       "accreditations": "Accreditations"
+    },
+    "news": {
+      "title": "News",
+      "add": "Add news",
+      "edit": "Edit news",
+      "delete": "Delete news"
+    },
+    "accreditations": {
+      "title": "Accreditations",
+      "add": "Add accreditation",
+      "edit": "Edit accreditation",
+      "delete": "Delete accreditation"
+    }
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "loading": "Loading...",
+    "no_data": "No data",
+    "confirm_delete": "Are you sure you want to delete this item?",
+    "success": "Operation successful",
+    "error": "An error occurred",
+    "required": "This field is required",
+    "invalid_email": "Invalid email",
+    "invalid_format": "Invalid format"
+  },
+  "genetique": {
+    "individuel": {
+      "title": "Individual genetic profile"
+    },
+    "ascendance": {
+      "title": "Genetic ancestry"
+    },
+    "sante": {
+      "title": "Genetic health"
+    },
+    "education": {
+      "title": "Education"
+    },
+    "pii": {
+      "title": "Individualized Intervention Plan"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "stats": "Statistics",
+    "users": "Users",
+    "revenue": "Revenue",
+    "activity": "Activity",
+    "view_more": "View more"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Invalid email address",
+    "minLength": "Must be at least {min} characters",
+    "maxLength": "Must be at most {max} characters",
+    "lengthBetween": "Must be between {min} and {max} characters",
+    "pattern": "Invalid format",
+    "url": "Invalid URL",
+    "numeric": "Must be a number",
+    "integer": "Must be an integer",
+    "min": "Must be greater than or equal to {min}",
+    "max": "Must be less than or equal to {max}",
+    "between": "Must be between {min} and {max}",
+    "phone": "Invalid phone number",
+    "date": "Invalid date",
+    "minDate": "Date must be on or after {date}",
+    "maxDate": "Date must be on or before {date}",
+    "password": {
+      "min": "Password must be at least {min} characters",
+      "upper": "Password must contain at least one uppercase letter",
+      "lower": "Password must contain at least one lowercase letter",
+      "number": "Password must contain at least one number",
+      "special": "Password must contain at least one special character"
+    },
+    "passwords_mismatch": "Passwords do not match",
+    "oneOf": "Value must be one of: {values}",
+    "notOneOf": "Value must not be one of: {values}",
+    "equals": "Value must equal {value}",
+    "notEquals": "Value must be different from {value}",
+    "json": "Must be valid JSON",
+    "uuid": "Invalid UUID",
+    "iban": "Invalid IBAN",
+    "bic": "Invalid BIC/SWIFT",
+    "slug": "Invalid slug (letters, digits and hyphens only)",
+    "hexColor": "Invalid hex color",
+    "creditCard": "Invalid card number",
+    "postalCode": "Invalid postal code",
+    "time": "Invalid time (HH:mm)",
+    "accept": "You must accept to continue",
+    "afterDate": "Date must be on or after the start date",
+    "beforeDate": "Date must be on or before the end date",
+    "file": {
+      "required": "At least one file is required",
+      "maxSize": "{name}: file size exceeds limit ({max} bytes)",
+      "minSize": "{name}: file size is below limit ({min} bytes)",
+      "mimeType": "{name}: file type not allowed ({types})",
+      "extension": "{name}: file extension not allowed ({exts})",
+      "maxFiles": "Maximum number of files: {max}",
+      "minFiles": "Minimum number of files: {min}",
+      "totalMaxSize": "Total file size exceeds limit ({max} bytes)",
+      "emptyFile": "{name}: empty file",
+      "filenameSafe": "{name}: invalid filename",
+      "imageMaxDimensions": "{name}: dimensions exceed {w}x{h}",
+      "imageMinDimensions": "{name}: dimensions are below {w}x{h}",
+      "imageAspectRatio": "{name}: image ratio out of allowed range ({min}-{max})",
+      "imageLoad": "Failed to load image dimensions"
     }
   }
 }
-

@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import { useTheme } from 'vuetify'
-import { useRouter } from 'vue-router'
 import { useAuth } from '@/utils/auth'
 import { getRedirectAfterLogin } from '@/utils/authGuard'
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
-
-const logo = '/logo_lafaom.png'
 import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
-import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
-import authV1Tree from '@images/pages/auth-v1-tree.png'
+import { useRouter } from 'vue-router'
+import { useTheme } from 'vuetify'
+
+const logo = '/logo_lafaom.png'
 
 const router = useRouter()
 const { login, isLoading, error, clearError } = useAuth()
@@ -121,7 +118,7 @@ onMounted(() => {
                   <VIcon icon="ri-error-warning-line" />
                 </template>
                 <div>
-                  <div class="font-weight-medium mb-1">Erreur de connexion</div>
+                  <div class="font-weight-medium mb-1">{{ $t('auth.login.title') }}</div>
                   <div class="text-body-2">{{ error }}</div>
                 </div>
               </VAlert>
@@ -201,7 +198,7 @@ onMounted(() => {
               cols="12"
               class="text-center text-base"
             >
-              <span>Nouveau sur notre plateforme?</span>
+              <span>{{ $t('auth.login.register_link') }}</span>
               <RouterLink
                 class="text-primary ms-2"
                 to="/register"
@@ -227,8 +224,8 @@ onMounted(() => {
 @use "@core/scss/template/pages/page-auth";
 
 .disabled {
-  pointer-events: none;
   opacity: 0.6;
+  pointer-events: none;
 }
 
 // Animation pour les alertes d'erreur
@@ -241,6 +238,7 @@ onMounted(() => {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -249,7 +247,7 @@ onMounted(() => {
 
 // Amélioration du style du bouton de connexion
 .v-btn--size-large {
-  height: 48px;
+  block-size: 48px;
   font-size: 1rem;
   font-weight: 500;
 }

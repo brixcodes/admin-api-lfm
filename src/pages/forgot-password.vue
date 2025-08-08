@@ -145,9 +145,9 @@ onMounted(() => {
             <VCol cols="12">
               <VTextField
                 v-model="form.email"
-                label="Adresse email"
+                :label="$t('auth.forgot.email')"
                 type="email"
-                placeholder="Entrez votre adresse email"
+                :placeholder="$t('auth.forgot.subtitle')"
                 :disabled="isLoading"
                 :rules="[
                   v => !!v || 'L\'email est requis',
@@ -216,8 +216,8 @@ onMounted(() => {
 @use "@core/scss/template/pages/page-auth";
 
 .disabled {
-  pointer-events: none;
   opacity: 0.6;
+  pointer-events: none;
 }
 
 // Animation pour les alertes d'erreur et de succès
@@ -230,6 +230,7 @@ onMounted(() => {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -238,7 +239,7 @@ onMounted(() => {
 
 // Amélioration du style du bouton
 .v-btn--size-large {
-  height: 48px;
+  block-size: 48px;
   font-size: 1rem;
   font-weight: 500;
 }
@@ -246,7 +247,7 @@ onMounted(() => {
 // Style pour le lien de retour
 .text-primary {
   text-decoration: none;
-  
+
   &:hover {
     text-decoration: underline;
   }
