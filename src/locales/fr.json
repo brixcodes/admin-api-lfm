@@ -99,7 +99,28 @@
       "init_all": "Initialiser toutes les permissions",
       "add": "Ajouter une permission",
       "edit": "Modifier la permission",
-      "delete": "Supprimer la permission"
+      "delete": "Supprimer la permission",
+      "search": "Rechercher une permission",
+      "add_subtitle": "Ajoutez des permissions selon vos besoins.",
+      "warning_title": "Attention !",
+      "warning_desc": "En ajoutant un nom de permission, vous pouvez potentiellement altérer le fonctionnement du système.",
+      "enter_name": "Saisir le nom de la permission",
+      "set_core": "Définir comme permission coeur",
+      "columns": {
+        "name": "Nom",
+        "assigned_to": "Assignée à",
+        "actions": "Actions"
+      },
+      "rows_per_page": "Lignes par page:"
+    }
+  },
+  "roles": {
+    "labels": {
+      "admin": "Administrateur",
+      "coordonnateur": "Coordonnateur",
+      "formateur": "Formateur",
+      "referent": "Référent",
+      "apprenant": "Apprenant"
     }
   },
   "formations": {
@@ -198,6 +219,23 @@
       "edit": "Modifier l'accréditation",
       "delete": "Supprimer l'accréditation"
     }
+  },
+  "permissions": {
+    "title": "Gestion des permissions",
+    "search": "Rechercher une permission",
+    "add": "Ajouter une permission",
+    "add_subtitle": "Ajoutez des permissions selon vos besoins.",
+    "warning_title": "Attention !",
+    "warning_desc": "En ajoutant un nom de permission, vous pouvez potentiellement altérer le fonctionnement du système.",
+    "enter_name": "Saisir le nom de la permission",
+    "set_core": "Définir comme permission coeur",
+    "columns": {
+      "name": "Nom",
+      "assigned_to": "Assignée à",
+      "created": "Date de création",
+      "actions": "Actions"
+    },
+    "rows_per_page": "Lignes par page:"
   },
   "common": {
     "save": "Enregistrer",

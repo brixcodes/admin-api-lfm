@@ -97,9 +97,30 @@
     "permissions": {
       "title": "Permission management",
       "init_all": "Initialize all permissions",
-      "add": "Add permission",
-      "edit": "Edit permission",
-      "delete": "Delete permission"
+      "add": "Add Permission",
+      "edit": "Edit Permission",
+      "delete": "Delete Permission",
+      "search": "Search Permission",
+      "add_subtitle": "Add permission as per your requirements.",
+      "warning_title": "Warning!",
+      "warning_desc": "By adding the permission name, you might break the system permissions functionality.",
+      "enter_name": "Enter Permission Name",
+      "set_core": "Set as core permission",
+      "columns": {
+        "name": "Name",
+        "assigned_to": "Assigned To",
+        "actions": "Actions"
+      },
+      "rows_per_page": "Rows Per Page:"
+    }
+  },
+  "roles": {
+    "labels": {
+      "admin": "Administrator",
+      "coordonnateur": "Coordinator",
+      "formateur": "Trainer",
+      "referent": "Referrer",
+      "apprenant": "Learner"
     }
   },
   "formations": {
@@ -198,6 +219,22 @@
       "edit": "Edit accreditation",
       "delete": "Delete accreditation"
     }
+  },
+  "permissions": {
+    "title": "Permission management",
+    "search": "Search Permission",
+    "add": "Add Permission",
+    "add_subtitle": "Add permission as per your requirements.",
+    "warning_title": "Warning!",
+    "warning_desc": "By adding the permission name, you might break the system permissions functionality.",
+    "enter_name": "Enter Permission Name",
+    "set_core": "Set as core permission",
+    "columns": {
+      "name": "Name",
+      "assigned_to": "Assigned To",
+      "actions": "Actions"
+    },
+    "rows_per_page": "Rows Per Page:"
   },
   "common": {
     "save": "Save",

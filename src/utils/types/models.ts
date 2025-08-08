@@ -7,7 +7,7 @@ import type {
 } from './enums';
 
 // Light interfaces
-export interface PermissionLight { id: number; nom: PermissionEnum }
+export interface PermissionLight { id: number; nom: PermissionEnum; roles: RoleLight[] }
 export interface RoleLight { id: number; nom: RoleEnum }
 export interface UtilisateurLight { id: number; nom: string; prenom?: string | null; sexe: SexeEnum; email: string; statut: StatutCompteEnum; est_actif: boolean; date_naissance?: string | null; created_at: string; updated_at: string; role?: RoleLight | null; permissions: PermissionLight[] }
 

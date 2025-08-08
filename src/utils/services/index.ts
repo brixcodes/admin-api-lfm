@@ -29,7 +29,9 @@ import type {
   PaiementCreate,
   Paiement as PaiementT,
   PaiementUpdate,
-  Permission, PermissionCreate, PermissionUpdate,
+  PermissionCreate,
+  PermissionLight,
+  PermissionUpdate,
   PlanInterventionIndividualiseCreate, PlanInterventionIndividualiseUpdate,
   PlanInterventionIndividualise as PlanT,
   ProjetCollectifLight as ProjetT,
@@ -79,8 +81,9 @@ export const RolesApi = {
 }
 
 export const PermissionsApi = {
-  ...createRestService<Permission, PermissionCreate, PermissionUpdate>('/permissions'),
+  ...createRestService<PermissionLight, PermissionCreate, PermissionUpdate>('/permissions'),
   initAll: () => apiClient.post<string, Record<string, never>>('/permissions/init-all', {}),
+  enums: () => apiClient.get<string[]>('/permissions/enums'),
 }
 
 export const FormationsApi = {
