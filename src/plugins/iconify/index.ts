@@ -1,5 +1,7 @@
+// Simple plugin that just imports the generated CSS
+// Icons are now handled directly by Remix Icons CSS classes
 import './icons.css'
 
 export default function () {
-  // This plugin just requires icons import
+  console.log('✅ Iconify plugin loaded - using Remix Icons CSS')
 }

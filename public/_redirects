@@ -1,0 +1,5 @@
+# Netlify redirects for SPA (Single Page Application)
+# This ensures that all routes are served by index.html
+# Fixes 404 errors when refreshing pages or accessing URLs directly
+
+/* /index.html 200

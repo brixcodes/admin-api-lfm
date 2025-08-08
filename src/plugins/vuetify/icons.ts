@@ -61,19 +61,15 @@ export const iconify = {
         return h(iconComponent)
     }
 
-    return h(
-      props.tag,
-      {
-        ...props,
-
-        // As we are using class based icons
-        class: [props.icon],
-
-        // Remove used props from DOM rendering
-        tag: undefined,
-        icon: undefined,
+    // Use Remix Icons CSS classes directly
+    return h('i', {
+      class: props.icon, // ex: 'ri-dashboard-line'
+      style: {
+        fontSize: 'inherit',
+        lineHeight: 1,
+        color: 'currentColor',
       },
-    )
+    })
   },
 }
 
