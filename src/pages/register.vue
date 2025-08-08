@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { useTheme } from 'vuetify'
-import { useRouter } from 'vue-router'
 import { useAuth } from '@/utils/auth'
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
-
-const logo = '/logo_lafaom.png'
 import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
-import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
-import authV1Tree from '@images/pages/auth-v1-tree.png'
+import { useRouter } from 'vue-router'
+import { useTheme } from 'vuetify'
+
+const logo = '/logo_lafaom.png'
 
 const router = useRouter()
 const { register, isLoading, error, clearError } = useAuth()
@@ -244,9 +242,6 @@ onMounted(() => {
                     <template #title>
                       <div class="font-weight-medium">{{ item.title }}</div>
                     </template>
-                    <template #subtitle>
-                      <div class="text-caption text-medium-emphasis">{{ item.subtitle }}</div>
-                    </template>
                   </VListItem>
                 </template>
               </VSelect>
@@ -330,8 +325,8 @@ onMounted(() => {
 @use "@core/scss/template/pages/page-auth";
 
 .disabled {
-  pointer-events: none;
   opacity: 0.6;
+  pointer-events: none;
 }
 
 // Animation pour les alertes d'erreur
@@ -339,20 +334,21 @@ onMounted(() => {
   animation: slideInDown 0.3s ease-out;
 }
 
-@keyframes slideInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+// @keyframes slideInDown {
+//   from {
+//     opacity: 0;
+//     transform: translateY(-10px);
+//   }
+
+//   to {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+// }
 
 // Amélioration du style du bouton d'inscription
 .v-btn--size-large {
-  height: 48px;
+  block-size: 48px;
   font-size: 1rem;
   font-weight: 500;
 }
@@ -360,7 +356,7 @@ onMounted(() => {
 // Style pour les sélecteurs
 .v-select {
   .v-field__input {
-    min-height: 40px;
+    min-block-size: 40px;
   }
 }
 
@@ -369,7 +365,7 @@ onMounted(() => {
   .v-list-item-title {
     font-weight: 500;
   }
-  
+
   .v-list-item-subtitle {
     font-size: 0.75rem;
     line-height: 1.2;

@@ -10,6 +10,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   color: 'primary',
 })
+import { kFormatter } from '@core/utils/formatters'
+
 
 const isPositive = controlledComputed(() => props.change, () => Math.sign(props.change) === 1)
 </script>

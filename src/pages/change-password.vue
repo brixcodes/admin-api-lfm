@@ -50,8 +50,8 @@
           <div v-if="form.confirmPassword.length > 0 && confirmPasswordError" class="text-error text-caption mb-3">
             {{ confirmPasswordError }}
           </div>
-          <VAlert v-if="error" type="error" class="mb-4">{{ error }}</VAlert>
-          <VAlert v-if="success" type="success" class="mb-4">{{ success }}</VAlert>
+          <VAlert v-if="localError" type="error" class="mb-4">{{ localError }}</VAlert>
+          <VAlert v-if="localSuccess" type="success" class="mb-4">{{ localSuccess }}</VAlert>
           <VBtn :loading="isLoading" type="submit" color="primary" block>Valider</VBtn>
         </VForm>
       </VCardText>
@@ -60,12 +60,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useAuth } from '@/utils/auth'
+import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const { isLoading, error, success, clearError } = useAuth()
+const { isLoading, clearError } = useAuth()
+const localError = ref('')
+const localSuccess = ref('')
 
 const formRef = ref()
 const form = ref({
@@ -96,15 +98,15 @@ const confirmPasswordError = computed(() => {
 const handleChangePassword = async () => {
   clearError()
   if (!form.value.newPassword || !form.value.confirmPassword) {
-    error.value = 'Tous les champs sont obligatoires.'
+    localError.value = 'Tous les champs sont obligatoires.'
     return
   }
   if (passwordRules.value.length > 0) {
-    error.value = 'Le mot de passe ne respecte pas les critères.'
+    localError.value = 'Le mot de passe ne respecte pas les critères.'
     return
   }
   if (confirmPasswordError.value) {
-    error.value = confirmPasswordError.value
+    localError.value = confirmPasswordError.value
     return
   }
   try {
@@ -125,19 +127,19 @@ const handleChangePassword = async () => {
       const data = await response.json().catch(() => ({}))
       throw new Error(data.message || 'Erreur lors du changement de mot de passe')
     }
-    success.value = 'Mot de passe changé avec succès. Vous allez être redirigé.'
+    localSuccess.value = 'Mot de passe changé avec succès. Vous allez être redirigé.'
     setTimeout(() => {
       router.push('/login')
     }, 2000)
   } catch (err: any) {
-    error.value = err.message || 'Erreur inconnue.'
+    localError.value = err.message || 'Erreur inconnue.'
   }
 }
 </script>
 
 <style scoped>
 .auth-wrapper {
-  min-height: 100vh;
   background: #f5f6fa;
+  min-block-size: 100vh;
 }
 </style>

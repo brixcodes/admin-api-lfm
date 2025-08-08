@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { NavGroup } from '@layouts/types'
+import type { NavGroup } from '@layouts/types';
 
 defineProps<{
   item: Omit<NavGroup, 'children'>
@@ -18,7 +18,7 @@ const isOpen = ref(false)
       @click="isOpen = !isOpen"
     >
       <VIcon
-        :icon="item.icon || 'ri-checkbox-blank-circle-line'"
+        :icon="(item.icon as any) || 'ri-checkbox-blank-circle-line'"
         class="nav-item-icon"
       />
       <span class="nav-item-title">{{ item.title }}</span>

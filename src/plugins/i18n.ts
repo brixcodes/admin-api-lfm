@@ -1,3 +1,4 @@
+import type { App } from 'vue'
 import { createI18n } from 'vue-i18n'
 
 function detectLocale() {
@@ -26,5 +27,8 @@ export const i18n = createI18n({
   messages,
 })
 
-export default i18n
+export default function (app: App) {
+  app.use(i18n)
+  document.documentElement.lang = locale
+}
 
