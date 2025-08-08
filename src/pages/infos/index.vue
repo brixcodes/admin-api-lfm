@@ -2,7 +2,15 @@
 import Accreditations from '@/pages/accreditations.vue'
 import Actualites from '@/pages/actualites.vue'
 
-const activeTab = ref('actualites')
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const activeTab = ref((route.query.tab as string) || 'actualites')
+
+watch(activeTab, val => {
+  const q = new URLSearchParams(route.query as any)
+  q.set('tab', val)
+  history.replaceState(null, '', `${route.path}?${q.toString()}`)
+})
 const tabs = [
   { title: 'Actualités', icon: 'ri-newspaper-line', tab: 'actualites', component: Actualites },
   { title: 'Accréditations', icon: 'ri-shield-check-line', tab: 'accreditations', component: Accreditations },

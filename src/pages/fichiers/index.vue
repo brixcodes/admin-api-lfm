@@ -1,10 +1,18 @@
 <script lang="ts" setup>
+import Audios from '@/pages/fichiers/audios.vue'
 import Documents from '@/pages/fichiers/documents.vue'
 import Images from '@/pages/fichiers/images.vue'
-import Audios from '@/pages/fichiers/audios.vue'
 import Videos from '@/pages/fichiers/videos.vue'
 
-const activeTab = ref('documents')
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const activeTab = ref((route.query.tab as string) || 'documents')
+
+watch(activeTab, val => {
+  const q = new URLSearchParams(route.query as any)
+  q.set('tab', val)
+  history.replaceState(null, '', `${route.path}?${q.toString()}`)
+})
 const tabs = [
   { title: 'Documents', icon: 'ri-file-2-line', tab: 'documents', component: Documents },
   { title: 'Images', icon: 'ri-image-line', tab: 'images', component: Images },

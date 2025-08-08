@@ -27,13 +27,8 @@ export const routes = [
       // Fichiers
       { path: 'fichiers', component: () => import('@/pages/fichiers/index.vue') },
 
-      // Legacy/demo pages (optional)
+      // Paramètres de compte (exemple d’UI tabulée)
       { path: 'account-settings', component: () => import('@/pages/account-settings.vue') },
-      { path: 'typography', component: () => import('@/pages/typography.vue') },
-      { path: 'icons', component: () => import('@/pages/icons.vue') },
-      { path: 'cards', component: () => import('@/pages/cards.vue') },
-      { path: 'tables', component: () => import('@/pages/tables.vue') },
-      { path: 'form-layouts', component: () => import('@/pages/form-layouts.vue') },
     ],
   },
   {

@@ -1,10 +1,18 @@
 <script lang="ts" setup>
+import Evaluations from '@/pages/formations/evaluations.vue'
 import Index from '@/pages/formations/index.vue'
 import Modules from '@/pages/formations/modules.vue'
 import Ressources from '@/pages/formations/ressources.vue'
-import Evaluations from '@/pages/formations/evaluations.vue'
 
-const activeTab = ref('index')
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const activeTab = ref((route.query.tab as string) || 'index')
+
+watch(activeTab, val => {
+  const q = new URLSearchParams(route.query as any)
+  q.set('tab', val)
+  history.replaceState(null, '', `${route.path}?${q.toString()}`)
+})
 const tabs = [
   { title: 'Catalogue', icon: 'ri-book-open-line', tab: 'index', component: Index },
   { title: 'Modules', icon: 'ri-layout-masonry-line', tab: 'modules', component: Modules },

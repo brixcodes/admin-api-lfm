@@ -1,11 +1,19 @@
 <script lang="ts" setup>
-import Individuel from '@/pages/genetique/individuel.vue'
 import Ascendance from '@/pages/genetique/ascendance.vue'
-import Sante from '@/pages/genetique/sante.vue'
 import Education from '@/pages/genetique/education.vue'
+import Individuel from '@/pages/genetique/individuel.vue'
 import PII from '@/pages/genetique/plan-intervention.vue'
+import Sante from '@/pages/genetique/sante.vue'
 
-const activeTab = ref('individuel')
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const activeTab = ref((route.query.tab as string) || 'individuel')
+
+watch(activeTab, val => {
+  const q = new URLSearchParams(route.query as any)
+  q.set('tab', val)
+  history.replaceState(null, '', `${route.path}?${q.toString()}`)
+})
 const tabs = [
   { title: 'Individuel', icon: 'ri-user-3-line', tab: 'individuel', component: Individuel },
   { title: 'Ascendance', icon: 'ri-family-line', tab: 'ascendance', component: Ascendance },

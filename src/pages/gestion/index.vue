@@ -2,7 +2,15 @@
 import Inscriptions from '@/pages/inscriptions/index.vue'
 import Paiements from '@/pages/paiements/index.vue'
 
-const activeTab = ref('inscriptions')
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const activeTab = ref((route.query.tab as string) || 'inscriptions')
+
+watch(activeTab, val => {
+  const q = new URLSearchParams(route.query as any)
+  q.set('tab', val)
+  history.replaceState(null, '', `${route.path}?${q.toString()}`)
+})
 const tabs = [
   { title: 'Inscriptions', icon: 'ri-file-add-line', tab: 'inscriptions', component: Inscriptions },
   { title: 'Paiements', icon: 'ri-bill-line', tab: 'paiements', component: Paiements },

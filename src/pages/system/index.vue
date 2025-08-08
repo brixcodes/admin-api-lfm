@@ -1,11 +1,17 @@
 <script lang="ts" setup>
-import { useRoute } from 'vue-router'
-import Utilisateurs from '@/pages/system/utilisateurs.vue'
-import Roles from '@/pages/system/roles.vue'
 import Journal from '@/pages/system/journal.vue'
+import Roles from '@/pages/system/roles.vue'
+import Utilisateurs from '@/pages/system/utilisateurs.vue'
+import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const activeTab = ref((route.params.tab as string) || 'utilisateurs')
+const activeTab = ref((route.query.tab as string) || 'utilisateurs')
+
+watch(activeTab, val => {
+  const q = new URLSearchParams(route.query as any)
+  q.set('tab', val)
+  history.replaceState(null, '', `${route.path}?${q.toString()}`)
+})
 
 const tabs = [
   { title: 'Utilisateurs', icon: 'ri-user-3-line', tab: 'utilisateurs', component: Utilisateurs },

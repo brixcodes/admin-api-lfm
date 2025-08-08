@@ -2,7 +2,15 @@
 import Chefs from '@/pages/projets/chefs-doeuvre.vue'
 import Collectifs from '@/pages/projets/collectifs.vue'
 
-const activeTab = ref('chefs')
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const activeTab = ref((route.query.tab as string) || 'chefs')
+
+watch(activeTab, val => {
+  const q = new URLSearchParams(route.query as any)
+  q.set('tab', val)
+  history.replaceState(null, '', `${route.path}?${q.toString()}`)
+})
 const tabs = [
   { title: 'Chefs-d\'œuvre', icon: 'ri-award-line', tab: 'chefs', component: Chefs },
   { title: 'Collectifs', icon: 'ri-team-line', tab: 'collectifs', component: Collectifs },
