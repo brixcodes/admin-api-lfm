@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import NavItems from '@/layouts/components/NavItems.vue'
-const logo = '/logo_lafaom.png'
 import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue'
+const logo = '/logo_lafaom.png'
 
 // Components
 import Footer from '@/layouts/components/Footer.vue'
+import NavbarLangSwitcher from '@/layouts/components/NavbarLangSwitcher.vue'
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
+
 import UserProfile from '@/layouts/components/UserProfile.vue'
 </script>
 
@@ -33,19 +35,20 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
           </IconBtn>
 
           <span class="d-none d-md-flex align-center text-disabled">
-            <span class="me-3">Search</span>
+            <span class="me-3">{{ $t('nav.search') }}</span>
             <span class="meta-key">&#8984;K</span>
           </span>
         </div>
 
         <VSpacer />
 
-        
+
 
         <IconBtn>
           <VIcon icon="ri-notification-line" />
         </IconBtn>
 
+        <NavbarLangSwitcher class="me-1" />
         <NavbarThemeSwitcher class="me-2" />
 
         <UserProfile />

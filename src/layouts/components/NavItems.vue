@@ -21,29 +21,29 @@ const handleLogout = async () => {
 
 <template>
   <!-- 👉 Tableau de bord -->
-  <VerticalNavLink :item="{ title: 'Tableau de bord', icon: 'ri-dashboard-line', to: '/dashboard' }" />
+  <VerticalNavLink :item="{ title: $t('nav.dashboard'), icon: 'ri-dashboard-line', to: '/dashboard' }" />
 
   <!-- 👉 Profil -->
-  <VerticalNavLink :item="{ title: 'Profil', icon: 'ri-user-settings-line', to: '/profil' }" />
+  <VerticalNavLink :item="{ title: $t('nav.profile'), icon: 'ri-user-settings-line', to: '/profil' }" />
 
   <!-- 👉 Utilisateurs -->
-  <VerticalNavLink :item="{ title: 'Utilisateurs', icon: 'ri-user-3-line', to: '/system' }" />
+  <VerticalNavLink :item="{ title: $t('nav.users'), icon: 'ri-user-3-line', to: '/system' }" />
 
   <!-- 👉 Formations -->
-  <VerticalNavLink :item="{ title: 'Formations', icon: 'ri-book-open-line', to: '/formations' }" />
+  <VerticalNavLink :item="{ title: $t('nav.trainings'), icon: 'ri-book-open-line', to: '/formations' }" />
 
   <!-- 👉 Gestion -->
-  <VerticalNavLink :item="{ title: 'Gestion', icon: 'ri-briefcase-3-line', to: '/gestion' }" />
+  <VerticalNavLink :item="{ title: $t('nav.management'), icon: 'ri-briefcase-3-line', to: '/gestion' }" />
 
   <!-- 👉 Projets -->
-  <VerticalNavLink :item="{ title: 'Projets', icon: 'ri-team-line', to: '/projets' }" />
+  <VerticalNavLink :item="{ title: $t('nav.projects'), icon: 'ri-team-line', to: '/projets' }" />
 
 
   <!-- 👉 Fichiers -->
-  <VerticalNavLink :item="{ title: 'Fichiers', icon: 'ri-folder-3-line', to: '/fichiers' }" />
+  <VerticalNavLink :item="{ title: $t('nav.files'), icon: 'ri-folder-3-line', to: '/fichiers' }" />
 
   <!-- 👉 Informations -->
-  <VerticalNavLink :item="{ title: 'Informations', icon: 'ri-megaphone-line', to: '/infos' }" />
+  <VerticalNavLink :item="{ title: $t('nav.infos'), icon: 'ri-megaphone-line', to: '/infos' }" />
 
   <!-- 👉 Déconnexion -->
   <VerticalNavLink :item="{ title: 'Déconnexion', icon: 'ri-logout-box-r-line', }" @click="handleLogout" />

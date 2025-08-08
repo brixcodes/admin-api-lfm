@@ -1,0 +1,70 @@
+{
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "profile": "Profil",
+    "users": "Utilisateurs",
+    "trainings": "Formations",
+    "management": "Gestion",
+    "projects": "Projets",
+    "files": "Fichiers",
+    "infos": "Informations",
+    "logout": "Déconnexion",
+    "search": "Rechercher",
+    "notifications": "Notifications"
+  },
+  "profile": {
+    "tabs": {
+      "profile": "Profil",
+      "security": "Sécurité",
+      "notifications": "Notifications",
+      "gen_individual": "Individuel",
+      "gen_ancestry": "Ascendance",
+      "gen_health": "Santé",
+      "gen_education": "Éducation",
+      "gen_pii": "PII"
+    }
+  },
+  "system": {
+    "tabs": {
+      "users": "Utilisateurs",
+      "roles": "Rôles",
+      "permissions": "Permissions",
+      "journal": "Journal"
+    }
+  },
+  "formations": {
+    "tabs": {
+      "catalog": "Catalogue",
+      "modules": "Modules",
+      "resources": "Ressources",
+      "assessments": "Évaluations"
+    }
+  },
+  "gestion": {
+    "tabs": {
+      "enrollments": "Inscriptions",
+      "payments": "Paiements"
+    }
+  },
+  "projects": {
+    "tabs": {
+      "masterpieces": "Chefs-d'œuvres",
+      "collective": "Collectifs"
+    }
+  },
+  "files": {
+    "tabs": {
+      "documents": "Documents",
+      "images": "Images",
+      "audios": "Audios",
+      "videos": "Vidéos"
+    }
+  },
+  "infos": {
+    "tabs": {
+      "news": "Actualités",
+      "accreditations": "Accréditations"
+    }
+  }
+}
+
