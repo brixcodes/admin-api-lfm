@@ -12,6 +12,55 @@
     "search": "Rechercher",
     "notifications": "Notifications"
   },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "subtitle": "Connectez-vous à votre compte",
+      "email": "Email",
+      "password": "Mot de passe",
+      "remember": "Se souvenir de moi",
+      "forgot": "Mot de passe oublié ?",
+      "submit": "Se connecter",
+      "register_link": "Créer un compte",
+      "error_required": "Ce champ est requis",
+      "error_email": "Email invalide"
+    },
+    "register": {
+      "title": "Inscription",
+      "subtitle": "Créez votre compte",
+      "first_name": "Prénom",
+      "last_name": "Nom",
+      "email": "Email",
+      "password": "Mot de passe",
+      "confirm_password": "Confirmer le mot de passe",
+      "birth_date": "Date de naissance",
+      "gender": "Sexe",
+      "role": "Rôle dans le système",
+      "terms": "J'accepte les conditions d'utilisation et la politique de confidentialité",
+      "submit": "S'inscrire",
+      "login_link": "Déjà un compte ? Se connecter",
+      "success": "Inscription réussie ! Vous pouvez maintenant vous connecter."
+    },
+    "forgot": {
+      "title": "Mot de passe oublié",
+      "subtitle": "Entrez votre email pour recevoir un lien de réinitialisation",
+      "email": "Email",
+      "submit": "Envoyer le lien",
+      "back": "Retour à la connexion",
+      "success": "Email envoyé ! Vérifiez votre boîte de réception."
+    },
+    "change_password": {
+      "title": "Changer le mot de passe",
+      "subtitle": "Définissez un nouveau mot de passe",
+      "new_password": "Nouveau mot de passe",
+      "confirm_password": "Confirmer le mot de passe",
+      "submit": "Valider",
+      "success": "Mot de passe changé avec succès. Vous allez être redirigé.",
+      "error_required": "Tous les champs sont obligatoires.",
+      "error_criteria": "Le mot de passe ne respecte pas les critères.",
+      "error_match": "Les mots de passe ne correspondent pas."
+    }
+  },
   "profile": {
     "tabs": {
       "profile": "Profil",
@@ -30,6 +79,48 @@
       "roles": "Rôles",
       "permissions": "Permissions",
       "journal": "Journal"
+    },
+    "users": {
+      "title": "Gestion des utilisateurs",
+      "add": "Ajouter un utilisateur",
+      "edit": "Modifier l'utilisateur",
+      "delete": "Supprimer l'utilisateur",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "roles": {
+      "title": "Gestion des rôles",
+      "add": "Ajouter un rôle",
+      "edit": "Modifier le rôle",
+      "delete": "Supprimer le rôle"
+    },
+    "permissions": {
+      "title": "Gestion des permissions",
+      "init_all": "Initialiser toutes les permissions",
+      "add": "Ajouter une permission",
+      "edit": "Modifier la permission",
+      "delete": "Supprimer la permission",
+      "search": "Rechercher une permission",
+      "add_subtitle": "Ajoutez des permissions selon vos besoins.",
+      "warning_title": "Attention !",
+      "warning_desc": "En ajoutant un nom de permission, vous pouvez potentiellement altérer le fonctionnement du système.",
+      "enter_name": "Saisir le nom de la permission",
+      "set_core": "Définir comme permission coeur",
+      "columns": {
+        "name": "Nom",
+        "assigned_to": "Assignée à",
+        "actions": "Actions"
+      },
+      "rows_per_page": "Lignes par page:"
+    }
+  },
+  "roles": {
+    "labels": {
+      "admin": "Administrateur",
+      "coordonnateur": "Coordonnateur",
+      "formateur": "Formateur",
+      "referent": "Référent",
+      "apprenant": "Apprenant"
     }
   },
   "users": {
@@ -78,29 +169,68 @@
       "resources": "Ressources",
       "assessments": "Évaluations"
     },
+    "catalog": {
+      "title": "Catalogue des formations",
+      "add": "Ajouter une formation",
+      "edit": "Modifier la formation",
+      "delete": "Supprimer la formation"
+    },
     "modules": {
       "title": "Modules de formation",
-      "description": "Gestion des modules par formation."
+      "description": "Gestion des modules par formation.",
+      "add": "Ajouter un module",
+      "edit": "Modifier le module",
+      "delete": "Supprimer le module"
     },
     "resources": {
-      "title": "Ressources",
-      "description": "Documents, images, vidéos et audios liés aux formations."
+      "title": "Ressources pédagogiques",
+      "description": "Documents, images, vidéos et audios liés aux formations.",
+      "add": "Ajouter une ressource",
+      "edit": "Modifier la ressource",
+      "delete": "Supprimer la ressource"
     },
     "assessments": {
       "title": "Évaluations",
-      "description": "Questions, propositions et résultats d'évaluation."
+      "description": "Questions, propositions et résultats d'évaluation.",
+      "add": "Ajouter une évaluation",
+      "edit": "Modifier l'évaluation",
+      "delete": "Supprimer l'évaluation"
     }
   },
   "gestion": {
     "tabs": {
       "enrollments": "Inscriptions",
       "payments": "Paiements"
+    },
+    "enrollments": {
+      "title": "Gestion des inscriptions",
+      "add": "Ajouter une inscription",
+      "edit": "Modifier l'inscription",
+      "delete": "Supprimer l'inscription"
+    },
+    "payments": {
+      "title": "Gestion des paiements",
+      "add": "Ajouter un paiement",
+      "edit": "Modifier le paiement",
+      "delete": "Supprimer le paiement"
     }
   },
   "projects": {
     "tabs": {
       "masterpieces": "Chefs-d'œuvres",
       "collective": "Collectifs"
+    },
+    "masterpieces": {
+      "title": "Chefs-d'œuvres",
+      "add": "Ajouter un chef-d'œuvre",
+      "edit": "Modifier le chef-d'œuvre",
+      "delete": "Supprimer le chef-d'œuvre"
+    },
+    "collective": {
+      "title": "Projets collectifs",
+      "add": "Ajouter un projet collectif",
+      "edit": "Modifier le projet collectif",
+      "delete": "Supprimer le projet collectif"
     }
   },
   "files": {
@@ -125,12 +255,140 @@
     "videos": {
       "title": "Vidéos",
       "description": "Liste des vidéos (liées à /static/videos)."
+    },
+    "actions": {
+      "upload": "Téléverser",
+      "delete": "Supprimer",
+      "download": "Télécharger"
     }
   },
   "infos": {
     "tabs": {
       "news": "Actualités",
       "accreditations": "Accréditations"
+    },
+    "news": {
+      "title": "Actualités",
+      "add": "Ajouter une actualité",
+      "edit": "Modifier l'actualité",
+      "delete": "Supprimer l'actualité"
+    },
+    "accreditations": {
+      "title": "Accréditations",
+      "add": "Ajouter une accréditation",
+      "edit": "Modifier l'accréditation",
+      "delete": "Supprimer l'accréditation"
+    }
+  },
+  "permissions": {
+    "title": "Gestion des permissions",
+    "search": "Rechercher une permission",
+    "add": "Ajouter une permission",
+    "add_subtitle": "Ajoutez des permissions selon vos besoins.",
+    "warning_title": "Attention !",
+    "warning_desc": "En ajoutant un nom de permission, vous pouvez potentiellement altérer le fonctionnement du système.",
+    "enter_name": "Saisir le nom de la permission",
+    "set_core": "Définir comme permission coeur",
+    "columns": {
+      "name": "Nom",
+      "assigned_to": "Assignée à",
+      "created": "Date de création",
+      "actions": "Actions"
+    },
+    "rows_per_page": "Lignes par page:"
+  },
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "export": "Exporter",
+    "import": "Importer",
+    "loading": "Chargement...",
+    "no_data": "Aucune donnée",
+    "confirm_delete": "Êtes-vous sûr de vouloir supprimer cet élément ?",
+    "success": "Opération réussie",
+    "error": "Une erreur s'est produite",
+    "required": "Ce champ est requis",
+    "invalid_email": "Email invalide",
+    "invalid_format": "Format invalide"
+  },
+  "genetique": {
+    "individuel": {
+      "title": "Profil génétique individuel"
+    },
+    "ascendance": {
+      "title": "Ascendance génétique"
+    },
+    "sante": {
+      "title": "Santé génétique"
+    },
+    "education": {
+      "title": "Éducation"
+    },
+    "pii": {
+      "title": "Plan d'intervention individualisé"
+    }
+  },
+  "validation": {
+    "required": "Ce champ est requis",
+    "email": "Adresse email invalide",
+    "minLength": "Doit contenir au moins {min} caractères",
+    "maxLength": "Doit contenir au plus {max} caractères",
+    "lengthBetween": "Doit contenir entre {min} et {max} caractères",
+    "pattern": "Format invalide",
+    "url": "URL invalide",
+    "numeric": "Doit être un nombre",
+    "integer": "Doit être un entier",
+    "min": "Doit être supérieur ou égal à {min}",
+    "max": "Doit être inférieur ou égal à {max}",
+    "between": "Doit être entre {min} et {max}",
+    "phone": "Numéro de téléphone invalide",
+    "date": "Date invalide",
+    "minDate": "La date doit être postérieure ou égale à {date}",
+    "maxDate": "La date doit être antérieure ou égale à {date}",
+    "password": {
+      "min": "Le mot de passe doit contenir au moins {min} caractères",
+      "upper": "Le mot de passe doit contenir au moins une lettre majuscule",
+      "lower": "Le mot de passe doit contenir au moins une lettre minuscule",
+      "number": "Le mot de passe doit contenir au moins un chiffre",
+      "special": "Le mot de passe doit contenir au moins un caractère spécial"
+    },
+    "passwords_mismatch": "Les mots de passe ne correspondent pas",
+    "oneOf": "La valeur doit être parmi: {values}",
+    "notOneOf": "La valeur ne doit pas être parmi: {values}",
+    "equals": "La valeur doit être égale à {value}",
+    "notEquals": "La valeur doit être différente de {value}",
+    "json": "Doit être un JSON valide",
+    "uuid": "UUID invalide",
+    "iban": "IBAN invalide",
+    "bic": "BIC/SWIFT invalide",
+    "slug": "Slug invalide (caractères autorisés: lettres, chiffres, tirets)",
+    "hexColor": "Couleur hexadécimale invalide",
+    "creditCard": "Numéro de carte invalide",
+    "postalCode": "Code postal invalide",
+    "time": "Heure invalide (HH:mm)",
+    "accept": "Vous devez accepter pour continuer",
+    "afterDate": "La date doit être postérieure ou égale à la date de début",
+    "beforeDate": "La date doit être antérieure ou égale à la date de fin",
+    "file": {
+      "required": "Au moins un fichier est requis",
+      "maxSize": "{name}: taille supérieure à la limite ({max} octets)",
+      "minSize": "{name}: taille inférieure à la limite ({min} octets)",
+      "mimeType": "{name}: type de fichier non autorisé ({types})",
+      "extension": "{name}: extension non autorisée ({exts})",
+      "maxFiles": "Nombre maximal de fichiers: {max}",
+      "minFiles": "Nombre minimal de fichiers: {min}",
+      "totalMaxSize": "Taille totale des fichiers supérieure à la limite ({max} octets)",
+      "emptyFile": "{name}: fichier vide",
+      "filenameSafe": "{name}: nom de fichier invalide",
+      "imageMaxDimensions": "{name}: dimensions supérieures à {w}x{h}",
+      "imageMinDimensions": "{name}: dimensions inférieures à {w}x{h}",
+      "imageAspectRatio": "{name}: ratio d'image hors plage autorisée ({min}-{max})",
+      "imageLoad": "Impossible de lire les dimensions de l'image"
     }
   },
   "login": {
@@ -454,33 +712,5 @@
   "error": {
     "notFound": "Page non trouvée ⚠️",
     "notFoundMessage": "Désolé, la page que vous recherchez n'existe pas."
-  },
-  "common": {
-    "save": "Enregistrer",
-    "cancel": "Annuler",
-    "delete": "Supprimer",
-    "edit": "Modifier",
-    "add": "Ajouter",
-    "loading": "Chargement",
-    "error": "Erreur",
-    "search": "Rechercher",
-    "filter": "Filtrer",
-    "sort": "Trier",
-    "noData": "Aucune donnée",
-    "actions": "Actions",
-    "status": "Statut",
-    "date": "Date",
-    "name": "Nom",
-    "description": "Description",
-    "type": "Type",
-    "amount": "Montant",
-    "currency": "Devise",
-    "country": "Pays",
-    "language": "Langue",
-    "timezone": "Fuseau horaire",
-    "phone": "Téléphone",
-    "address": "Adresse",
-    "state": "État/Province",
-    "zipCode": "Code postal"
   }
 }

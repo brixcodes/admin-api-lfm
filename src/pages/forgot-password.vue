@@ -147,9 +147,15 @@ onMounted(() => {
             <VCol cols="12">
               <VTextField
                 v-model="form.email"
+<<<<<<< HEAD
                 :label="$t('forgotPassword.email')"
                 type="email"
                 :placeholder="$t('forgotPassword.emailPlaceholder')"
+=======
+                :label="$t('auth.forgot.email')"
+                type="email"
+                :placeholder="$t('auth.forgot.subtitle')"
+>>>>>>> e7755b392bfcc912fbf0679b114ece63610622d7
                 :disabled="isLoading"
                 :rules="[
                   v => !!v || $t('forgotPassword.emailRequired'),
