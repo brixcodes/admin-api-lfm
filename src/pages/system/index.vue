@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import Journal from '@/pages/system/journal.vue'
+import Permissions from '@/pages/system/permissions.vue'
 import Roles from '@/pages/system/roles.vue'
 import Utilisateurs from '@/pages/system/utilisateurs.vue'
+
+
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -16,6 +19,7 @@ watch(activeTab, val => {
 const tabs = [
   { title: 'Utilisateurs', icon: 'ri-user-3-line', tab: 'utilisateurs', component: Utilisateurs },
   { title: 'Rôles', icon: 'ri-shield-keyhole-line', tab: 'roles', component: Roles },
+  { title: 'Permissions', icon: 'ri-key-2-line', tab: 'permissions', component: Permissions },
   { title: 'Journal', icon: 'ri-file-list-3-line', tab: 'journal', component: Journal },
 ]
 </script>

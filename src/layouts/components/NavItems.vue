@@ -23,20 +23,21 @@ const handleLogout = async () => {
   <!-- 👉 Tableau de bord -->
   <VerticalNavLink :item="{ title: 'Tableau de bord', icon: 'ri-dashboard-line', to: '/dashboard' }" />
 
+  <!-- 👉 Profil -->
+  <VerticalNavLink :item="{ title: 'Profil', icon: 'ri-user-settings-line', to: '/profil' }" />
+
   <!-- 👉 Utilisateurs -->
   <VerticalNavLink :item="{ title: 'Utilisateurs', icon: 'ri-user-3-line', to: '/system' }" />
 
   <!-- 👉 Formations -->
   <VerticalNavLink :item="{ title: 'Formations', icon: 'ri-book-open-line', to: '/formations' }" />
 
-  <!-- 👉 Inscriptions & Paiements -->
-  <VerticalNavLink :item="{ title: 'Inscriptions & Paiements', icon: 'ri-bill-line', to: '/gestion' }" />
+  <!-- 👉 Gestion -->
+  <VerticalNavLink :item="{ title: 'Gestion', icon: 'ri-briefcase-3-line', to: '/gestion' }" />
 
   <!-- 👉 Projets -->
   <VerticalNavLink :item="{ title: 'Projets', icon: 'ri-team-line', to: '/projets' }" />
 
-  <!-- 👉 Génétique -->
-  <VerticalNavLink :item="{ title: 'Génétique', icon: 'ri-service-line', to: '/genetique' }" />
 
   <!-- 👉 Fichiers -->
   <VerticalNavLink :item="{ title: 'Fichiers', icon: 'ri-folder-3-line', to: '/fichiers' }" />

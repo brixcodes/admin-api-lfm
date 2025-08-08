@@ -18,8 +18,6 @@ export const routes = [
       // Projets
       { path: 'projets', component: () => import('@/pages/projets/index.vue') },
 
-      // Génétique
-      { path: 'genetique', component: () => import('@/pages/genetique/index.vue') },
 
       // Accréditations & Actualités
       { path: 'infos', component: () => import('@/pages/infos/index.vue') },
@@ -27,8 +25,8 @@ export const routes = [
       // Fichiers
       { path: 'fichiers', component: () => import('@/pages/fichiers/index.vue') },
 
-      // Paramètres de compte (exemple d’UI tabulée)
-      { path: 'account-settings', component: () => import('@/pages/account-settings.vue') },
+      // Profil (ex-account-settings)
+      { path: 'profil', component: () => import('@/pages/profil.vue') },
     ],
   },
   {
