@@ -73,7 +73,7 @@ export interface Permission { id: number; nom: PermissionEnum; description?: str
 export interface PermissionCreate { nom: PermissionEnum }
 export interface PermissionUpdate { nom?: PermissionEnum }
 
-export interface Role { id: number; nom: RoleEnum; permissions: PermissionLight[] }
+export interface Role { id: number; nom: RoleEnum; permissions: PermissionEnum[]; user_count?: number }
 export interface RoleCreate { nom: RoleEnum; permission_ids?: number[] }
 export interface RoleUpdate { nom?: RoleEnum; permission_ids?: number[] }
 

@@ -13,9 +13,11 @@ declare module 'vue' {
     ErrorHeader: typeof import('./src/components/ErrorHeader.vue')['default']
     MoreBtn: typeof import('./src/@core/components/MoreBtn.vue')['default']
     RolePermissionsDialog: typeof import('./src/components/system/roles/RolePermissionsDialog.vue')['default']
+    RolesStats: typeof import('./src/components/system/roles/RolesStats.vue')['default']
     RolesTable: typeof import('./src/components/system/roles/RolesTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ThemeSwitcher: typeof import('./src/@core/components/ThemeSwitcher.vue')['default']
+    VueApexCharts: typeof import('vue3-apexcharts')['default']
   }
 }

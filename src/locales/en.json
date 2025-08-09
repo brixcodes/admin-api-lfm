@@ -92,7 +92,47 @@
       "title": "Role management",
       "add": "Add role",
       "edit": "Edit role",
-      "delete": "Delete role"
+      "delete": "Delete role",
+      "search": "Search role",
+      "table": {
+        "role": "ROLE",
+        "permissions": "PERMISSIONS",
+        "actions": "ACTIONS"
+      },
+      "actions": {
+        "assign": "Assign",
+        "revoke": "Revoke",
+        "assignTooltip": "Assign permissions",
+        "revokeTooltip": "Revoke permissions"
+      },
+      "confirm": {
+        "assignTitle": "Confirm assignment",
+        "assignMessage": "Are you sure you want to assign these permissions to this role?",
+        "revokeTitle": "Confirm revocation",
+        "revokeMessage": "Are you sure you want to revoke these permissions from this role?"
+      },
+      "notifications": {
+        "assignSuccess": "Permissions assigned successfully",
+        "revokeSuccess": "Permissions revoked successfully"
+      },
+      "stats": {
+        "total_roles": "Total roles",
+        "with_users": "Roles with users",
+        "without_users": "Roles without users",
+        "total_users": "Total users (by role)",
+        "last_week": "Last week analytics"
+      },
+      "permissions": {
+        "title": "Permission management",
+        "roleLabel": "Role:",
+        "assignSection": "Select permissions to add",
+        "revokeSection": "Select permissions to remove",
+        "searchPlaceholder": "Search and select",
+        "selectAll": "Select all",
+        "clear": "Clear",
+        "nothingToAssign": "No permission available to add.",
+        "nothingToRevoke": "No associated permission to remove."
+      }
     },
     "permissions": {
       "title": "Permission management",

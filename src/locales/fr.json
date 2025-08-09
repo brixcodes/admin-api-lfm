@@ -92,7 +92,47 @@
       "title": "Gestion des rôles",
       "add": "Ajouter un rôle",
       "edit": "Modifier le rôle",
-      "delete": "Supprimer le rôle"
+      "delete": "Supprimer le rôle",
+      "search": "Rechercher un rôle",
+      "table": {
+        "role": "RÔLE",
+        "permissions": "PERMISSIONS",
+        "actions": "ACTIONS"
+      },
+      "actions": {
+        "assign": "Affecter",
+        "revoke": "Révoquer",
+        "assignTooltip": "Affecter des permissions",
+        "revokeTooltip": "Révoquer des permissions"
+      },
+      "confirm": {
+        "assignTitle": "Confirmer l’affectation",
+        "assignMessage": "Voulez-vous vraiment affecter ces permissions à ce rôle ?",
+        "revokeTitle": "Confirmer la révocation",
+        "revokeMessage": "Voulez-vous vraiment révoquer ces permissions de ce rôle ?"
+      },
+      "notifications": {
+        "assignSuccess": "Permissions affectées avec succès",
+        "revokeSuccess": "Permissions révoquées avec succès"
+      },
+      "stats": {
+        "total_roles": "Rôles totaux",
+        "with_users": "Rôles avec des utilisateurs",
+        "without_users": "Rôles sans utilisateurs",
+        "total_users": "Total utilisateurs (par rôle)",
+        "last_week": "Stats de la semaine dernière"
+      },
+      "permissions": {
+        "title": "Gestion des permissions",
+        "roleLabel": "Rôle :",
+        "assignSection": "Sélectionner des permissions à ajouter",
+        "revokeSection": "Sélectionner des permissions à retirer",
+        "searchPlaceholder": "Rechercher et sélectionner",
+        "selectAll": "Tout sélectionner",
+        "clear": "Effacer",
+        "nothingToAssign": "Aucune permission disponible à ajouter.",
+        "nothingToRevoke": "Aucune permission associée à retirer."
+      }
     },
     "permissions": {
       "title": "Gestion des permissions",
@@ -469,10 +509,10 @@
       "actionLabel": "En savoir plus"
     },
     "stats": {
-      "general": "Statistiques générales"
+      "general": "Stats générales"
     },
     "statistics": {
-      "title": "Statistiques",
+      "title": "Stats",
       "subtitle": "Aperçu des données importantes de la plateforme"
     },
     "weeklyOverview": "Aperçu hebdomadaire",
