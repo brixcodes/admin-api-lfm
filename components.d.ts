@@ -7,7 +7,6 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    AddUserDialog: typeof import('./src/components/users/AddUserDialog.vue')['default']
     CardStatisticsHorizontal: typeof import('./src/@core/components/cards/CardStatisticsHorizontal.vue')['default']
     CardStatisticsVertical: typeof import('./src/@core/components/cards/CardStatisticsVertical.vue')['default']
     CardStatisticsWithImages: typeof import('./src/@core/components/cards/CardStatisticsWithImages.vue')['default']
@@ -18,6 +17,5 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ThemeSwitcher: typeof import('./src/@core/components/ThemeSwitcher.vue')['default']
-    VueApexCharts: typeof import('vue3-apexcharts')['default']
   }
 }

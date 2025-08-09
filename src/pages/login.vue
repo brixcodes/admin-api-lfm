@@ -118,13 +118,8 @@ onMounted(() => {
                   <VIcon icon="ri-error-warning-line" />
                 </template>
                 <div>
-<<<<<<< HEAD
                 <div class="font-weight-medium mb-1">{{$t('login.errorTitle')}}</div>
                 <div class="text-body-2">{{ error }}</div>
-=======
-                  <div class="font-weight-medium mb-1">{{ $t('auth.login.title') }}</div>
-                  <div class="text-body-2">{{ error }}</div>
->>>>>>> e7755b392bfcc912fbf0679b114ece63610622d7
                 </div>
               </VAlert>
             </VCol>
@@ -203,11 +198,7 @@ onMounted(() => {
               cols="12"
               class="text-center text-base"
             >
-<<<<<<< HEAD
               <span>{{$t('login.newHere')}}</span>
-=======
-              <span>{{ $t('auth.login.register_link') }}</span>
->>>>>>> e7755b392bfcc912fbf0679b114ece63610622d7
               <RouterLink
                 class="text-primary ms-2"
                 to="/register"
