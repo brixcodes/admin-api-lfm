@@ -7,6 +7,7 @@ import type {
 } from './enums';
 
 // Light interfaces
+export interface PermissionMinLight { id: number; nom: PermissionEnum }
 export interface PermissionLight { id: number; nom: PermissionEnum; roles: RoleLight[] }
 export interface RoleLight { id: number; nom: RoleEnum }
 export interface UtilisateurLight { id: number; nom: string; prenom?: string | null; sexe: SexeEnum; email: string; statut: StatutCompteEnum; est_actif: boolean; date_naissance?: string | null; created_at: string; updated_at: string; role?: RoleLight | null; permissions: PermissionLight[] }
@@ -73,7 +74,7 @@ export interface Permission { id: number; nom: PermissionEnum; description?: str
 export interface PermissionCreate { nom: PermissionEnum }
 export interface PermissionUpdate { nom?: PermissionEnum }
 
-export interface Role { id: number; nom: RoleEnum; permissions: PermissionEnum[]; user_count?: number }
+export interface Role { id: number; nom: RoleEnum; permissions: PermissionMinLight[]; user_count?: number }
 export interface RoleCreate { nom: RoleEnum; permission_ids?: number[] }
 export interface RoleUpdate { nom?: RoleEnum; permission_ids?: number[] }
 

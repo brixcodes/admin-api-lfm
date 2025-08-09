@@ -33,9 +33,9 @@ watch(() => props.mode, () => { selectedAssign.value = []; selectedRevoke.value 
 
 const toTitle = (key: string) => key.split('_').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')
 
-const assignedNames = computed(() => new Set((props.role?.permissions || [] as string[])))
-const availableToAssign = computed(() => props.allPermissions.filter(p => !assignedNames.value.has(p.nom)))
-const availableToRevoke = computed(() => props.allPermissions.filter(p =>  assignedNames.value.has(p.nom)))
+const assignedIds = computed(() => new Set((props.role?.permissions || []).map(p => p.id)))
+const availableToAssign = computed(() => props.allPermissions.filter(p => !assignedIds.value.has(p.id)))
+const availableToRevoke = computed(() => props.allPermissions.filter(p => assignedIds.value.has(p.id)))
 
 const canAssign = computed(() => !!props.role && selectedAssign.value.length > 0)
 const canRevoke = computed(() => !!props.role && selectedRevoke.value.length > 0)
@@ -43,10 +43,13 @@ const canRevoke = computed(() => !!props.role && selectedRevoke.value.length > 0
 const assignCount = computed(() => availableToAssign.value.length)
 const revokeCount = computed(() => availableToRevoke.value.length)
 
-const selectAllAssign = () => { selectedAssign.value = availableToAssign.value.map(p => p.id) }
+const selectAllAssign = () => { selectedAssign.value = availableToAssign.value.map(p => Number(p.id)) }
 const clearAssign = () => { selectedAssign.value = [] }
-const selectAllRevoke = () => { selectedRevoke.value = availableToRevoke.value.map(p => p.id) }
+const selectAllRevoke = () => { selectedRevoke.value = availableToRevoke.value.map(p => Number(p.id)) }
 const clearRevoke = () => { selectedRevoke.value = [] }
+
+const selectedAssignIds = computed(() => selectedAssign.value.map(v => Number(v)).filter(v => Number.isFinite(v)))
+const selectedRevokeIds = computed(() => selectedRevoke.value.map(v => Number(v)).filter(v => Number.isFinite(v)))
 </script>
 
 <template>
@@ -57,10 +60,13 @@ const clearRevoke = () => { selectedRevoke.value = [] }
           <VIcon icon="ri-key-2-line" />
           <div>
             <div class="text-subtitle-1">{{ $t('system.roles.permissions.title') }}</div>
-            <div class="text-caption text-medium-emphasis">{{ $t('system.roles.permissions.roleLabel') }} <strong>{{ props.role?.nom }}</strong></div>
+            <div class="text-caption text-medium-emphasis">{{ $t('system.roles.permissions.roleLabel') }} <strong>{{
+              props.role?.nom }}</strong></div>
           </div>
         </div>
-        <VBtn icon variant="text" @click="open = false"><VIcon icon="ri-close-line" /></VBtn>
+        <VBtn icon variant="text" @click="open = false">
+          <VIcon icon="ri-close-line" />
+        </VBtn>
       </VCardTitle>
 
       <VProgressLinear v-if="loading" indeterminate color="primary" />
@@ -69,8 +75,12 @@ const clearRevoke = () => { selectedRevoke.value = [] }
         <!-- Tabs si les deux modes sont autorisés -->
         <div v-if="props.mode === 'both'">
           <VTabs v-model="tab" class="v-tabs-pill">
-            <VTab value="assign"><VIcon size="18" start icon="ri-add-line" />Affecter ({{ assignCount }})</VTab>
-            <VTab value="revoke"><VIcon size="18" start icon="ri-close-line" />Révoquer ({{ revokeCount }})</VTab>
+            <VTab value="assign">
+              <VIcon size="18" start icon="ri-add-line" />Affecter ({{ assignCount }})
+            </VTab>
+            <VTab value="revoke">
+              <VIcon size="18" start icon="ri-close-line" />Révoquer ({{ revokeCount }})
+            </VTab>
           </VTabs>
 
           <VWindow v-model="tab" class="mt-4">
@@ -78,31 +88,26 @@ const clearRevoke = () => { selectedRevoke.value = [] }
             <VWindowItem value="assign">
               <VCard variant="tonal" class="pa-4">
                 <div class="text-subtitle-2 mb-3">{{ $t('system.roles.permissions.assignSection') }}</div>
-                <VAutocomplete
-                  v-model="selectedAssign"
-                  :items="availableToAssign.map(p => ({ title: toTitle(p.nom), value: p.id }))"
-                  multiple
-                  chips
-                  closable-chips
-                  clearable
-                  hide-details
-                  prepend-inner-icon="ri-search-line"
-                  density="comfortable"
-                  variant="outlined"
-                  :placeholder="$t('system.roles.permissions.searchPlaceholder')"
-                  :disabled="assignCount === 0"
-                />
+                <VAutocomplete v-model="selectedAssign"
+                  :items="availableToAssign.map(p => ({ title: toTitle(p.nom), value: p.id }))" multiple chips
+                  closable-chips clearable hide-details prepend-inner-icon="ri-search-line" density="comfortable"
+                  variant="outlined" :placeholder="$t('system.roles.permissions.searchPlaceholder')"
+                  :disabled="assignCount === 0" />
                 <div class="d-flex align-center justify-space-between mt-2">
                   <div class="text-caption text-medium-emphasis">{{ assignCount }} permission(s) disponible(s)</div>
                   <div class="d-flex gap-2">
-                    <VBtn size="small" variant="text" @click="selectAllAssign" :disabled="assignCount === 0">{{ $t('system.roles.permissions.selectAll') }}</VBtn>
-                    <VBtn size="small" variant="text" @click="clearAssign" :disabled="selectedAssign.length===0">{{ $t('system.roles.permissions.clear') }}</VBtn>
-                    <VBtn size="small" color="primary" :disabled="!canAssign" @click="emit('assign', { roleId: props.role!.id, permission_ids: selectedAssign })">
+                    <VBtn size="small" variant="text" @click="selectAllAssign" :disabled="assignCount === 0">{{
+                      $t('system.roles.permissions.selectAll') }}</VBtn>
+                    <VBtn size="small" variant="text" @click="clearAssign" :disabled="selectedAssign.length === 0">{{
+                      $t('system.roles.permissions.clear') }}</VBtn>
+                    <VBtn size="small" color="primary" :disabled="!canAssign"
+                      @click="emit('assign', { roleId: props.role!.id, permission_ids: selectedAssignIds as any as number[] || [] })">
                       <VIcon icon="ri-add-line" class="me-1" /> {{ $t('system.roles.actions.assign') }}
                     </VBtn>
                   </div>
                 </div>
-                <VAlert v-if="assignCount === 0" type="info" variant="tonal" class="mt-3">{{ $t('system.roles.permissions.nothingToAssign') }}</VAlert>
+                <VAlert v-if="assignCount === 0" type="info" variant="tonal" class="mt-3">{{
+                  $t('system.roles.permissions.nothingToAssign') }}</VAlert>
               </VCard>
             </VWindowItem>
 
@@ -110,31 +115,26 @@ const clearRevoke = () => { selectedRevoke.value = [] }
             <VWindowItem value="revoke">
               <VCard variant="tonal" class="pa-4">
                 <div class="text-subtitle-2 mb-3">{{ $t('system.roles.permissions.revokeSection') }}</div>
-                <VAutocomplete
-                  v-model="selectedRevoke"
-                  :items="availableToRevoke.map(p => ({ title: toTitle(p.nom), value: p.id }))"
-                  multiple
-                  chips
-                  closable-chips
-                  clearable
-                  hide-details
-                  prepend-inner-icon="ri-search-line"
-                  density="comfortable"
-                  variant="outlined"
-                  :placeholder="$t('system.roles.permissions.searchPlaceholder')"
-                  :disabled="revokeCount === 0"
-                />
+                <VAutocomplete v-model="selectedRevoke"
+                  :items="availableToRevoke.map(p => ({ title: toTitle(p.nom), value: p.id }))" multiple chips
+                  closable-chips clearable hide-details prepend-inner-icon="ri-search-line" density="comfortable"
+                  variant="outlined" :placeholder="$t('system.roles.permissions.searchPlaceholder')"
+                  :disabled="revokeCount === 0" />
                 <div class="d-flex align-center justify-space-between mt-2">
                   <div class="text-caption text-medium-emphasis">{{ revokeCount }} permission(s) associée(s)</div>
                   <div class="d-flex gap-2">
-                    <VBtn size="small" variant="text" @click="selectAllRevoke" :disabled="revokeCount === 0">{{ $t('system.roles.permissions.selectAll') }}</VBtn>
-                    <VBtn size="small" variant="text" @click="clearRevoke" :disabled="selectedRevoke.length===0">{{ $t('system.roles.permissions.clear') }}</VBtn>
-                    <VBtn size="small" color="error" variant="tonal" :disabled="!canRevoke" @click="emit('revoke', { roleId: props.role!.id, permission_ids: selectedRevoke })">
+                    <VBtn size="small" variant="text" @click="selectAllRevoke" :disabled="revokeCount === 0">{{
+                      $t('system.roles.permissions.selectAll') }}</VBtn>
+                    <VBtn size="small" variant="text" @click="clearRevoke" :disabled="selectedRevoke.length === 0">{{
+                      $t('system.roles.permissions.clear') }}</VBtn>
+                    <VBtn size="small" color="error" variant="tonal" :disabled="!canRevoke"
+                      @click="emit('revoke', { roleId: props.role!.id, permission_ids: selectedRevokeIds })">
                       <VIcon icon="ri-close-line" class="me-1" /> {{ $t('system.roles.actions.revoke') }}
                     </VBtn>
                   </div>
                 </div>
-                <VAlert v-if="revokeCount === 0" type="info" variant="tonal" class="mt-3">{{ $t('system.roles.permissions.nothingToRevoke') }}</VAlert>
+                <VAlert v-if="revokeCount === 0" type="info" variant="tonal" class="mt-3">{{
+                  $t('system.roles.permissions.nothingToRevoke') }}</VAlert>
               </VCard>
             </VWindowItem>
           </VWindow>
@@ -146,19 +146,20 @@ const clearRevoke = () => { selectedRevoke.value = [] }
             <VCol v-if="props.mode !== 'revoke'" cols="12">
               <VCard variant="tonal" class="pa-4">
                 <div class="text-subtitle-2 mb-3">{{ $t('system.roles.permissions.assignSection') }}</div>
-                <VAutocomplete
-                  v-model="selectedAssign"
-                  :items="availableToAssign.map(p => ({ title: toTitle(p.nom), value: p.id }))"
-                  multiple chips closable-chips clearable hide-details
-                  prepend-inner-icon="ri-search-line" density="comfortable" variant="outlined"
-                  :placeholder="$t('system.roles.permissions.searchPlaceholder')" :disabled="assignCount === 0"
-                />
+                <VAutocomplete v-model="selectedAssign"
+                  :items="availableToAssign.map(p => ({ title: toTitle(p.nom), value: p.id }))" multiple chips
+                  closable-chips clearable hide-details prepend-inner-icon="ri-search-line" density="comfortable"
+                  variant="outlined" :placeholder="$t('system.roles.permissions.searchPlaceholder')"
+                  :disabled="assignCount === 0" />
                 <div class="d-flex align-center justify-space-between mt-2">
                   <div class="text-caption text-medium-emphasis">{{ assignCount }} permission(s) disponible(s)</div>
                   <div class="d-flex gap-2">
-                    <VBtn size="small" variant="text" @click="selectAllAssign" :disabled="assignCount === 0">{{ $t('system.roles.permissions.selectAll') }}</VBtn>
-                    <VBtn size="small" variant="text" @click="clearAssign" :disabled="selectedAssign.length===0">{{ $t('system.roles.permissions.clear') }}</VBtn>
-                    <VBtn size="small" color="primary" :disabled="!canAssign" @click="emit('assign', { roleId: props.role!.id, permission_ids: selectedAssign })">
+                    <VBtn size="small" variant="text" @click="selectAllAssign" :disabled="assignCount === 0">{{
+                      $t('system.roles.permissions.selectAll') }}</VBtn>
+                    <VBtn size="small" variant="text" @click="clearAssign" :disabled="selectedAssign.length === 0">{{
+                      $t('system.roles.permissions.clear') }}</VBtn>
+                    <VBtn size="small" color="primary" :disabled="!canAssign"
+                      @click="emit('assign', { roleId: props.role!.id, permission_ids: selectedAssignIds })">
                       <VIcon icon="ri-add-line" class="me-1" /> {{ $t('system.roles.actions.assign') }}
                     </VBtn>
                   </div>
@@ -169,19 +170,20 @@ const clearRevoke = () => { selectedRevoke.value = [] }
             <VCol v-if="props.mode !== 'assign'" cols="12">
               <VCard variant="tonal" class="pa-4">
                 <div class="text-subtitle-2 mb-3">{{ $t('system.roles.permissions.revokeSection') }}</div>
-                <VAutocomplete
-                  v-model="selectedRevoke"
-                  :items="availableToRevoke.map(p => ({ title: toTitle(p.nom), value: p.id }))"
-                  multiple chips closable-chips clearable hide-details
-                  prepend-inner-icon="ri-search-line" density="comfortable" variant="outlined"
-                  :placeholder="$t('system.roles.permissions.searchPlaceholder')" :disabled="revokeCount === 0"
-                />
+                <VAutocomplete v-model="selectedRevoke"
+                  :items="availableToRevoke.map(p => ({ title: toTitle(p.nom), value: p.id }))" multiple chips
+                  closable-chips clearable hide-details prepend-inner-icon="ri-search-line" density="comfortable"
+                  variant="outlined" :placeholder="$t('system.roles.permissions.searchPlaceholder')"
+                  :disabled="revokeCount === 0" />
                 <div class="d-flex align-center justify-space-between mt-2">
                   <div class="text-caption text-medium-emphasis">{{ revokeCount }} permission(s) associée(s)</div>
                   <div class="d-flex gap-2">
-                    <VBtn size="small" variant="text" @click="selectAllRevoke" :disabled="revokeCount === 0">{{ $t('system.roles.permissions.selectAll') }}</VBtn>
-                    <VBtn size="small" variant="text" @click="clearRevoke" :disabled="selectedRevoke.length===0">{{ $t('system.roles.permissions.clear') }}</VBtn>
-                    <VBtn size="small" color="error" variant="tonal" :disabled="!canRevoke" @click="emit('revoke', { roleId: props.role!.id, permission_ids: selectedRevoke })">
+                    <VBtn size="small" variant="text" @click="selectAllRevoke" :disabled="revokeCount === 0">{{
+                      $t('system.roles.permissions.selectAll') }}</VBtn>
+                    <VBtn size="small" variant="text" @click="clearRevoke" :disabled="selectedRevoke.length === 0">{{
+                      $t('system.roles.permissions.clear') }}</VBtn>
+                    <VBtn size="small" color="error" variant="tonal" :disabled="!canRevoke"
+                      @click="emit('revoke', { roleId: props.role!.id, permission_ids: selectedRevokeIds })">
                       <VIcon icon="ri-close-line" class="me-1" /> {{ $t('system.roles.actions.revoke') }}
                     </VBtn>
                   </div>

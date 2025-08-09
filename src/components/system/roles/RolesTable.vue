@@ -51,10 +51,10 @@ const headers = computed(() => ([
       <!-- permissions column -->
       <template #item.perms="{ item }">
         <div class="d-flex flex-wrap gap-2 align-center">
-          <VChip v-for="p in (item.permissions || []).slice(0, 5)" :key="p" color="primary" label size="small"
-            variant="tonal">{{ toTitle(p) }}</VChip>
+          <VChip v-for="p in (item.permissions || []).slice(0, 5)" :key="p.id" color="secondary" label size="small"
+            variant="tonal">{{ toTitle(p.nom) }}</VChip>
           <span v-if="(item.permissions?.length || 0) > 5" class="text-disabled">+{{ (item.permissions!.length) - 5
-            }}</span>
+          }}</span>
           <span v-if="!(item.permissions?.length)" class="text-disabled">—</span>
         </div>
       </template>
@@ -64,8 +64,7 @@ const headers = computed(() => ([
         <div class="d-flex align-center gap-2">
           <VTooltip :text="t('system.roles.actions.assignTooltip')">
             <template #activator="{ props }">
-              <VBtn v-bind="props" size="small" variant="tonal" color="primary" icon
-                @click="emit('assign-perms', item)">
+              <VBtn v-bind="props" size="small" variant="tonal" color="info" icon @click="emit('assign-perms', item)">
                 <VIcon icon="ri-add-line" />
               </VBtn>
             </template>
@@ -73,7 +72,8 @@ const headers = computed(() => ([
 
           <VTooltip :text="t('system.roles.actions.revokeTooltip')">
             <template #activator="{ props }">
-              <VBtn v-bind="props" size="small" variant="tonal" color="error" icon @click="emit('revoke-perms', item)">
+              <VBtn v-bind="props" size="small" variant="tonal" color="warning" icon
+                @click="emit('revoke-perms', item)">
                 <VIcon icon="ri-close-line" />
               </VBtn>
             </template>
