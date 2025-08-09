@@ -75,8 +75,8 @@ export const UsersApi = {
 
 export const RolesApi = {
   ...createRestService<Role, RoleCreate, RoleUpdate>('/roles'),
-  assignPermissions: (roleId: number, permission_ids: number[]) => apiClient.post<string, { permission_ids: number[] }>(`/roles/${roleId}/assign-permissions`, { permission_ids }),
-  revokePermissions: (roleId: number, permission_ids: number[]) => apiClient.post<string, { permission_ids: number[] }>(`/roles/${roleId}/revoke-permissions`, { permission_ids }),
+  assignPermissions: (roleId: number, permission_ids: number[]) => apiClient.post<string, number[]>(`/roles/${roleId}/permissions`, permission_ids),
+  revokePermissions: (roleId: number, permission_ids: number[]) => apiClient.delete<string, number[]>(`/roles/${roleId}/permissions`, undefined, { data: permission_ids }),
 }
 
 export const PermissionsApi = {

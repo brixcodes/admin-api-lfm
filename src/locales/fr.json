@@ -82,11 +82,146 @@
     },
     "users": {
       "title": "Gestion des utilisateurs",
+      "subtitle": "Gérez les comptes utilisateurs, leurs rôles et permissions",
       "add": "Ajouter un utilisateur",
       "edit": "Modifier l'utilisateur",
       "delete": "Supprimer l'utilisateur",
-      "status": "Statut",
-      "actions": "Actions"
+      "search": "Rechercher un utilisateur",
+      "total": "utilisateurs",
+      "no_role": "Aucun rôle",
+      "permissions_count": "permissions",
+      "from_role": "du rôle",
+      "role_permissions": "Permissions du rôle",
+      "has_role": "A un rôle",
+      "role_info": "Informations du rôle",
+      "table": {
+        "title": "Liste des utilisateurs",
+        "user": "UTILISATEUR",
+        "gender": "SEXE",
+        "role": "RÔLE",
+        "permissions": "PERMISSIONS",
+        "status": "STATUT",
+        "created": "CRÉÉ LE",
+        "actions": "ACTIONS",
+        "no_data": "Aucun utilisateur trouvé"
+      },
+      "status": {
+        "active": "Actif",
+        "inactive": "Inactif",
+        "suspended": "Suspendu"
+      },
+      "gender": {
+        "homme": "Homme",
+        "femme": "Femme"
+      },
+      "actions": {
+        "view": "Voir les détails",
+        "edit": "Modifier",
+        "assign": "Affecter",
+        "revoke": "Révoquer",
+        "assign_permissions": "Affecter des permissions",
+        "revoke_permissions": "Révoquer des permissions",
+        "activate": "Activer",
+        "deactivate": "Désactiver",
+        "delete": "Supprimer"
+      },
+      "stats": {
+        "total_users": "Total utilisateurs",
+        "active_users": "Utilisateurs actifs",
+        "with_roles": "Avec des rôles",
+        "total_permissions": "Total permissions",
+        "last_week": "Stats de la semaine dernière"
+      },
+      "filters": {
+        "status": "Statut",
+        "gender": "Sexe",
+        "role": "Rôle",
+        "permissions": "Permissions",
+        "clear_all": "Effacer tous les filtres"
+      },
+      "details": {
+        "title": "Détails de l'utilisateur",
+        "personal_info": "Informations personnelles",
+        "account_info": "Informations du compte",
+        "permissions": "Rôles et permissions",
+        "first_name": "Prénom",
+        "last_name": "Nom",
+        "gender": "Sexe",
+        "birth_date": "Date de naissance",
+        "email": "Email",
+        "status": "Statut",
+        "created_at": "Créé le",
+        "updated_at": "Modifié le",
+        "username": "Nom d'utilisateur",
+        "details_title": "Détails",
+        "permissions_count": "Permissions",
+        "projects_count": "Projets",
+        "role_permissions": "Permissions du rôle",
+        "direct_permissions": "Permissions directes",
+        "no_permissions": "Aucune permission assignée",
+        "project_list": "Liste des projets",
+        "project": "PROJET",
+        "total_task": "TÂCHES TOTALES",
+        "progress": "PROGRÈS",
+        "hours": "HEURES",
+        "activity_coming_soon": "L'historique des activités sera bientôt disponible",
+        "tabs": {
+          "overview": "Aperçu",
+          "permissions": "Permissions",
+          "activity": "Activité"
+        }
+      },
+      "edit": {
+        "title": "Modifier l'utilisateur",
+        "subtitle": "Modifiez les informations de l'utilisateur",
+        "first_name": "Prénom",
+        "first_name_placeholder": "Entrez le prénom",
+        "last_name": "Nom",
+        "last_name_placeholder": "Entrez le nom",
+        "email": "Email",
+        "email_placeholder": "Entrez l'email",
+        "gender": "Sexe",
+        "role": "Rôle",
+        "current_role": "Rôle actuel"
+      },
+      "permissions": {
+        "title": "Gestion des permissions",
+        "userLabel": "Utilisateur :",
+        "assignTab": "Affecter",
+        "revokeTab": "Révoquer",
+        "assignSection": "Sélectionner des permissions à ajouter",
+        "revokeSection": "Sélectionner des permissions à retirer",
+        "searchPlaceholder": "Rechercher et sélectionner",
+        "selectAll": "Tout sélectionner",
+        "clear": "Effacer",
+        "nothingToAssign": "Aucune permission disponible à ajouter.",
+        "nothingToRevoke": "Aucune permission associée à retirer."
+      },
+      "confirm": {
+        "assign_title": "Confirmer l'affectation",
+        "assign_message": "Voulez-vous vraiment affecter ces permissions à cet utilisateur ?",
+        "revoke_title": "Confirmer la révocation",
+        "revoke_message": "Voulez-vous vraiment révoquer ces permissions de cet utilisateur ?",
+        "status_title": "Confirmer le changement de statut",
+        "status_message": "Voulez-vous vraiment changer le statut de cet utilisateur ?"
+      },
+      "notifications": {
+        "assign_success": "Permissions affectées avec succès",
+        "revoke_success": "Permissions révoquées avec succès",
+        "update_success": "Utilisateur modifié avec succès",
+        "status_success": "Statut modifié avec succès",
+        "update_error": "Erreur lors de la modification",
+        "action_error": "Erreur lors de l'action"
+      },
+      "validation": {
+        "name_required": "Le nom est requis",
+        "name_min_length": "Le nom doit contenir au moins 2 caractères",
+        "email_required": "L'email est requis",
+        "email_invalid": "Format d'email invalide"
+      },
+      "errors": {
+        "fetch_failed": "Erreur lors de la récupération des utilisateurs"
+      }
     },
     "roles": {
       "title": "Gestion des rôles",
@@ -132,6 +267,13 @@
         "clear": "Effacer",
         "nothingToAssign": "Aucune permission disponible à ajouter.",
         "nothingToRevoke": "Aucune permission associée à retirer."
+      },
+      "labels": {
+        "admin": "Administrateur",
+        "coordonnateur": "Coordonnateur",
+        "formateur": "Formateur",
+        "referent": "Référent",
+        "apprenant": "Apprenant"
       }
     },
     "permissions": {
@@ -404,14 +546,19 @@
     "export": "Exporter",
     "import": "Importer",
     "loading": "Chargement...",
+    "refresh": "Actualiser",
+    "reset": "Réinitialiser",
+    "more": "plus",
+    "not_specified": "Non spécifié",
+    "confirm": "Confirmer",
+    "close": "Fermer",
     "no_data": "Aucune donnée",
     "confirm_delete": "Êtes-vous sûr de vouloir supprimer cet élément ?",
     "success": "Opération réussie",
     "error": "Une erreur s'est produite",
     "required": "Ce champ est requis",
     "invalid_email": "Email invalide",
-    "invalid_format": "Format invalide",
-    "refresh": "Actualiser"
+    "invalid_format": "Format invalide"
   },
   "genetique": {
     "individuel": {

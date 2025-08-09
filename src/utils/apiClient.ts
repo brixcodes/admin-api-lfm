@@ -31,8 +31,8 @@ export const apiClient = {
     const { data } = await $api.patch<T>(`${url}${buildQS(query)}`, body)
     return data
   },
-  delete: async <T>(url: string, query?: Query): Promise<T> => {
-    const { data } = await $api.delete<T>(`${url}${buildQS(query)}`)
+  delete: async <T, B = any>(url: string, query?: Query, config?: { data?: B }): Promise<T> => {
+    const { data } = await $api.delete<T>(`${url}${buildQS(query)}`, config)
     return data
   },
 }

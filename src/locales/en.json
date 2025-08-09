@@ -82,11 +82,123 @@
     },
     "users": {
       "title": "User management",
+      "subtitle": "Manage user accounts, their roles and permissions",
       "add": "Add user",
       "edit": "Edit user",
       "delete": "Delete user",
-      "status": "Status",
-      "actions": "Actions"
+      "search": "Search user",
+      "total": "users",
+      "no_role": "No role",
+      "permissions_count": "permissions",
+      "from_role": "from role",
+      "role_permissions": "Role permissions",
+      "has_role": "Has role",
+      "role_info": "Role information",
+      "table": {
+        "title": "Users list",
+        "user": "USER",
+        "role": "ROLE",
+        "permissions": "PERMISSIONS",
+        "status": "STATUS",
+        "created": "CREATED",
+        "actions": "ACTIONS",
+        "no_data": "No users found"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "suspended": "Suspended"
+      },
+      "gender": {
+        "homme": "Male",
+        "femme": "Female"
+      },
+      "actions": {
+        "view": "View details",
+        "edit": "Edit",
+        "assign": "Assign",
+        "revoke": "Revoke",
+        "assign_permissions": "Assign permissions",
+        "revoke_permissions": "Revoke permissions",
+        "activate": "Activate",
+        "deactivate": "Deactivate",
+        "delete": "Delete"
+      },
+      "stats": {
+        "total_users": "Total users",
+        "active_users": "Active users",
+        "with_roles": "With roles",
+        "total_permissions": "Total permissions",
+        "last_week": "Last week analytics"
+      },
+      "details": {
+        "title": "User details",
+        "personal_info": "Personal information",
+        "account_info": "Account information",
+        "permissions": "Roles and permissions",
+        "first_name": "First name",
+        "last_name": "Last name",
+        "gender": "Gender",
+        "birth_date": "Birth date",
+        "email": "Email",
+        "status": "Status",
+        "created_at": "Created at",
+        "updated_at": "Updated at",
+        "role_permissions": "Role permissions",
+        "direct_permissions": "Direct permissions",
+        "no_permissions": "No permissions assigned"
+      },
+      "edit": {
+        "title": "Edit user",
+        "subtitle": "Edit user information",
+        "first_name": "First name",
+        "first_name_placeholder": "Enter first name",
+        "last_name": "Last name",
+        "last_name_placeholder": "Enter last name",
+        "email": "Email",
+        "email_placeholder": "Enter email",
+        "gender": "Gender",
+        "role": "Role",
+        "current_role": "Current role"
+      },
+      "permissions": {
+        "title": "Permission management",
+        "userLabel": "User:",
+        "assignTab": "Assign",
+        "revokeTab": "Revoke",
+        "assignSection": "Select permissions to add",
+        "revokeSection": "Select permissions to remove",
+        "searchPlaceholder": "Search and select",
+        "selectAll": "Select all",
+        "clear": "Clear",
+        "nothingToAssign": "No permission available to add.",
+        "nothingToRevoke": "No associated permission to remove."
+      },
+      "confirm": {
+        "assign_title": "Confirm assignment",
+        "assign_message": "Are you sure you want to assign these permissions to this user?",
+        "revoke_title": "Confirm revocation",
+        "revoke_message": "Are you sure you want to revoke these permissions from this user?",
+        "status_title": "Confirm status change",
+        "status_message": "Are you sure you want to change this user's status?"
+      },
+      "notifications": {
+        "assign_success": "Permissions assigned successfully",
+        "revoke_success": "Permissions revoked successfully",
+        "update_success": "User updated successfully",
+        "status_success": "Status updated successfully",
+        "update_error": "Error updating user",
+        "action_error": "Error performing action"
+      },
+      "validation": {
+        "name_required": "Name is required",
+        "name_min_length": "Name must be at least 2 characters",
+        "email_required": "Email is required",
+        "email_invalid": "Invalid email format"
+      },
+      "errors": {
+        "fetch_failed": "Error fetching users"
+      }
     },
     "roles": {
       "title": "Role management",
@@ -485,6 +597,12 @@
     "export": "Export",
     "import": "Import",
     "loading": "Loading...",
+    "refresh": "Refresh",
+    "reset": "Reset",
+    "more": "more",
+    "not_specified": "Not specified",
+    "confirm": "Confirm",
+    "close": "Close",
     "no_data": "No data",
     "confirm_delete": "Are you sure you want to delete this item?",
     "success": "Operation successful",

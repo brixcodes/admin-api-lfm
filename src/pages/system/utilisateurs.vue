@@ -1,192 +1,276 @@
 <script setup lang="ts">
-import { UsersApi } from '@/utils/services'
-import type { Utilisateur } from '@/utils/types/models'
-import { onMounted, ref } from 'vue'
+import UserDetailsDialog from '@/components/system/users/UserDetailsDialog.vue'
+import UserEditDialog from '@/components/system/users/UserEditDialog.vue'
+import UserPermissionsDialog from '@/components/system/users/UserPermissionsDialog.vue'
+import UsersFilters from '@/components/system/users/UsersFilters.vue'
+import UsersStats from '@/components/system/users/UsersStats.vue'
+import UsersTable from '@/components/system/users/UsersTable.vue'
+import { PermissionsApi, RolesApi, UsersApi } from '@/utils/services'
+import type { PermissionLight, RoleLight, UtilisateurLight } from '@/utils/types/models'
+import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
-// Type étendu pour les utilisateurs avec fullName
-interface UtilisateurWithFullName extends Utilisateur {
-  fullName: string
+// États
+const users = ref<UtilisateurLight[]>([])
+const roles = ref<RoleLight[]>([])
+const permissions = ref<PermissionLight[]>([])
+const isLoading = ref(false)
+const isLoadingPermissions = ref(false)
+const error = ref<string | null>(null)
+const searchQuery = ref('')
+
+// Dialog states
+const showDetailsDialog = ref(false)
+const showEditDialog = ref(false)
+const showPermissionsDialog = ref(false)
+const showConfirmDialog = ref(false)
+const selectedUser = ref<UtilisateurLight | null>(null)
+const permissionsMode = ref<'assign' | 'revoke' | 'both'>('both')
+
+// Notification state
+const showNotification = ref(false)
+const notificationMessage = ref('')
+const notificationType = ref<'success' | 'error'>('success')
+
+// Confirmation state
+const confirmAction = ref<'assign' | 'revoke' | 'status' | 'delete'>('assign')
+const confirmData = ref<any>(null)
+
+// Filter state
+interface FilterState {
+  status: string[]
+  gender: string[]
+  role: string[]
+  permissions: string[]
 }
 
-// États
-const users = ref<UtilisateurWithFullName[]>([])
-const isLoading = ref(false)
-const error = ref<string | null>(null)
-const selectedUsers = ref<number[]>([])
-const searchQuery = ref('')
-const selectedRole = ref('')
-const showAddUserDialog = ref(false)
-const showDeleteDialog = ref(false)
-const userToDelete = ref<UtilisateurWithFullName | null>(null)
-
-// Formulaire d'ajout d'utilisateur
-const userForm = ref({
-  nom: '',
-  prenom: '',
-  email: '',
-  sexe: 'homme' as 'homme' | 'femme',
-  role_name: 'admin' as 'admin' | 'coordonnateur' | 'formateur' | 'referent' | 'apprenant',
+const activeFilters = ref<FilterState>({
+  status: [],
+  gender: [],
+  role: [],
+  permissions: []
 })
 
-// Rôles disponibles
-const roles = ref([
-  { id: 1, nom: 'admin', label: 'Administrateur' },
-  { id: 2, nom: 'coordonnateur', label: 'Coordinateur' },
-  { id: 3, nom: 'formateur', label: 'Formateur' },
-  { id: 4, nom: 'referent', label: 'Référent' },
-  { id: 5, nom: 'apprenant', label: 'Apprenant' },
-])
-
-// Configuration du tableau
-const headers = [
-  { title: 'UTILISATEUR', key: 'fullName', sortable: true },
-  { title: 'EMAIL', key: 'email', sortable: true },
-  { title: 'RÔLE', key: 'role', sortable: true },
-  { title: 'STATUT', key: 'statut', sortable: true },
-  { title: 'DATE CRÉATION', key: 'created_at', sortable: true },
-  { title: 'ACTIONS', key: 'actions', sortable: false },
-]
-
-// Utilisateurs filtrés
+// Computed properties
 const filteredUsers = computed(() => {
-  let filtered = [...users.value]
+  let filtered = users.value
 
-  // Filtrage par rôle
-  if (selectedRole.value) {
+  // Apply search query
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase()
+    filtered = filtered.filter(user =>
+      user.nom.toLowerCase().includes(query) ||
+      user.prenom?.toLowerCase().includes(query) ||
+      user.email.toLowerCase().includes(query) ||
+      user.role?.nom.toLowerCase().includes(query)
+    )
+  }
+
+  // Apply status filter
+  if (activeFilters.value.status.length > 0) {
     filtered = filtered.filter(user => {
-      const userRole = user.role?.nom?.toLowerCase() || ''
-      return userRole === selectedRole.value.toLowerCase()
+      const status = user.statut === 'actif' && user.est_actif ? 'active' : 'inactive'
+      return activeFilters.value.status.includes(status)
     })
   }
 
-  // Filtrage par recherche
-  if (searchQuery.value && searchQuery.value.trim()) {
-    const query = searchQuery.value.toLowerCase().trim()
-    filtered = filtered.filter(user => {
-      const fullName = user.fullName.toLowerCase()
-      const email = user.email.toLowerCase()
-      const role = (user.role?.nom || '').toLowerCase()
+  // Apply gender filter
+  if (activeFilters.value.gender.length > 0) {
+    filtered = filtered.filter(user =>
+      activeFilters.value.gender.includes(user.sexe)
+    )
+  }
 
-      return fullName.includes(query) ||
-             email.includes(query) ||
-             role.includes(query)
+  // Apply role filter
+  if (activeFilters.value.role.length > 0) {
+    filtered = filtered.filter(user =>
+      user.role && activeFilters.value.role.includes(user.role.nom)
+    )
+  }
+
+  // Apply permissions filter
+  if (activeFilters.value.permissions.length > 0) {
+    filtered = filtered.filter(user => {
+      // Vérifier les permissions directes de l'utilisateur
+      const hasDirectPermission = user.permissions?.some(perm =>
+        activeFilters.value.permissions.includes(perm.nom)
+      )
+
+      // Vérifier les permissions du rôle de l'utilisateur
+      const hasRolePermission = user.role?.permissions?.some(perm =>
+        activeFilters.value.permissions.includes(perm.nom)
+      )
+
+      return hasDirectPermission || hasRolePermission
     })
   }
 
   return filtered
 })
 
-// Fonction pour récupérer les utilisateurs
+// Fetch functions
 const fetchUsers = async () => {
   isLoading.value = true
   error.value = null
 
   try {
-    const response = await UsersApi.list({ skip: 0, limit: 100 })
-    users.value = response.map((user: Utilisateur) => ({
-      ...user,
-      fullName: `${user.prenom || ''} ${user.nom}`.trim(),
-    }))
+    users.value = await UsersApi.list({ skip: 0, limit: 100 })
   } catch (err: any) {
-    error.value = err.message || t('users.errors.fetchFailed')
+    error.value = err.message || t('system.users.errors.fetch_failed')
     console.error('Erreur lors de la récupération des utilisateurs:', err)
   } finally {
     isLoading.value = false
   }
 }
 
-// Fonction pour supprimer un utilisateur
-const deleteUser = async () => {
-  if (!userToDelete.value) return
-
+const fetchRoles = async () => {
   try {
-    await UsersApi.remove(userToDelete.value.id)
-    await fetchUsers() // Recharger la liste
-    showDeleteDialog.value = false
-    userToDelete.value = null
+    roles.value = await RolesApi.list({ skip: 0, limit: 100 })
   } catch (err: any) {
-    error.value = err.message || t('users.errors.deleteFailed')
-    console.error('Erreur lors de la suppression:', err)
+    console.error('Erreur lors de la récupération des rôles:', err)
   }
 }
 
-// Fonction pour confirmer la suppression
-const confirmDelete = (user: UtilisateurWithFullName) => {
-  userToDelete.value = user
-  showDeleteDialog.value = true
+const fetchPermissions = async () => {
+  isLoadingPermissions.value = true
+  try {
+    const result = await PermissionsApi.list({ skip: 0, limit: 100 })
+    permissions.value = result as PermissionLight[]
+  } catch (err: any) {
+    console.error('Erreur lors de la récupération des permissions:', err)
+  } finally {
+    isLoadingPermissions.value = false
+  }
 }
 
-// Fonction pour ajouter un utilisateur
-const addUser = async () => {
+const fetchAllData = async () => {
+  isLoading.value = true
   try {
-    await UsersApi.create(userForm.value)
+    await Promise.all([
+      fetchUsers(),
+      fetchRoles()
+      // Les permissions seront chargées à la demande
+    ])
+  } finally {
+    isLoading.value = false
+  }
+}
+
+// Filter handlers
+const handleFilterChange = (filters: FilterState) => {
+  activeFilters.value = filters
+}
+
+// Dialog handlers
+const handleViewUser = (user: UtilisateurLight) => {
+  selectedUser.value = user
+  showDetailsDialog.value = true
+}
+
+const handleEditUser = (user: UtilisateurLight) => {
+  selectedUser.value = user
+  showEditDialog.value = true
+}
+
+const handleAssignPermissions = (user: UtilisateurLight) => {
+  selectedUser.value = user
+  permissionsMode.value = 'assign'
+  showPermissionsDialog.value = true
+  // Charger les permissions si elles ne sont pas encore chargées
+  if (permissions.value.length === 0) {
+    fetchPermissions()
+  }
+}
+
+const handleRevokePermissions = (user: UtilisateurLight) => {
+  selectedUser.value = user
+  permissionsMode.value = 'revoke'
+  showPermissionsDialog.value = true
+  // Charger les permissions si elles ne sont pas encore chargées
+  if (permissions.value.length === 0) {
+    fetchPermissions()
+  }
+}
+
+const handleChangeStatus = (user: UtilisateurLight) => {
+  selectedUser.value = user
+  confirmAction.value = 'status'
+  confirmData.value = {
+    newStatus: user.statut === 'actif' ? 'inactif' : 'actif'
+  }
+  showConfirmDialog.value = true
+}
+
+// Permission assignment/revocation
+const onAssignPermissions = async (payload: { userId: number; permission_ids: number[] }) => {
+  confirmAction.value = 'assign'
+  confirmData.value = payload
+  showPermissionsDialog.value = false
+  showConfirmDialog.value = true
+}
+
+const onRevokePermissions = async (payload: { userId: number; permission_ids: number[] }) => {
+  confirmAction.value = 'revoke'
+  confirmData.value = payload
+  showPermissionsDialog.value = false
+  showConfirmDialog.value = true
+}
+
+// User update
+const onSaveUser = async (payload: { userId: number; data: any }) => {
+  try {
+    await UsersApi.update(payload.userId, payload.data)
     await fetchUsers()
-    showAddUserDialog.value = false
-    // Réinitialiser le formulaire
-    userForm.value = {
-      nom: '',
-      prenom: '',
-      email: '',
-      sexe: 'homme',
-      role_name: 'admin',
-    }
+    showEditDialog.value = false
+    showNotification.value = true
+    notificationMessage.value = t('system.users.notifications.update_success')
+    notificationType.value = 'success'
   } catch (err: any) {
-    error.value = err.message || t('users.errors.addFailed')
-    console.error('Erreur lors de l\'ajout:', err)
+    showNotification.value = true
+    notificationMessage.value = err.message || t('system.users.notifications.update_error')
+    notificationType.value = 'error'
   }
 }
 
-// Fonction pour résoudre la couleur du statut
-const resolveStatusVariant = (statut: string) => {
-  switch (statut.toLowerCase()) {
-    case 'actif':
-      return { color: 'success', text: t('users.status.active') }
-    case 'inactif':
-      return { color: 'error', text: t('users.status.inactive') }
-    case 'suspendu':
-      return { color: 'warning', text: t('users.status.suspended') }
-    default:
-      return { color: 'info', text: statut }
+
+
+
+
+// Confirmation handler
+const onConfirmYes = async () => {
+  try {
+    switch (confirmAction.value) {
+      case 'assign':
+        await UsersApi.assignPermissions(confirmData.value.userId, confirmData.value.permission_ids)
+        notificationMessage.value = t('system.users.notifications.assign_success')
+        break
+      case 'revoke':
+        await UsersApi.revokePermissions(confirmData.value.userId, confirmData.value.permission_ids)
+        notificationMessage.value = t('system.users.notifications.revoke_success')
+        break
+      case 'status':
+        await UsersApi.changeStatus(selectedUser.value!.id, confirmData.value.newStatus)
+        notificationMessage.value = t('system.users.notifications.status_success')
+        break
+    }
+
+    await fetchUsers()
+    showConfirmDialog.value = false
+    showNotification.value = true
+    notificationType.value = 'success'
+  } catch (err: any) {
+    showNotification.value = true
+    notificationMessage.value = err.message || t('system.users.notifications.action_error')
+    notificationType.value = 'error'
+    showConfirmDialog.value = false
   }
 }
-
-// Fonction pour résoudre la couleur du rôle
-const resolveRoleVariant = (role: string) => {
-  switch (role.toLowerCase()) {
-    case 'admin':
-      return { color: 'error', icon: 'ri-shield-star-line' }
-    case 'coordonnateur':
-      return { color: 'primary', icon: 'ri-user-settings-line' }
-    case 'formateur':
-      return { color: 'info', icon: 'ri-graduation-cap-line' }
-    case 'referent':
-      return { color: 'warning', icon: 'ri-user-heart-line' }
-    case 'apprenant':
-      return { color: 'success', icon: 'ri-user-line' }
-    default:
-      return { color: 'secondary', icon: 'ri-user-line' }
-  }
-}
-
-// Fonction pour générer les initiales
-const avatarText = (name: string) => {
-  const names = name.split(' ')
-  return names.map(n => n.charAt(0)).join('').toUpperCase()
-}
-
-// Fonction pour formater la date
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('fr-FR')
-}
-
-
 
 // Charger les données au montage
 onMounted(() => {
-  fetchUsers()
+  fetchAllData()
 })
 </script>
 
@@ -196,315 +280,107 @@ onMounted(() => {
     <div class="d-flex justify-space-between align-center mb-6">
       <div>
         <h4 class="text-h4 mb-1">
-          {{ t('users.title') }}
+          {{ t('system.users.title') }}
         </h4>
         <p class="text-body-1 mb-0">
-          {{ t('users.subtitle') }}
+          {{ t('system.users.subtitle') }}
         </p>
       </div>
 
-      <VBtn
-        color="primary"
-        @click="showAddUserDialog = true"
-      >
-        <VIcon start icon="ri-add-line" />
-        {{ t('users.addUser') }}
-      </VBtn>
+      <div class="d-flex gap-3">
+        <VTextField v-model="searchQuery" :placeholder="t('system.users.search')" prepend-inner-icon="ri-search-line"
+          variant="outlined" density="compact" style="min-inline-size: 300px;" clearable />
+        <VBtn color="primary" @click="fetchAllData" :loading="isLoading" prepend-icon="ri-refresh-line">
+          {{ t('common.refresh') }}
+        </VBtn>
+      </div>
     </div>
 
-    <!-- Filtres et recherche -->
-    <VCard class="mb-6">
-      <VCardText>
-        <VRow>
-          <VCol cols="12" md="6">
-            <VTextField
-              v-model="searchQuery"
-              :placeholder="t('users.searchPlaceholder')"
-              prepend-inner-icon="ri-search-line"
-              clearable
-            />
-          </VCol>
-          <VCol cols="12" md="3">
-            <VSelect
-              v-model="selectedRole"
-              :label="t('users.filterByRole')"
-              :items="[
-                { title: t('users.roles.admin'), value: 'admin' },
-                { title: t('users.roles.coordinator'), value: 'coordonnateur' },
-                { title: t('users.roles.trainer'), value: 'formateur' },
-                { title: t('users.roles.referent'), value: 'referent' },
-                { title: t('users.roles.learner'), value: 'apprenant' }
-              ]"
-              clearable
-            />
-          </VCol>
-          <VCol cols="12" md="3">
-            <VBtn
-              variant="outlined"
-              @click="fetchUsers"
-              :loading="isLoading"
-            >
-              <VIcon start icon="ri-refresh-line" />
-              {{ t('common.refresh') }}
-            </VBtn>
-          </VCol>
-        </VRow>
-      </VCardText>
-    </VCard>
+    <!-- Statistics -->
+    <UsersStats :users="users" :loading="isLoading" class="mb-6" />
 
     <!-- Message d'erreur -->
-    <VAlert
-      v-if="error"
-      type="error"
-      variant="tonal"
-      class="mb-6"
-      closable
-      @click:close="error = null"
-    >
+    <VAlert v-if="error" type="error" variant="tonal" class="mb-6" closable @click:close="error = null">
       {{ error }}
     </VAlert>
 
-    <!-- Tableau des utilisateurs -->
+    <!-- Users Table -->
     <VCard>
-      <VCardTitle class="d-flex justify-space-between align-center">
-        <span>{{ t('users.title') }}</span>
-        <VChip
-          v-if="filteredUsers.length !== users.length"
-          color="primary"
-          variant="tonal"
-          size="small"
-        >
-          {{ t('users.count.filtered', { count: filteredUsers.length, total: users.length }) }}
+      <!-- <VCardTitle class="d-flex justify-space-between align-center">
+        <span>{{ t('system.users.table.title') }}</span>
+        <VChip color="primary" variant="tonal" size="small">
+          {{ filteredUsers.length }} {{ t('system.users.total') }}
         </VChip>
-        <VChip
-          v-else
-          color="success"
-          variant="tonal"
-          size="small"
-        >
-          {{ users.length }} {{ users.length === 1 ? t('users.count.single') : t('users.count.plural') }}
-        </VChip>
-      </VCardTitle>
+      </VCardTitle> -->
 
-      <VDataTable
-        v-model="selectedUsers"
-        :headers="headers"
-        :items="filteredUsers"
-        :loading="isLoading"
-        :items-per-page="10"
-        show-select
-        class="text-no-wrap"
-      >
-        <!-- Nom complet avec avatar -->
-        <template #item.fullName="{ item }">
-          <div class="d-flex align-center">
-            <VAvatar
-              size="32"
-              color="primary"
-              variant="tonal"
-            >
-              <span class="text-sm">{{ avatarText(item.fullName) }}</span>
-            </VAvatar>
-            <div class="d-flex flex-column ms-3">
-              <RouterLink
-                :to="`/system/users/${item.id}`"
-                class="text-decoration-none"
-              >
-                <span class="d-block font-weight-medium text-primary text-truncate cursor-pointer">
-                  {{ item.fullName }}
-                </span>
-              </RouterLink>
-              <small>{{ item.email }}</small>
-            </div>
-          </div>
-        </template>
+      <VCardText>
+        <!-- Filters -->
+        <UsersFilters :users="users" :search-query="searchQuery" :loading="isLoading"
+          @update:search-query="searchQuery = $event" @filter-change="handleFilterChange" />
 
-        <!-- Rôle -->
-        <template #item.role="{ item }">
-          <VChip
-            :color="resolveRoleVariant(item.role?.nom || '').color"
-            :prepend-icon="resolveRoleVariant(item.role?.nom || '').icon"
-            size="small"
-            variant="tonal"
-          >
-            {{ item.role?.nom || t('users.noRole') }}
-          </VChip>
-        </template>
-
-        <!-- Statut -->
-        <template #item.statut="{ item }">
-          <VChip
-            :color="resolveStatusVariant(item.statut).color"
-            class="font-weight-medium"
-            size="small"
-          >
-            {{ resolveStatusVariant(item.statut).text }}
-          </VChip>
-        </template>
-
-        <!-- Date de création -->
-        <template #item.created_at="{ item }">
-          {{ formatDate(item.created_at) }}
-        </template>
-
-        <!-- Actions -->
-        <template #item.actions="{ item }">
-          <div class="d-flex gap-2">
-            <VBtn
-              icon
-              size="small"
-              color="primary"
-              variant="text"
-              :to="`/system/users/${item.id}`"
-            >
-              <VIcon icon="ri-eye-line" />
-              <VTooltip activator="parent">
-                {{ t('users.actions.view') }}
-              </VTooltip>
-            </VBtn>
-
-            <VBtn
-              icon
-              size="small"
-              color="info"
-              variant="text"
-              :to="`/system/users/${item.id}/edit`"
-            >
-              <VIcon icon="ri-edit-line" />
-              <VTooltip activator="parent">
-                {{ t('users.actions.edit') }}
-              </VTooltip>
-            </VBtn>
-
-            <VBtn
-              icon
-              size="small"
-              color="error"
-              variant="text"
-              @click="confirmDelete(item)"
-            >
-              <VIcon icon="ri-delete-bin-line" />
-              <VTooltip activator="parent">
-                {{ t('users.actions.delete') }}
-              </VTooltip>
-            </VBtn>
-          </div>
-        </template>
-      </VDataTable>
+        <!-- Table -->
+        <UsersTable :users="filteredUsers" :loading="isLoading" @view-user="handleViewUser" @edit-user="handleEditUser"
+          @assign-perms="handleAssignPermissions" @revoke-perms="handleRevokePermissions"
+          @change-status="handleChangeStatus" />
+      </VCardText>
     </VCard>
 
-    <!-- Dialog de confirmation de suppression -->
-    <VDialog
-      v-model="showDeleteDialog"
-      max-width="400"
-    >
+
+
+    <!-- User Details Dialog -->
+    <UserDetailsDialog v-model="showDetailsDialog" :user="selectedUser" @edit-user="handleEditUser"
+      @assign-perms="handleAssignPermissions" @revoke-perms="handleRevokePermissions" />
+
+    <!-- User Edit Dialog -->
+    <UserEditDialog v-model="showEditDialog" :user="selectedUser" :roles="roles" :loading="isLoading"
+      @save="onSaveUser" />
+
+    <!-- User Permissions Dialog -->
+    <UserPermissionsDialog v-model="showPermissionsDialog" :user="selectedUser" :all-permissions="permissions"
+      :mode="permissionsMode" :loading="isLoadingPermissions" @assign="onAssignPermissions"
+      @revoke="onRevokePermissions" />
+
+    <!-- Confirmation Dialog -->
+    <VDialog v-model="showConfirmDialog" max-width="500" persistent>
       <VCard>
         <VCardTitle class="text-h6">
-          {{ t('users.deleteDialog.title') }}
+          <VIcon
+            :icon="confirmAction === 'assign' ? 'ri-shield-check-line' : confirmAction === 'revoke' ? 'ri-shield-cross-line' : 'ri-user-settings-line'"
+            class="me-2" />
+          {{ t(`system.users.confirm.${confirmAction}_title`) }}
         </VCardTitle>
 
         <VCardText>
-          {{ t('users.deleteDialog.message', { name: userToDelete?.fullName }) }}
+          <p>{{ t(`system.users.confirm.${confirmAction}_message`) }}</p>
+          <div v-if="selectedUser" class="d-flex align-center mt-3">
+            <VAvatar size="32" color="primary" variant="tonal" class="me-3">
+              <span class="text-sm">{{ `${selectedUser.prenom?.[0] || ''}${selectedUser.nom[0]}`.toUpperCase() }}</span>
+            </VAvatar>
+            <div>
+              <div class="font-weight-medium">{{ `${selectedUser.prenom || ''} ${selectedUser.nom}`.trim() }}</div>
+              <div class="text-caption text-medium-emphasis">{{ selectedUser.email }}</div>
+            </div>
+          </div>
         </VCardText>
 
         <VCardActions>
           <VSpacer />
-
-          <VBtn
-            color="grey"
-            variant="outlined"
-            @click="showDeleteDialog = false"
-          >
+          <VBtn variant="outlined" @click="showConfirmDialog = false">
             {{ t('common.cancel') }}
           </VBtn>
-
-          <VBtn
-            color="error"
-            @click="deleteUser"
-          >
-            {{ t('users.actions.delete') }}
+          <VBtn :color="confirmAction === 'revoke' ? 'warning' : 'primary'" @click="onConfirmYes">
+            {{ t('common.confirm') }}
           </VBtn>
         </VCardActions>
       </VCard>
     </VDialog>
 
-    <!-- Dialog d'ajout d'utilisateur -->
-    <VDialog
-      v-model="showAddUserDialog"
-      max-width="600"
-    >
-      <VCard>
-        <VCardTitle class="text-h6">
-          {{ t('users.addDialog.title') }}
-        </VCardTitle>
-
-        <VCardText>
-          <VForm @submit.prevent="addUser">
-            <VRow>
-              <VCol cols="12" md="6">
-                <VTextField
-                  v-model="userForm.nom"
-                  :label="t('users.addDialog.form.lastName')"
-                  required
-                />
-              </VCol>
-              <VCol cols="12" md="6">
-                <VTextField
-                  v-model="userForm.prenom"
-                  :label="t('users.addDialog.form.firstName')"
-                />
-              </VCol>
-              <VCol cols="12">
-                <VTextField
-                  v-model="userForm.email"
-                  :label="t('users.addDialog.form.email')"
-                  type="email"
-                  required
-                />
-              </VCol>
-              <VCol cols="12" md="6">
-                <VSelect
-                  v-model="userForm.sexe"
-                  :label="t('users.addDialog.form.gender')"
-                  :items="[
-                    { title: t('users.addDialog.form.genderOptions.male'), value: 'homme' },
-                    { title: t('users.addDialog.form.genderOptions.female'), value: 'femme' }
-                  ]"
-                  required
-                />
-              </VCol>
-              <VCol cols="12" md="6">
-                <VSelect
-                  v-model="userForm.role_name"
-                  :label="t('users.addDialog.form.role')"
-                  :items="roles.map(r => ({ title: r.label, value: r.nom }))"
-                  required
-                />
-              </VCol>
-            </VRow>
-          </VForm>
-        </VCardText>
-
-        <VCardActions>
-          <VSpacer />
-
-          <VBtn
-            color="grey"
-            variant="outlined"
-            @click="showAddUserDialog = false"
-          >
-            {{ t('users.addDialog.actions.cancel') }}
-          </VBtn>
-
-          <VBtn
-            color="primary"
-            @click="addUser"
-          >
-            {{ t('users.addDialog.actions.add') }}
-          </VBtn>
-        </VCardActions>
-      </VCard>
-    </VDialog>
+    <!-- Notification -->
+    <VSnackbar v-model="showNotification" :color="notificationType" location="top right" timeout="4000">
+      {{ notificationMessage }}
+      <template #actions>
+        <VBtn icon="ri-close-line" @click="showNotification = false" />
+      </template>
+    </VSnackbar>
   </div>
 </template>
-
