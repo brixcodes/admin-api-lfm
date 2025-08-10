@@ -11,6 +11,28 @@ import { themes } from './theme'
 import '@core/scss/template/libs/vuetify/index.scss'
 import 'vuetify/styles'
 
+// Fonction pour détecter le thème préféré
+function getInitialTheme(): string {
+  // Vérifier si on est côté client
+  if (typeof window === 'undefined') {
+    return 'light'
+  }
+
+  // 1. Vérifier le localStorage
+  const savedTheme = localStorage.getItem('theme')
+  if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+    return savedTheme
+  }
+
+  // 2. Détecter la préférence système
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'dark'
+  }
+
+  // 3. Par défaut : light
+  return 'light'
+}
+
 export default function (app: App) {
   const vuetify = createVuetify({
     aliases: {
@@ -19,7 +41,7 @@ export default function (app: App) {
     defaults,
     icons,
     theme: {
-      defaultTheme: 'light',
+      defaultTheme: getInitialTheme(),
       themes,
     },
   })

@@ -47,7 +47,9 @@ import type {
   Role, RoleCreate, RoleUpdate,
   SanteGenotypeCreate, SanteGenotypeUpdate,
   SanteGenotype as SanteT,
-  Utilisateur, UtilisateurCreate, UtilisateurUpdate
+  Utilisateur, UtilisateurCreate,
+  UtilisateurLight,
+  UtilisateurUpdate
 } from '../types/models';
 
 export interface PageQuery extends Query { skip?: number; limit?: number }
@@ -66,9 +68,11 @@ export function createRestService<T, TCreate = Partial<T>, TUpdate = Partial<T>>
 // ---------------------- Services typés alignés au backend ----------------------
 export const UsersApi = {
   ...createRestService<Utilisateur, UtilisateurCreate, UtilisateurUpdate>('/users'),
-  changeStatus: (userId: number, statut: string) => apiClient.put<Utilisateur>(`/users/${userId}/status`, undefined, { statut }),
-  assignPermissions: (userId: number, permission_ids: number[]) => apiClient.post<string, { permission_ids: number[] }>(`/users/${userId}/assign-permissions`, { permission_ids }),
-  revokePermissions: (userId: number, permission_ids: number[]) => apiClient.post<string, { permission_ids: number[] }>(`/users/${userId}/revoke-permissions`, { permission_ids }),
+  changeStatus: (userId: number, statut: string) => apiClient.put<UtilisateurLight>(`/users/${userId}/status?statut=${statut}`, {}),
+  assignPermissions: (userId: number, permission_ids: number[]) =>
+    apiClient.post<string, number[]>(`/users/${userId}/assign-permissions`, permission_ids),
+  revokePermissions: (userId: number, permission_ids: number[]) =>
+    apiClient.post<string, number[]>(`/users/${userId}/revoke-permissions`, permission_ids),
   me: (token: string) => apiClient.get<Utilisateur>(`/users/me`, { token }),
   updateProfile: (userId: number, data: UtilisateurUpdate) => apiClient.put<Utilisateur>(`/users/${userId}`, data),
 }

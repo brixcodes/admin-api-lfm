@@ -119,8 +119,8 @@
         "edit": "Modifier",
         "assign": "Affecter",
         "revoke": "Révoquer",
-        "assign_permissions": "Affecter des permissions",
-        "revoke_permissions": "Révoquer des permissions",
+        "assign_permissions": "Affecter",
+        "revoke_permissions": "Révoquer",
         "activate": "Activer",
         "deactivate": "Désactiver",
         "delete": "Supprimer"
@@ -148,6 +148,7 @@
         "last_name": "Nom",
         "gender": "Sexe",
         "birth_date": "Date de naissance",
+        "years_old": "ans",
         "email": "Email",
         "status": "Statut",
         "created_at": "Créé le",
@@ -182,7 +183,9 @@
         "email_placeholder": "Entrez l'email",
         "gender": "Sexe",
         "role": "Rôle",
-        "current_role": "Rôle actuel"
+        "current_role": "Rôle actuel",
+        "birth_date": "Date de naissance",
+        "birth_date_placeholder": "Sélectionnez la date de naissance"
       },
       "permissions": {
         "title": "Gestion des permissions",
@@ -203,7 +206,9 @@
         "revoke_title": "Confirmer la révocation",
         "revoke_message": "Voulez-vous vraiment révoquer ces permissions de cet utilisateur ?",
         "status_title": "Confirmer le changement de statut",
-        "status_message": "Voulez-vous vraiment changer le statut de cet utilisateur ?"
+        "status_message": "Voulez-vous vraiment changer le statut de cet utilisateur ?",
+        "edit_title": "Confirmer la modification",
+        "edit_message": "Voulez-vous vraiment sauvegarder ces modifications ?"
       },
       "notifications": {
         "assign_success": "Permissions affectées avec succès",

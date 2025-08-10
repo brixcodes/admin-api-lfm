@@ -35,7 +35,7 @@ const notificationMessage = ref('')
 const notificationType = ref<'success' | 'error'>('success')
 
 // Confirmation state
-const confirmAction = ref<'assign' | 'revoke' | 'status' | 'delete'>('assign')
+const confirmAction = ref<'assign' | 'revoke' | 'status' | 'delete' | 'edit'>('assign')
 const confirmData = ref<any>(null)
 
 // Filter state
@@ -220,18 +220,10 @@ const onRevokePermissions = async (payload: { userId: number; permission_ids: nu
 
 // User update
 const onSaveUser = async (payload: { userId: number; data: any }) => {
-  try {
-    await UsersApi.update(payload.userId, payload.data)
-    await fetchUsers()
-    showEditDialog.value = false
-    showNotification.value = true
-    notificationMessage.value = t('system.users.notifications.update_success')
-    notificationType.value = 'success'
-  } catch (err: any) {
-    showNotification.value = true
-    notificationMessage.value = err.message || t('system.users.notifications.update_error')
-    notificationType.value = 'error'
-  }
+  confirmAction.value = 'edit'
+  confirmData.value = payload
+  showEditDialog.value = false
+  showConfirmDialog.value = true
 }
 
 
@@ -253,6 +245,10 @@ const onConfirmYes = async () => {
       case 'status':
         await UsersApi.changeStatus(selectedUser.value!.id, confirmData.value.newStatus)
         notificationMessage.value = t('system.users.notifications.status_success')
+        break
+      case 'edit':
+        await UsersApi.update(confirmData.value.userId, confirmData.value.data)
+        notificationMessage.value = t('system.users.notifications.update_success')
         break
     }
 
@@ -299,20 +295,8 @@ onMounted(() => {
     <!-- Statistics -->
     <UsersStats :users="users" :loading="isLoading" class="mb-6" />
 
-    <!-- Message d'erreur -->
-    <VAlert v-if="error" type="error" variant="tonal" class="mb-6" closable @click:close="error = null">
-      {{ error }}
-    </VAlert>
-
     <!-- Users Table -->
     <VCard>
-      <!-- <VCardTitle class="d-flex justify-space-between align-center">
-        <span>{{ t('system.users.table.title') }}</span>
-        <VChip color="primary" variant="tonal" size="small">
-          {{ filteredUsers.length }} {{ t('system.users.total') }}
-        </VChip>
-      </VCardTitle> -->
-
       <VCardText>
         <!-- Filters -->
         <UsersFilters :users="users" :search-query="searchQuery" :loading="isLoading"
@@ -341,20 +325,35 @@ onMounted(() => {
       @revoke="onRevokePermissions" />
 
     <!-- Confirmation Dialog -->
-    <VDialog v-model="showConfirmDialog" max-width="500" persistent>
-      <VCard>
-        <VCardTitle class="text-h6">
-          <VIcon
-            :icon="confirmAction === 'assign' ? 'ri-shield-check-line' : confirmAction === 'revoke' ? 'ri-shield-cross-line' : 'ri-user-settings-line'"
-            class="me-2" />
-          {{ t(`system.users.confirm.${confirmAction}_title`) }}
+    <VDialog v-model="showConfirmDialog" max-width="420" persistent>
+      <VCard class="pa-4 rounded-lg">
+        <!-- Header -->
+        <VCardTitle class="d-flex align-center pb-2">
+          <VAvatar size="40" :color="confirmAction === 'assign' ? 'green-lighten-4' :
+            confirmAction === 'revoke' ? 'red-lighten-4' :
+              confirmAction === 'edit' ? 'orange-lighten-4' : 'blue-lighten-4'" variant="tonal" class="me-3">
+            <VIcon size="24" :color="confirmAction === 'assign' ? 'green-darken-2' :
+              confirmAction === 'revoke' ? 'red-darken-2' :
+                confirmAction === 'edit' ? 'orange-darken-2' : 'blue-darken-2'" :icon="confirmAction === 'assign' ? 'ri-shield-check-line' :
+                      confirmAction === 'revoke' ? 'ri-shield-cross-line' :
+                        confirmAction === 'edit' ? 'ri-edit-line' : 'ri-user-settings-line'" />
+          </VAvatar>
+          <span class="text-h6 font-weight-bold">
+            {{ t(`system.users.confirm.${confirmAction}_title`) }}
+          </span>
         </VCardTitle>
 
-        <VCardText>
-          <p>{{ t(`system.users.confirm.${confirmAction}_message`) }}</p>
-          <div v-if="selectedUser" class="d-flex align-center mt-3">
-            <VAvatar size="32" color="primary" variant="tonal" class="me-3">
-              <span class="text-sm">{{ `${selectedUser.prenom?.[0] || ''}${selectedUser.nom[0]}`.toUpperCase() }}</span>
+        <!-- Content -->
+        <VCardText class="pt-1">
+          <p class="mb-4 text-body-2 text-medium-emphasis">
+            {{ t(`system.users.confirm.${confirmAction}_message`) }}
+          </p>
+
+          <div v-if="selectedUser" class="d-flex align-center">
+            <VAvatar size="40" color="primary" variant="tonal" class="me-3">
+              <span class="text-sm font-weight-medium">
+                {{ `${selectedUser.prenom?.[0] || ''}${selectedUser.nom[0]}`.toUpperCase() }}
+              </span>
             </VAvatar>
             <div>
               <div class="font-weight-medium">{{ `${selectedUser.prenom || ''} ${selectedUser.nom}`.trim() }}</div>
@@ -363,17 +362,19 @@ onMounted(() => {
           </div>
         </VCardText>
 
-        <VCardActions>
-          <VSpacer />
-          <VBtn variant="outlined" @click="showConfirmDialog = false">
+        <!-- Actions -->
+        <VCardActions class="justify-end pt-3">
+          <VBtn variant="outlined" color="error" class="" @click="showConfirmDialog = false">
             {{ t('common.cancel') }}
           </VBtn>
-          <VBtn :color="confirmAction === 'revoke' ? 'warning' : 'primary'" @click="onConfirmYes">
+          <VBtn class="" variant="flat" :color="confirmAction === 'revoke' ? 'warning' : 'primary'"
+            @click="onConfirmYes">
             {{ t('common.confirm') }}
           </VBtn>
         </VCardActions>
       </VCard>
     </VDialog>
+
 
     <!-- Notification -->
     <VSnackbar v-model="showNotification" :color="notificationType" location="top right" timeout="4000">

@@ -59,6 +59,23 @@ const totalPermissions = computed(() => {
   return rolePermissions + directPermissions
 })
 
+// Calculate age from birth date
+const userAge = computed(() => {
+  if (!props.user?.date_naissance) return null
+
+  const birthDate = new Date(props.user.date_naissance)
+  const today = new Date()
+
+  let age = today.getFullYear() - birthDate.getFullYear()
+  const monthDiff = today.getMonth() - birthDate.getMonth()
+
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--
+  }
+
+  return age
+})
+
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('fr-FR', {
     year: 'numeric',
@@ -87,7 +104,7 @@ const closeDialog = () => {
       <VCardText class="pa-0">
         <VRow no-gutters>
           <!-- Left Panel - User Profile -->
-          <VCol cols="12" md="4" class="bg-variant">
+          <VCol cols="12" md="6" class="bg-variant">
             <div class="pa-6 text-center">
               <!-- User Avatar -->
               <VAvatar size="120" :color="statusColor" variant="tonal" class="mb-4">
@@ -134,6 +151,9 @@ const closeDialog = () => {
                 <div class="mb-3" v-if="user.date_naissance">
                   <span class="text-caption text-medium-emphasis mr-2">{{ t('system.users.details.birth_date') }}</span>
                   <span class="font-weight-medium">{{ formatDate(user.date_naissance) }}</span>
+                  <VChip v-if="userAge !== null" size="x-small" variant="outlined" color="info" class="ml-2">
+                    {{ userAge }} {{ t('system.users.details.years_old') }}
+                  </VChip>
                 </div>
 
                 <div class="mb-3">
@@ -150,27 +170,28 @@ const closeDialog = () => {
               </div>
 
               <!-- Action Buttons -->
-              <div class="d-flex flex-column gap-2">
-                <VBtn color="primary" variant="flat" block @click="emit('edit-user', user)">
+              <div class="d-flex flex-row gap-2">
+                <VBtn color="primary" variant="flat" @click="emit('edit-user', user)">
                   <VIcon start icon="ri-edit-line" />
                   {{ t('system.users.actions.edit') }}
                 </VBtn>
 
-                <VBtn color="success" variant="outlined" block @click="emit('assign-perms', user)">
+                <VBtn color="success" variant="outlined" @click="emit('assign-perms', user)">
                   <VIcon start icon="ri-shield-check-line" />
                   {{ t('system.users.actions.assign_permissions') }}
                 </VBtn>
 
-                <VBtn color="warning" variant="outlined" block @click="emit('revoke-perms', user)">
+                <VBtn color="warning" variant="outlined" @click="emit('revoke-perms', user)">
                   <VIcon start icon="ri-shield-cross-line" />
                   {{ t('system.users.actions.revoke_permissions') }}
                 </VBtn>
               </div>
+
             </div>
           </VCol>
 
           <!-- Right Panel - Tabbed Content -->
-          <VCol cols="12" md="8">
+          <VCol cols="12" md="6">
 
             <!-- Close Button -->
             <div class="d-flex justify-end mb-4 pa-3">

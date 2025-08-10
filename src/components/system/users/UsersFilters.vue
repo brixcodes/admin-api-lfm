@@ -132,35 +132,41 @@ const hasActiveFilters = computed(() => {
     <!-- Status Filter -->
     <VCol cols="12" md="3">
       <VSelect v-model="selectedStatus" :label="t('system.users.filters.status')" :items="statusOptions"
-        variant="outlined" density="compact" multiple chips clearable :loading="loading" />
+        variant="outlined" density="compact" multiple chips clearable :loading="loading">
+        <template #prepend-inner>
+          <i class="ri-checkbox-circle-line"></i>
+        </template>
+      </VSelect>
     </VCol>
 
     <!-- Gender Filter -->
     <VCol cols="12" md="3">
       <VSelect v-model="selectedGender" :label="t('system.users.filters.gender')" :items="genderOptions"
-        variant="outlined" density="compact" multiple chips clearable :loading="loading" />
+        variant="outlined" density="compact" multiple chips clearable :loading="loading">
+        <template #prepend-inner>
+          <i class="ri-genderless-line"></i>
+        </template>
+      </VSelect>
     </VCol>
 
     <!-- Role Filter -->
     <VCol cols="12" md="3">
       <VSelect v-model="selectedRole" :label="t('system.users.filters.role')" :items="roleOptions" variant="outlined"
-        density="compact" multiple chips clearable :loading="loading" />
+        density="compact" multiple chips clearable :loading="loading">
+        <template #prepend-inner>
+          <i class="ri-shield-user-line"></i>
+        </template>
+      </VSelect>
     </VCol>
 
     <!-- Permissions Filter -->
     <VCol cols="12" md="3">
       <VSelect v-model="selectedPermissions" :label="t('system.users.filters.permissions')" :items="permissionOptions"
-        variant="outlined" density="compact" multiple chips clearable :loading="loading" />
+        variant="outlined" density="compact" multiple chips clearable :loading="loading">
+        <template #prepend-inner>
+          <i class="ri-key-2-line"></i>
+        </template>
+      </VSelect>
     </VCol>
-
-    <!-- Clear Filters
-    <VCol cols="12" md="1" class="d-flex align-center">
-      <VBtn v-if="hasActiveFilters" icon variant="outlined" color="error" size="small" @click="clearAllFilters">
-        <VIcon icon="ri-close-line" />
-        <VTooltip activator="parent">
-          {{ t('system.users.filters.clear_all') }}
-        </VTooltip>
-      </VBtn>
-    </VCol> -->
   </VRow>
 </template>

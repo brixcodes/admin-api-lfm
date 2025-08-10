@@ -97,8 +97,8 @@
       "table": {
         "title": "Users list",
         "user": "USER",
+        "gender": "GENDER",
         "role": "ROLE",
-        "permissions": "PERMISSIONS",
         "status": "STATUS",
         "created": "CREATED",
         "actions": "ACTIONS",
@@ -118,8 +118,8 @@
         "edit": "Edit",
         "assign": "Assign",
         "revoke": "Revoke",
-        "assign_permissions": "Assign permissions",
-        "revoke_permissions": "Revoke permissions",
+        "assign_permissions": "Assign",
+        "revoke_permissions": "Revoke",
         "activate": "Activate",
         "deactivate": "Deactivate",
         "delete": "Delete"
@@ -131,6 +131,13 @@
         "total_permissions": "Total permissions",
         "last_week": "Last week analytics"
       },
+      "filters": {
+        "status": "Status",
+        "gender": "Gender",
+        "role": "Role",
+        "permissions": "Permissions",
+        "clear_all": "Clear all filters"
+      },
       "details": {
         "title": "User details",
         "personal_info": "Personal information",
@@ -140,13 +147,29 @@
         "last_name": "Last name",
         "gender": "Gender",
         "birth_date": "Birth date",
+        "years_old": "years old",
         "email": "Email",
         "status": "Status",
         "created_at": "Created at",
         "updated_at": "Updated at",
+        "username": "Username",
+        "details_title": "Details",
+        "permissions_count": "Permissions",
+        "projects_count": "Projects",
         "role_permissions": "Role permissions",
         "direct_permissions": "Direct permissions",
-        "no_permissions": "No permissions assigned"
+        "no_permissions": "No permissions assigned",
+        "project_list": "Project List",
+        "project": "PROJECT",
+        "total_task": "TOTAL TASKS",
+        "progress": "PROGRESS",
+        "hours": "HOURS",
+        "activity_coming_soon": "Activity history will be available soon",
+        "tabs": {
+          "overview": "Overview",
+          "permissions": "Permissions",
+          "activity": "Activity"
+        }
       },
       "edit": {
         "title": "Edit user",
@@ -244,6 +267,13 @@
         "clear": "Clear",
         "nothingToAssign": "No permission available to add.",
         "nothingToRevoke": "No associated permission to remove."
+      },
+      "labels": {
+        "admin": "Administrator",
+        "coordonnateur": "Coordinator",
+        "formateur": "Trainer",
+        "referent": "Referent",
+        "apprenant": "Learner"
       }
     },
     "permissions": {

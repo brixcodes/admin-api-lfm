@@ -13,4 +13,14 @@ body.v-theme--dark {
   .ps__thumb-y {
     background-color: variables.$plugin-ps-thumb-y-dark;
   }
+
+  // 👉 Atténuation du texte primaire en mode sombre
+  .text-primary {
+    color: rgba(var(--v-theme-primary), 0.85) !important;
+  }
+
+  // 👉 Liens moins agressifs en mode sombre
+  a {
+    color: rgba(var(--v-theme-primary), 0.8) !important;
+  }
 }

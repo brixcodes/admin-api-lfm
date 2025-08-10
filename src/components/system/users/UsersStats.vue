@@ -70,7 +70,7 @@ const stats = computed(() => [
     title: t('system.users.stats.active_users'),
     value: activeUsers.value,
     subtitle: t('system.users.stats.last_week'),
-    icon: 'ri-user-check-line',
+    icon: 'ri-user-star-line',
     color: 'success',
     change: getGrowthPercentage(activeUsers.value, totalUsers.value)
   },

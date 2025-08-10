@@ -58,6 +58,11 @@ $card-spacer-content: 16px;
   color: rgba(255, 255, 255, var(--v-high-emphasis-opacity));
 }
 
+// 👉 Couleur primaire atténuée pour le mode sombre
+.text-primary-soft {
+  color: rgba(var(--v-theme-primary), 0.8) !important;
+}
+
 .text-link {
   &:not(:hover) {
     color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
