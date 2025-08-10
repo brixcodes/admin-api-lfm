@@ -1,9 +1,9 @@
 import type {
-    EvaluationTypeEnum, FileTypeEnum, GenotypeTypeEnum, MethodePaiementEnum,
-    PermissionEnum,
-    RoleEnum, SexeEnum, StatutCompteEnum,
-    StatutFormationEnum,
-    StatutPaiementEnum
+  EvaluationTypeEnum, FileTypeEnum, GenotypeTypeEnum, MethodePaiementEnum,
+  PermissionEnum,
+  RoleEnum, SexeEnum, StatutCompteEnum,
+  StatutFormationEnum,
+  StatutPaiementEnum
 } from './enums';
 
 // Light interfaces
@@ -59,6 +59,7 @@ export interface UtilisateurCreate {
   sexe: SexeEnum
   email: string
   role_name: RoleEnum
+  date_naissance?: string | null
 }
 export interface UtilisateurUpdate {
   nom?: string

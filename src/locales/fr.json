@@ -83,7 +83,7 @@
     "users": {
       "title": "Gestion des utilisateurs",
       "subtitle": "Gérez les comptes utilisateurs, leurs rôles et permissions",
-      "add": "Ajouter un utilisateur",
+      "add": "Ajouter",
       "edit": "Modifier l'utilisateur",
       "delete": "Supprimer l'utilisateur",
       "search": "Rechercher un utilisateur",
@@ -172,20 +172,29 @@
           "activity": "Activité"
         }
       },
-      "edit": {
-        "title": "Modifier l'utilisateur",
-        "subtitle": "Modifiez les informations de l'utilisateur",
+      "create": {
+        "title": "Ajouter un utilisateur",
+        "subtitle": "Créez un nouveau compte utilisateur",
         "first_name": "Prénom",
         "first_name_placeholder": "Entrez le prénom",
         "last_name": "Nom",
         "last_name_placeholder": "Entrez le nom",
         "email": "Email",
-        "email_placeholder": "Entrez l'email",
+        "email_placeholder": "Entrez l'adresse email",
         "gender": "Sexe",
         "role": "Rôle",
-        "current_role": "Rôle actuel",
         "birth_date": "Date de naissance",
-        "birth_date_placeholder": "Sélectionnez la date de naissance"
+        "birth_date_placeholder": "Sélectionnez la date de naissance",
+        "password_note": "Un mot de passe sera généré automatiquement et envoyé par email à l'utilisateur.",
+        "submit": "Enregistrer",
+        "confirm": {
+          "title": "Confirmer la création",
+          "subtitle": "Vérifiez les informations avant de créer l'utilisateur",
+          "message": "Vous êtes sur le point de créer un nouveau compte utilisateur avec les informations suivantes :",
+          "summary": "Résumé de l'utilisateur",
+          "password_info": "Un mot de passe temporaire sera généré et envoyé à l'utilisateur par email.",
+          "create": "Confirmer"
+        }
       },
       "permissions": {
         "title": "Gestion des permissions",
@@ -211,6 +220,8 @@
         "edit_message": "Voulez-vous vraiment sauvegarder ces modifications ?"
       },
       "notifications": {
+        "created_success": "Utilisateur créé avec succès",
+        "created_error": "Erreur lors de la création de l'utilisateur",
         "assign_success": "Permissions affectées avec succès",
         "revoke_success": "Permissions révoquées avec succès",
         "update_success": "Utilisateur modifié avec succès",

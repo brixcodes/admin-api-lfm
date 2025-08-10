@@ -19,6 +19,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ThemeSwitcher: typeof import('./src/@core/components/ThemeSwitcher.vue')['default']
+    UserCreateDialog: typeof import('./src/components/system/users/UserCreateDialog.vue')['default']
     UserDetailsDialog: typeof import('./src/components/system/users/UserDetailsDialog.vue')['default']
     UserEditDialog: typeof import('./src/components/system/users/UserEditDialog.vue')['default']
     UserPermissionsDialog: typeof import('./src/components/system/users/UserPermissionsDialog.vue')['default']

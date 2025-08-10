@@ -83,7 +83,7 @@
     "users": {
       "title": "User management",
       "subtitle": "Manage user accounts, their roles and permissions",
-      "add": "Add user",
+      "add": "Add",
       "edit": "Edit user",
       "delete": "Delete user",
       "search": "Search user",
@@ -171,6 +171,30 @@
           "activity": "Activity"
         }
       },
+      "create": {
+        "title": "Add User",
+        "subtitle": "Create a new user account",
+        "first_name": "First Name",
+        "first_name_placeholder": "Enter first name",
+        "last_name": "Last Name",
+        "last_name_placeholder": "Enter last name",
+        "email": "Email",
+        "email_placeholder": "Enter email address",
+        "gender": "Gender",
+        "role": "Role",
+        "birth_date": "Birth Date",
+        "birth_date_placeholder": "Select birth date",
+        "password_note": "A password will be automatically generated and sent to the user by email.",
+        "submit": "Create User",
+        "confirm": {
+          "title": "Confirm Creation",
+          "subtitle": "Review the information before creating the user",
+          "message": "You are about to create a new user account with the following information:",
+          "summary": "User Summary",
+          "password_info": "A temporary password will be generated and sent to the user by email.",
+          "create": "Confirm"
+        }
+      },
       "edit": {
         "title": "Edit user",
         "subtitle": "Edit user information",
@@ -206,6 +230,8 @@
         "status_message": "Are you sure you want to change this user's status?"
       },
       "notifications": {
+        "created_success": "User created successfully",
+        "created_error": "Error creating user",
         "assign_success": "Permissions assigned successfully",
         "revoke_success": "Permissions revoked successfully",
         "update_success": "User updated successfully",
@@ -455,29 +481,11 @@
         }
       }
     },
-    "edit": {
-      "title": "Edit User",
-      "subtitle": "Modify user information",
-      "personalInfo": "Personal Information",
-      "form": {
-        "lastName": "Last Name",
-        "firstName": "First Name",
-        "email": "Email",
-        "gender": "Gender",
-        "role": "Role",
-        "status": "Status",
-        "required": "required"
-      },
-      "actions": {
-        "save": "Save Changes",
-        "cancel": "Cancel"
-      },
-      "validation": {
-        "lastNameRequired": "Last name is required",
-        "firstNameRequired": "First name is required",
-        "emailRequired": "Email is required",
-        "emailInvalid": "Email must be valid"
-      }
+    "validation": {
+      "lastNameRequired": "Last name is required",
+      "firstNameRequired": "First name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Email must be valid"
     }
   },
   "formations": {

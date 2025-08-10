@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import UserCreateDialog from '@/components/system/users/UserCreateDialog.vue'
 import UserDetailsDialog from '@/components/system/users/UserDetailsDialog.vue'
 import UserEditDialog from '@/components/system/users/UserEditDialog.vue'
 import UserPermissionsDialog from '@/components/system/users/UserPermissionsDialog.vue'
@@ -24,6 +25,7 @@ const searchQuery = ref('')
 // Dialog states
 const showDetailsDialog = ref(false)
 const showEditDialog = ref(false)
+const showCreateDialog = ref(false)
 const showPermissionsDialog = ref(false)
 const showConfirmDialog = ref(false)
 const selectedUser = ref<UtilisateurLight | null>(null)
@@ -226,6 +228,29 @@ const onSaveUser = async (payload: { userId: number; data: any }) => {
   showConfirmDialog.value = true
 }
 
+// User creation
+const onCreateUser = async (userData: any) => {
+  try {
+    isLoading.value = true
+    await UsersApi.create(userData)
+
+    // Show success notification
+    notificationMessage.value = t('system.users.notifications.created_success')
+    notificationType.value = 'success'
+    showNotification.value = true
+
+    // Refresh data
+    await fetchAllData()
+  } catch (error: any) {
+    console.error('Erreur lors de la création de l\'utilisateur:', error)
+    notificationMessage.value = error.response?.data?.detail || t('system.users.notifications.created_error')
+    notificationType.value = 'error'
+    showNotification.value = true
+  } finally {
+    isLoading.value = false
+  }
+}
+
 
 
 
@@ -272,29 +297,22 @@ onMounted(() => {
 
 <template>
   <div>
-    <!-- En-tête -->
-    <div class="d-flex justify-space-between align-center mb-6">
-      <div>
-        <h4 class="text-h4 mb-1">
-          {{ t('system.users.title') }}
-        </h4>
-        <p class="text-body-1 mb-0">
-          {{ t('system.users.subtitle') }}
-        </p>
-      </div>
-
+    <!-- Statistics -->
+    <UsersStats :users="users" :loading="isLoading" class="mb-1" />
+    <VCard class="pa-3 mb-2">
       <div class="d-flex gap-3">
         <VTextField v-model="searchQuery" :placeholder="t('system.users.search')" prepend-inner-icon="ri-search-line"
           variant="outlined" density="compact" style="min-inline-size: 300px;" clearable />
-        <VBtn color="primary" @click="fetchAllData" :loading="isLoading" prepend-icon="ri-refresh-line">
+       
+          <VBtn color="primary" variant="outlined" @click="fetchAllData" :loading="isLoading" prepend-icon="ri-refresh-line">
           {{ t('common.refresh') }}
         </VBtn>
+
+        <VBtn color="primary" variant="flat" @click="showCreateDialog = true" prepend-icon="ri-user-add-line">
+          {{ t('system.users.add') }}
+        </VBtn>
       </div>
-    </div>
-
-    <!-- Statistics -->
-    <UsersStats :users="users" :loading="isLoading" class="mb-6" />
-
+    </VCard>
     <!-- Users Table -->
     <VCard>
       <VCardText>
@@ -319,6 +337,9 @@ onMounted(() => {
     <UserEditDialog v-model="showEditDialog" :user="selectedUser" :roles="roles" :loading="isLoading"
       @save="onSaveUser" />
 
+    <!-- User Create Dialog -->
+    <UserCreateDialog v-model="showCreateDialog" :roles="roles" @created="onCreateUser" />
+
     <!-- User Permissions Dialog -->
     <UserPermissionsDialog v-model="showPermissionsDialog" :user="selectedUser" :all-permissions="permissions"
       :mode="permissionsMode" :loading="isLoadingPermissions" @assign="onAssignPermissions"
@@ -335,8 +356,8 @@ onMounted(() => {
             <VIcon size="24" :color="confirmAction === 'assign' ? 'green-darken-2' :
               confirmAction === 'revoke' ? 'red-darken-2' :
                 confirmAction === 'edit' ? 'orange-darken-2' : 'blue-darken-2'" :icon="confirmAction === 'assign' ? 'ri-shield-check-line' :
-                      confirmAction === 'revoke' ? 'ri-shield-cross-line' :
-                        confirmAction === 'edit' ? 'ri-edit-line' : 'ri-user-settings-line'" />
+                  confirmAction === 'revoke' ? 'ri-shield-cross-line' :
+                    confirmAction === 'edit' ? 'ri-edit-line' : 'ri-user-settings-line'" />
           </VAvatar>
           <span class="text-h6 font-weight-bold">
             {{ t(`system.users.confirm.${confirmAction}_title`) }}
