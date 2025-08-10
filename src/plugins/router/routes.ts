@@ -8,8 +8,6 @@ export const routes = [
 
       // Utilisateurs & Système
       { path: 'system', component: () => import('@/pages/system/index.vue') },
-      { path: 'system/users/:id', component: () => import('@/pages/system/users/[id].vue') },
-      { path: 'system/users/:id/edit', component: () => import('@/pages/system/users/edit/[id].vue') },
 
       // Formations
       { path: 'formations', component: () => import('@/pages/formations/container.vue') },

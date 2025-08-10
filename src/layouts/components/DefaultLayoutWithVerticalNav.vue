@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import NavItems from '@/layouts/components/NavItems.vue'
 import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue'
+import { ref } from 'vue'
 const logo = '/logo_lafaom.png'
 
 // Components
@@ -9,6 +10,12 @@ import NavbarLangSwitcher from '@/layouts/components/NavbarLangSwitcher.vue'
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
 
 import UserProfile from '@/layouts/components/UserProfile.vue'
+
+const globalSearchModal = ref()
+
+const openGlobalSearch = () => {
+  globalSearchModal.value?.openSearch()
+}
 </script>
 
 <template>
@@ -17,25 +24,19 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
     <template #navbar="{ toggleVerticalOverlayNavActive }">
       <div class="d-flex h-100 align-center">
         <!-- 👉 Vertical nav toggle in overlay mode -->
-        <IconBtn
-          class="ms-n3 d-lg-none"
-          @click="toggleVerticalOverlayNavActive(true)"
-        >
+        <IconBtn class="ms-n3 d-lg-none" @click="toggleVerticalOverlayNavActive(true)">
           <VIcon icon="ri-menu-line" />
         </IconBtn>
 
         <!-- 👉 Search -->
-        <div
-          class="d-flex align-center cursor-pointer"
-          style="user-select: none;"
-        >
+        <div class="d-flex align-center cursor-pointer" style="user-select: none;" @click="openGlobalSearch">
           <!-- 👉 Search Trigger button -->
           <IconBtn>
             <VIcon icon="ri-search-line" />
           </IconBtn>
 
           <span class="d-none d-md-flex align-center text-disabled">
-            <span class="me-3">{{ $t('nav.search') }}</span>
+            <span class="me-3">Rechercher</span>
             <span class="meta-key">&#8984;K</span>
           </span>
         </div>
@@ -56,27 +57,15 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
     </template>
 
     <template #vertical-nav-header="{ toggleIsOverlayNavActive }">
-      <RouterLink
-        to="/"
-        class="app-logo app-title-wrapper"
-      >
-        <VImg
-          :src="logo"
-          alt="Lafaom-MAO Logo"
-          width="100"
-          height="35"
-          contain
-        />
+      <RouterLink to="/" class="app-logo app-title-wrapper">
+        <VImg :src="logo" alt="Lafaom-MAO Logo" width="100" height="35" contain />
 
         <h1 class="font-weight-medium leading-normal text-xl">
           Lafaom-MAO
         </h1>
       </RouterLink>
 
-      <IconBtn
-        class="d-block d-lg-none"
-        @click="toggleIsOverlayNavActive(false)"
-      >
+      <IconBtn class="d-block d-lg-none" @click="toggleIsOverlayNavActive(false)">
         <VIcon icon="ri-close-line" />
       </IconBtn>
     </template>
@@ -93,6 +82,9 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
       <Footer />
     </template>
   </VerticalNavLayout>
+
+  <!-- 👉 Global Search Modal -->
+  <GlobalSearchModal ref="globalSearchModal" />
 </template>
 
 <style lang="scss" scoped>

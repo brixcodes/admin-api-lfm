@@ -11,6 +11,8 @@ declare module 'vue' {
     CardStatisticsVertical: typeof import('./src/@core/components/cards/CardStatisticsVertical.vue')['default']
     CardStatisticsWithImages: typeof import('./src/@core/components/cards/CardStatisticsWithImages.vue')['default']
     ErrorHeader: typeof import('./src/components/ErrorHeader.vue')['default']
+    GlobalSearch: typeof import('./src/components/GlobalSearch.vue')['default']
+    GlobalSearchModal: typeof import('./src/components/GlobalSearchModal.vue')['default']
     MoreBtn: typeof import('./src/@core/components/MoreBtn.vue')['default']
     PermissionsSkeleton: typeof import('./src/components/system/users/PermissionsSkeleton.vue')['default']
     RolePermissionsDialog: typeof import('./src/components/system/roles/RolePermissionsDialog.vue')['default']
