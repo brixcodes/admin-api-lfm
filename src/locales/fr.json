@@ -1016,7 +1016,6 @@
     },
     "categories": {
       "all": "Toutes",
-      "formation": "Formation",
       "partnership": "Partenariat",
       "event": "Événement",
       "testimonial": "Témoignage",
@@ -1073,21 +1072,72 @@
     },
     "modal": {
       "create": {
-        "title": "Nouvelle actualité"
+        "title": "Nouvelle actualité",
+        "subtitle": "Ajoutez une nouvelle actualité au système",
+        "confirm": {
+          "title": "Confirmer la création",
+          "subtitle": "Vérifiez les informations avant de créer",
+          "message": "Êtes-vous sûr de vouloir créer cette actualité avec les informations suivantes ?",
+          "summary": "Résumé de l'actualité",
+          "info": "Cette action créera une nouvelle actualité dans le système.",
+          "create": "Créer l'actualité"
+        }
       },
       "edit": {
-        "title": "Modifier l'actualité"
+        "title": "Modifier l'actualité",
+        "subtitle": "Modifiez les informations de l'actualité",
+        "confirm": {
+          "title": "Confirmer les modifications",
+          "subtitle": "Vérifiez les changements avant de sauvegarder",
+          "message": "Êtes-vous sûr de vouloir appliquer ces modifications ?",
+          "summary": "Modifications apportées",
+          "info": "Cette action mettra à jour l'actualité existante.",
+          "save": "Sauvegarder"
+        }
       },
       "view": {
+        "title": "Détails de l'actualité",
+        "subtitle": "Informations complètes",
         "downloadDocument": "Télécharger le document",
         "trainingDates": "Dates de formation",
         "start": "Début",
-        "end": "Fin"
+        "end": "Fin",
+        "tabs": {
+          "overview": "Aperçu",
+          "content": "Contenu",
+          "files": "Fichiers"
+        },
+        "files": {
+          "title": "Fichiers joints",
+          "image": "Image principale",
+          "document": "Document joint",
+          "none": "Aucun fichier joint à cette actualité"
+        }
       },
       "delete": {
         "title": "Supprimer l'actualité",
+        "subtitle": "Cette action est irréversible",
         "confirm": "Êtes-vous sûr de vouloir supprimer cette actualité ?",
-        "warning": "Cette action est irréversible."
+        "warning": "Cette action supprimera définitivement l'actualité et tous ses fichiers associés.",
+        "confirmButton": "Supprimer définitivement"
+      }
+    },
+    "notifications": {
+      "created": {
+        "title": "Actualité créée",
+        "message": "L'actualité \"{titre}\" a été créée avec succès"
+      },
+      "updated": {
+        "title": "Actualité modifiée",
+        "message": "L'actualité \"{titre}\" a été modifiée avec succès"
+      },
+      "deleted": {
+        "title": "Actualité supprimée",
+        "message": "L'actualité \"{titre}\" a été supprimée avec succès"
+      },
+      "error": {
+        "title": "Erreur",
+        "message": "Une erreur est survenue lors de l'opération"
       }
     },
     "errors": {

@@ -1,5 +1,5 @@
-// Configuration de l'API - utilise le proxy en développement
-const API_BASE_URL = import.meta.env.DEV ? '/api' : 'https://lafaom-mao.vertex-cam.com'
+// Configuration de l'API - utilise le proxy par défaut pour éviter les erreurs CORS
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
 
 // Types pour les réponses d'erreur
 interface ApiError {
@@ -69,7 +69,20 @@ async function apiCall<T>(
     }
 
     // Retourner les données JSON
-    return await response.json()
+    const text = await response.text()
+
+    // Si la réponse est vide, retourner un objet vide ou tableau selon le contexte
+    if (!text.trim())
+      return {} as T
+
+    try {
+      return JSON.parse(text)
+    }
+    catch (error) {
+      console.error('Erreur de parsing JSON:', error)
+      console.error('Réponse reçue:', text)
+      throw new ApiException('Réponse invalide du serveur', response.status)
+    }
   }
   catch (error) {
     // Re-lancer les erreurs API

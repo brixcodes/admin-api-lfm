@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import type { Actualite, CreateActualitePayload } from '@/composables/useActualites'
-import RichTextEditor from '@/components/RichTextEditorSimple.vue'
-import NotificationToast from '@/components/NotificationToast.vue'
+import ActualiteCreateDialog from '@/components/actualites/ActualiteCreateDialog.vue'
+import ActualiteDetailsDialog from '@/components/actualites/ActualiteDetailsDialog.vue'
+import ActualiteEditDialog from '@/components/actualites/ActualiteEditDialog.vue'
+import ActualiteDeleteDialog from '@/components/actualites/ActualiteDeleteDialog.vue'
+
 import { useActualites } from '@/composables/useActualites'
-import { useGlobalNotifications } from '@/composables/useNotifications'
+
 import { useAuthStore } from '@/stores/auth'
 
 // Traduction
@@ -15,6 +18,11 @@ const { t } = useI18n()
 // Store auth pour l'utilisateur connecté
 const authStore = useAuthStore()
 
+// Notifications (comme dans la page utilisateur)
+const showNotification = ref(false)
+const notificationMessage = ref('')
+const notificationType = ref<'success' | 'error' | 'warning' | 'info'>('success')
+
 // Composable avec API réelle
 const {
   actualites,
@@ -22,10 +30,7 @@ const {
   error,
   hasMore,
   isEmpty,
-  creating,
-  updating,
-  deleting,
-  uploading,
+
   fetchActualites,
   loadMore,
   createActualite,
@@ -40,11 +45,16 @@ const searchQuery = ref('')
 const selectedCategorie = ref(t('actualites.categories.all'))
 const viewMode = ref<'grid' | 'list'>('grid')
 
+// Pagination
+const currentPage = ref(1)
+const itemsPerPage = ref(12)
+const totalPages = computed(() => Math.ceil(actualitesFiltrees.value.length / itemsPerPage.value))
+
 // Modals
-const showCreateModal = ref(false)
-const showViewModal = ref(false)
-const showEditModal = ref(false)
-const showDeleteModal = ref(false)
+const showCreateDialog = ref(false)
+const showDetailsDialog = ref(false)
+const showEditDialog = ref(false)
+const showDeleteDialog = ref(false)
 
 // Actualité sélectionnée
 const selectedActualite = ref<Actualite | null>(null)
@@ -68,7 +78,6 @@ const formData = ref<CreateActualitePayload>({
 // Catégories
 const categories = computed(() => [
   t('actualites.categories.all'),
-  t('actualites.categories.formation'),
   t('actualites.categories.partnership'),
   t('actualites.categories.event'),
   t('actualites.categories.testimonial'),
@@ -89,7 +98,6 @@ const actualitesFiltrees = computed(() => {
   if (selectedCategorie.value !== t('actualites.categories.all')) {
     // Mapper la catégorie traduite vers la valeur originale
     const categoryMap: Record<string, string> = {
-      [t('actualites.categories.formation')]: 'Formation',
       [t('actualites.categories.partnership')]: 'Partenariat',
       [t('actualites.categories.event')]: 'Événement',
       [t('actualites.categories.testimonial')]: 'Témoignage',
@@ -117,16 +125,12 @@ const actualitesFiltrees = computed(() => {
   return filtered
 })
 
-const actualitesFeatured = computed(() => {
-  const filtered = actualitesFiltrees.value
+// Actualités paginées (remplace autresActualites)
+const actualitesPaginees = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value
+  const end = start + itemsPerPage.value
 
-  return Array.isArray(filtered) ? filtered.slice(0, 2) : [] // Les 2 premières comme featured
-})
-
-const autresActualites = computed(() => {
-  const filtered = actualitesFiltrees.value
-
-  return Array.isArray(filtered) ? filtered.slice(2) : [] // Le reste
+  return actualitesFiltrees.value.slice(start, end)
 })
 
 // Méthodes
@@ -156,56 +160,99 @@ const getImageUrl = (actualite: Actualite) => {
   return actualite.image_url || `https://picsum.photos/400/250?random=${actualite.id}`
 }
 
-const resetForm = () => {
-  formData.value = {
-    titre: '',
-    slug: '',
-    categorie: '',
-    chapeau: '',
-    contenu_html: '',
-    image_url: '',
-    date_publication: new Date().toISOString().split('T')[0],
-    date_debut_formation: '',
-    date_fin_formation: '',
-    document_url: '',
-    auteur: '',
-    utilisateur_id: 1,
-  }
-}
-
 // Actions
 const ouvrirCreateModal = () => {
-  resetForm()
-  showCreateModal.value = true
+  showCreateDialog.value = true
 }
+
+// Réinitialiser la pagination quand les filtres changent
+const resetPagination = () => {
+  currentPage.value = 1
+}
+
+// Watchers pour réinitialiser la pagination
+watch([searchQuery, selectedCategorie], () => {
+  resetPagination()
+})
 
 const voirActualite = (actualite: Actualite) => {
   selectedActualite.value = actualite
-  showViewModal.value = true
+  showDetailsDialog.value = true
+}
+
+// Gestion de la création d'actualité
+const onActualiteCreated = async (payload: CreateActualitePayload) => {
+  try {
+    await createActualite(payload)
+
+    // Notification de succès
+    notificationMessage.value = `Actualité "${payload.titre}" créée avec succès`
+    notificationType.value = 'success'
+    showNotification.value = true
+
+    // Recharger les données
+    await fetchActualites(true)
+  }
+  catch (err: any) {
+    console.error('Erreur lors de la création:', err)
+    notificationMessage.value = err.message || 'Erreur lors de la création de l\'actualité'
+    notificationType.value = 'error'
+    showNotification.value = true
+  }
 }
 
 const modifierActualite = (actualite: Actualite) => {
   selectedActualite.value = actualite
-  formData.value = {
-    titre: actualite.titre,
-    slug: actualite.slug,
-    categorie: actualite.categorie,
-    chapeau: actualite.chapeau,
-    contenu_html: actualite.contenu_html,
-    image_url: actualite.image_url,
-    date_publication: actualite.date_publication,
-    date_debut_formation: actualite.date_debut_formation || '',
-    date_fin_formation: actualite.date_fin_formation || '',
-    document_url: actualite.document_url || '',
-    auteur: actualite.auteur,
-    utilisateur_id: actualite.utilisateur_id,
+  showEditDialog.value = true
+}
+
+// Gestion de la modification d'actualité
+const onActualiteUpdated = async (payload: CreateActualitePayload) => {
+  try {
+    if (selectedActualite.value?.id) {
+      await updateActualite(selectedActualite.value.id, payload)
+
+      // Notification de succès
+      notificationMessage.value = `Actualité "${payload.titre}" modifiée avec succès`
+      notificationType.value = 'success'
+      showNotification.value = true
+
+      // Recharger les données
+      await fetchActualites(true)
+    }
   }
-  showEditModal.value = true
+  catch (err: any) {
+    console.error('Erreur lors de la modification:', err)
+    notificationMessage.value = err.message || 'Erreur lors de la modification de l\'actualité'
+    notificationType.value = 'error'
+    showNotification.value = true
+  }
 }
 
 const supprimerActualite = (actualite: Actualite) => {
   selectedActualite.value = actualite
-  showDeleteModal.value = true
+  showDeleteDialog.value = true
+}
+
+// Gestion de la suppression d'actualité
+const onActualiteDeleted = async (actualite: Actualite) => {
+  try {
+    await deleteActualite(actualite.id!)
+
+    // Notification de succès
+    notificationMessage.value = `Actualité "${actualite.titre}" supprimée avec succès`
+    notificationType.value = 'success'
+    showNotification.value = true
+
+    // Recharger les données
+    await fetchActualites(true)
+  }
+  catch (err: any) {
+    console.error('Erreur lors de la suppression:', err)
+    notificationMessage.value = err.message || 'Erreur lors de la suppression de l\'actualité'
+    notificationType.value = 'error'
+    showNotification.value = true
+  }
 }
 
 // Génération automatique du slug
@@ -391,12 +438,13 @@ const submitForm = async () => {
     if (selectedActualite.value) {
       // Modification
       await updateActualite(selectedActualite.value.id!, payload)
-      showEditModal.value = false
+
+      // Modification maintenant gérée par onActualiteUpdated
     }
     else {
-      // Création
-      await createActualite(payload)
-      showCreateModal.value = false
+      // Création - maintenant géré par onActualiteCreated
+      // await createActualite(payload)
+      // showCreateDialog.value = false
     }
 
     // Recharger les données
@@ -441,7 +489,8 @@ const confirmerSuppression = async () => {
   if (selectedActualite.value?.id) {
     try {
       await deleteActualite(selectedActualite.value.id)
-      showDeleteModal.value = false
+
+      // Suppression maintenant gérée par onActualiteDeleted
       selectedActualite.value = null
     }
     catch (err) {
@@ -549,69 +598,6 @@ onMounted(async () => {
       {{ error }}
     </VAlert>
 
-    <!-- Actualités à la une -->
-    <div v-if="actualitesFeatured.length && !searchQuery.trim()" class="featured-section mb-8">
-      <h2 class="text-h5 font-weight-bold mb-4 text-primary">
-        <VIcon icon="ri-star-line" class="me-2" />
-        {{ t('actualites.featured') }}
-      </h2>
-
-      <VRow>
-        <VCol v-for="actualite in actualitesFeatured" :key="actualite.id" cols="12" md="6">
-          <VCard class="featured-card h-100" variant="elevated" @click="voirActualite(actualite)">
-            <div class="position-relative">
-              <VImg :src="getImageUrl(actualite)" height="200" cover class="featured-image">
-                <template #placeholder>
-                  <div class="d-flex align-center justify-center fill-height">
-                    <VProgressCircular indeterminate color="primary" />
-                  </div>
-                </template>
-              </VImg>
-
-              <!-- Badge featured -->
-              <VChip color="primary" size="small" class="featured-badge" prepend-icon="ri-star-fill">
-                À la une
-              </VChip>
-
-              <!-- Badge catégorie -->
-              <VChip :color="getCategorieColor(actualite.categorie)" size="small" class="category-badge">
-                {{ actualite.categorie }}
-              </VChip>
-
-              <!-- Actions -->
-              <div class="card-actions">
-                <VBtn icon size="small" variant="elevated" color="primary" @click.stop="modifierActualite(actualite)">
-                  <VIcon icon="ri-edit-line" />
-                </VBtn>
-                <VBtn icon size="small" variant="elevated" color="error" @click.stop="supprimerActualite(actualite)">
-                  <VIcon icon="ri-delete-bin-line" />
-                </VBtn>
-              </div>
-            </div>
-
-            <VCardText class="pa-4">
-              <div class="d-flex align-center mb-2">
-                <VIcon icon="ri-calendar-line" size="16" class="me-1 text-disabled" />
-                <span class="text-caption text-disabled me-3">{{ formatDate(actualite.date_publication) }}</span>
-                <VIcon icon="ri-user-line" size="16" class="me-1 text-disabled" />
-                <span class="text-caption text-disabled me-3">{{ actualite.auteur }}</span>
-                <VIcon icon="ri-eye-line" size="16" class="me-1 text-disabled" />
-                <span class="text-caption text-disabled">{{ actualite.vues || 0 }} vues</span>
-              </div>
-
-              <h3 class="text-h6 font-weight-bold mb-2 text-high-emphasis">
-                {{ actualite.titre }}
-              </h3>
-
-              <p class="text-body-2 text-medium-emphasis mb-3">
-                {{ actualite.chapeau }}
-              </p>
-            </VCardText>
-          </VCard>
-        </VCol>
-      </VRow>
-    </div>
-
     <!-- Grille des actualités -->
     <div class="actualites-grid">
       <div class="d-flex justify-space-between align-center mb-4">
@@ -625,7 +611,7 @@ onMounted(async () => {
 
       <!-- Vue grille -->
       <VRow v-if="viewMode === 'grid'">
-        <VCol v-for="actualite in autresActualites" :key="actualite.id" cols="12" sm="6" lg="4" xl="3">
+        <VCol v-for="actualite in actualitesPaginees" :key="actualite.id" cols="12" sm="6" lg="4" xl="3">
           <VCard class="actualite-card h-100" variant="outlined" hover @click="voirActualite(actualite)">
             <div class="position-relative">
               <VImg :src="getImageUrl(actualite)" height="180" cover class="card-image">
@@ -685,7 +671,7 @@ onMounted(async () => {
 
       <!-- Vue liste -->
       <div v-else class="list-view">
-        <VCard v-for="actualite in autresActualites" :key="actualite.id" class="actualite-list-item mb-3"
+        <VCard v-for="actualite in actualitesPaginees" :key="actualite.id" class="actualite-list-item mb-3"
           variant="outlined" hover @click="voirActualite(actualite)">
           <VCardText class="pa-4">
             <VRow align="center">
@@ -767,364 +753,38 @@ onMounted(async () => {
           {{ t('actualites.loading') }}
         </p>
       </div>
+
+      <!-- Pagination -->
+      <div v-if="actualitesFiltrees.length > itemsPerPage" class="d-flex justify-center mt-8">
+        <VPagination v-model="currentPage" :length="totalPages" :total-visible="7" color="primary" variant="elevated"
+          rounded="circle" />
+      </div>
+
+      <!-- Debug info (à supprimer en production) -->
+      <div v-if="actualitesFiltrees.length > 0" class="text-center mt-4 text-caption text-disabled">
+        Page {{ currentPage }} sur {{ totalPages }} | {{ actualitesFiltrees.length }} actualités au total | {{
+        itemsPerPage }}
+        par page
+      </div>
     </div>
 
-    <!-- Modal Créer actualité -->
-    <VDialog v-model="showCreateModal" max-width="1200" persistent scrollable class="actualite-modal">
-      <VCard class="elevation-8">
-        <VCardTitle class="d-flex align-center justify-space-between pa-6 bg-primary text-white">
-          <div class="d-flex align-center">
-            <VIcon icon="ri-add-line" class="me-3" size="24" />
-            <span class="text-h5 font-weight-medium">{{ t('actualites.modal.create.title') }}</span>
-          </div>
-          <VBtn icon variant="text" color="white" @click="showCreateModal = false">
-            <VIcon icon="ri-close-line" />
-          </VBtn>
-        </VCardTitle>
+    <!-- Nouveaux composants de dialog -->
+    <ActualiteCreateDialog v-model="showCreateDialog" @created="onActualiteCreated" />
 
-        <VCardText class="pa-6">
-          <!-- Message d'erreur -->
-          <VAlert v-if="error" type="error" variant="tonal" class="mb-4" closable @click:close="error = null">
-            {{ error }}
-          </VAlert>
+    <ActualiteDetailsDialog v-model="showDetailsDialog" :actualite="selectedActualite"
+      @edit-actualite="modifierActualite" @delete-actualite="supprimerActualite" />
 
-          <VForm @submit.prevent="submitForm">
-            <VRow>
-              <!-- Colonne gauche - Contenu principal -->
-              <VCol cols="12" md="8">
-                <div class="mb-6">
-                  <h3 class="text-h6 font-weight-medium mb-4 text-primary">
-                    <VIcon icon="ri-file-text-line" class="me-2" />
-                    Informations principales
-                  </h3>
-                  <VTextField v-model="formData.titre" :label="`${t('actualites.form.title')} *`" variant="outlined"
-                    :rules="[v => !!v || t('actualites.form.titleRequired')]" class="mb-4" @input="onTitreChange" />
+    <ActualiteEditDialog v-model="showEditDialog" :actualite="selectedActualite" @updated="onActualiteUpdated" />
 
-                  <VTextField v-model="formData.slug" :label="`${t('actualites.form.slug')} *`" variant="outlined"
-                    :hint="t('actualites.form.slugHint')" persistent-hint
-                    :rules="[v => !!v || t('actualites.form.slugRequired')]" class="mb-4" />
+    <ActualiteDeleteDialog v-model="showDeleteDialog" :actualite="selectedActualite" @deleted="onActualiteDeleted" />
 
-                  <VTextarea v-model="formData.chapeau" :label="`${t('actualites.form.summary')} *`" variant="outlined"
-                    rows="3" :hint="t('actualites.form.summaryHint')" persistent-hint
-                    :rules="[v => !!v || t('actualites.form.summaryRequired')]" class="mb-4" />
-                </div>
-
-                <div class="mb-6">
-                  <h3 class="text-h6 font-weight-medium mb-4 text-primary">
-                    <VIcon icon="ri-edit-box-line" class="me-2" />
-                    {{ t('actualites.form.content') }} *
-                  </h3>
-                  <RichTextEditor v-model="formData.contenu_html" :show-preview="true" />
-                </div>
-              </VCol>
-
-              <!-- Colonne droite - Métadonnées -->
-              <VCol cols="12" md="4">
-                <div class="mb-6">
-                  <h3 class="text-h6 font-weight-medium mb-4 text-primary">
-                    <VIcon icon="ri-settings-3-line" class="me-2" />
-                    Métadonnées
-                  </h3>
-
-                  <VSelect v-model="formData.categorie"
-                    :items="categories.filter(c => c !== t('actualites.categories.all'))"
-                    :label="`${t('actualites.form.category')} *`" variant="outlined"
-                    :rules="[v => !!v || t('actualites.form.categoryRequired')]" class="mb-4" />
-
-                  <VTextField v-model="formData.auteur" :label="`${t('actualites.form.author')} *`" variant="outlined"
-                    :rules="[v => !!v || t('actualites.form.authorRequired')]" class="mb-4" />
-
-                  <VTextField v-model="formData.date_publication" :label="`${t('actualites.form.publicationDate')} *`"
-                    type="date" variant="outlined" :rules="[v => !!v || t('actualites.form.publicationDateRequired')]"
-                    class="mb-4" />
-                </div>
-
-                <div class="mb-6">
-                  <h3 class="text-h6 font-weight-medium mb-4 text-primary">
-                    <VIcon icon="ri-calendar-line" class="me-2" />
-                    Dates de formation ({{ t('actualites.form.optional') }})
-                  </h3>
-
-                  <VTextField v-model="formData.date_debut_formation" :label="t('actualites.form.trainingStartDate')"
-                    type="date" variant="outlined" :hint="t('actualites.form.optional')" persistent-hint class="mb-4" />
-
-                  <VTextField v-model="formData.date_fin_formation" :label="t('actualites.form.trainingEndDate')"
-                    type="date" variant="outlined" :hint="t('actualites.form.optional')" persistent-hint class="mb-4" />
-                </div>
-
-                <div class="mb-6">
-                  <h3 class="text-h6 font-weight-medium mb-4 text-primary">
-                    <VIcon icon="ri-image-line" class="me-2" />
-                    Médias
-                  </h3>
-
-                  <!-- Upload image -->
-                  <div class="mb-6">
-                    <VLabel class="text-subtitle-2 mb-3">
-                      {{ t('actualites.form.mainImage') }}
-                    </VLabel>
-                    <VFileInput accept="image/*" variant="outlined" prepend-icon="ri-image-line"
-                      :label="t('actualites.form.chooseImage')" :loading="uploading" class="mb-3"
-                      @change="onImageUpload" />
-                    <VImg v-if="formData.image_url" :src="formData.image_url" height="120" cover class="rounded" />
-                  </div>
-
-                  <!-- Upload document -->
-                  <div class="mb-6">
-                    <VLabel class="text-subtitle-2 mb-3">
-                      {{ t('actualites.form.attachedDocument') }}
-                    </VLabel>
-                    <VFileInput accept=".pdf,.doc,.docx,.xls,.xlsx" variant="outlined" prepend-icon="ri-file-line"
-                      :label="t('actualites.form.chooseDocument')" :loading="uploading" class="mb-3"
-                      @change="onDocumentUpload" />
-                    <VChip v-if="formData.document_url" color="primary" variant="outlined" prepend-icon="ri-file-line">
-                      {{ t('actualites.form.documentAttached') }}
-                    </VChip>
-                  </div>
-                </div>
-              </VCol>
-            </VRow>
-          </VForm>
-        </VCardText>
-
-        <VDivider />
-
-        <VCardActions class="pa-6 bg-grey-lighten-5">
-          <VSpacer />
-          <VBtn variant="outlined" color="grey" class="me-3" @click="showCreateModal = false">
-            <VIcon icon="ri-close-line" class="me-2" />
-            {{ t('actualites.actions.cancel') }}
-          </VBtn>
-          <VBtn color="primary" variant="elevated" :loading="creating" size="large" @click="submitForm">
-            <VIcon icon="ri-save-line" class="me-2" />
-            {{ t('actualites.actions.create') }}
-          </VBtn>
-        </VCardActions>
-      </VCard>
-    </VDialog>
-
-    <!-- Modal Modifier actualité -->
-    <VDialog v-model="showEditModal" max-width="1200" persistent scrollable>
-      <VCard>
-        <VCardTitle class="d-flex align-center pa-4 pb-2">
-          <VIcon icon="ri-edit-line" class="me-2" />
-          Modifier l'actualité
-        </VCardTitle>
-
-        <VDivider />
-
-        <VCardText class="pa-4">
-          <VForm @submit.prevent="submitForm">
-            <VRow>
-              <!-- Colonne gauche -->
-              <VCol cols="12" md="8">
-                <VTextField v-model="formData.titre" label="Titre *" variant="outlined"
-                  :rules="[v => !!v || 'Le titre est requis']" @input="onTitreChange" />
-
-                <VTextField v-model="formData.slug" label="Slug *" variant="outlined" hint="URL de l'actualité"
-                  persistent-hint :rules="[v => !!v || 'Le slug est requis']" />
-
-                <VTextarea v-model="formData.chapeau" label="Chapeau *" variant="outlined" rows="3"
-                  hint="Résumé court de l'actualité" persistent-hint :rules="[v => !!v || 'Le chapeau est requis']" />
-
-                <div class="mb-4">
-                  <VLabel class="text-subtitle-2 mb-2">
-                    Contenu HTML *
-                  </VLabel>
-                  <RichTextEditor v-model="formData.contenu_html" :show-preview="true" />
-                </div>
-              </VCol>
-
-              <!-- Colonne droite -->
-              <VCol cols="12" md="4">
-                <VSelect v-model="formData.categorie" :items="categories.filter(c => c !== 'Toutes')"
-                  label="Catégorie *" variant="outlined" :rules="[v => !!v || 'La catégorie est requise']" />
-
-                <VTextField v-model="formData.auteur" label="Auteur *" variant="outlined"
-                  :rules="[v => !!v || 'L\'auteur est requis']" />
-
-                <VTextField v-model="formData.date_publication" label="Date de publication *" type="date"
-                  variant="outlined" :rules="[v => !!v || 'La date est requise']" />
-
-                <VTextField v-model="formData.date_debut_formation" label="Date début formation" type="date"
-                  variant="outlined" hint="Optionnel" persistent-hint />
-
-                <VTextField v-model="formData.date_fin_formation" label="Date fin formation" type="date"
-                  variant="outlined" hint="Optionnel" persistent-hint />
-
-                <!-- Upload image -->
-                <div class="mb-4">
-                  <VLabel class="text-subtitle-2 mb-2">
-                    Image principale
-                  </VLabel>
-                  <VFileInput accept="image/*" variant="outlined" prepend-icon="ri-image-line" label="Choisir une image"
-                    :loading="uploading" @change="onImageUpload" />
-                  <VImg v-if="formData.image_url" :src="formData.image_url" height="120" cover class="rounded mt-2" />
-                </div>
-
-                <!-- Upload document -->
-                <div class="mb-4">
-                  <VLabel class="text-subtitle-2 mb-2">
-                    Document joint
-                  </VLabel>
-                  <VFileInput accept=".pdf,.doc,.docx,.xls,.xlsx" variant="outlined" prepend-icon="ri-file-line"
-                    label="Choisir un document" :loading="uploading" @change="onDocumentUpload" />
-                  <VChip v-if="formData.document_url" color="primary" variant="outlined" class="mt-2"
-                    prepend-icon="ri-file-line">
-                    Document joint
-                  </VChip>
-                </div>
-              </VCol>
-            </VRow>
-          </VForm>
-        </VCardText>
-
-        <VDivider />
-
-        <VCardActions class="pa-4">
-          <VSpacer />
-          <VBtn variant="text" @click="showEditModal = false">
-            Annuler
-          </VBtn>
-          <VBtn color="primary" variant="elevated" :loading="updating" @click="submitForm">
-            Sauvegarder
-          </VBtn>
-        </VCardActions>
-      </VCard>
-    </VDialog>
-
-    <!-- Modal Visualiser actualité -->
-    <VDialog v-model="showViewModal" max-width="900" scrollable>
-      <VCard v-if="selectedActualite">
-        <div class="position-relative">
-          <VImg v-if="selectedActualite.image_url" :src="selectedActualite.image_url" height="300" cover />
-
-          <!-- Actions dans l'en-tête -->
-          <div class="view-actions">
-            <VBtn icon variant="elevated" color="primary" @click="modifierActualite(selectedActualite)">
-              <VIcon icon="ri-edit-line" />
-            </VBtn>
-            <VBtn icon variant="elevated" color="error" @click="supprimerActualite(selectedActualite)">
-              <VIcon icon="ri-delete-bin-line" />
-            </VBtn>
-            <VBtn icon variant="elevated" @click="showViewModal = false">
-              <VIcon icon="ri-close-line" />
-            </VBtn>
-          </div>
-        </div>
-
-        <VCardText class="pa-6">
-          <!-- Métadonnées -->
-          <div class="d-flex align-center mb-4">
-            <VChip :color="getCategorieColor(selectedActualite.categorie)" class="me-2">
-              {{ selectedActualite.categorie }}
-            </VChip>
-            <VIcon icon="ri-calendar-line" size="16" class="me-1 text-disabled" />
-            <span class="text-body-2 text-disabled me-4">{{ formatDate(selectedActualite.date_publication) }}</span>
-            <VIcon icon="ri-user-line" size="16" class="me-1 text-disabled" />
-            <span class="text-body-2 text-disabled me-4">{{ selectedActualite.auteur }}</span>
-            <VIcon icon="ri-eye-line" size="16" class="me-1 text-disabled" />
-            <span class="text-body-2 text-disabled">{{ selectedActualite.vues || 0 }} vues</span>
-          </div>
-
-          <!-- Titre -->
-          <h1 class="text-h4 font-weight-bold mb-4 text-high-emphasis">
-            {{ selectedActualite.titre }}
-          </h1>
-
-          <!-- Chapeau -->
-          <div class="chapeau-section mb-6">
-            <p class="text-h6 text-medium-emphasis font-weight-medium">
-              {{ selectedActualite.chapeau }}
-            </p>
-          </div>
-
-          <!-- Contenu HTML -->
-          <div class="contenu-section">
-            <div class="article-content" v-html="selectedActualite.contenu_html" />
-          </div>
-
-          <!-- Document joint -->
-          <div v-if="selectedActualite.document_url" class="document-section mt-6">
-            <VDivider class="mb-4" />
-            <h3 class="text-h6 font-weight-bold mb-3">
-              Document joint
-            </h3>
-            <VBtn :href="selectedActualite.document_url" target="_blank" color="primary" variant="outlined"
-              prepend-icon="ri-download-line">
-              Télécharger le document
-            </VBtn>
-          </div>
-
-          <!-- Dates de formation -->
-          <div v-if="selectedActualite.date_debut_formation || selectedActualite.date_fin_formation"
-            class="formation-dates mt-6">
-            <VDivider class="mb-4" />
-            <h3 class="text-h6 font-weight-bold mb-3">
-              Dates de formation
-            </h3>
-            <div class="d-flex gap-4">
-              <div v-if="selectedActualite.date_debut_formation">
-                <VIcon icon="ri-calendar-event-line" class="me-1" />
-                <strong>Début :</strong> {{ formatDate(selectedActualite.date_debut_formation) }}
-              </div>
-              <div v-if="selectedActualite.date_fin_formation">
-                <VIcon icon="ri-calendar-check-line" class="me-1" />
-                <strong>Fin :</strong> {{ formatDate(selectedActualite.date_fin_formation) }}
-              </div>
-            </div>
-          </div>
-        </VCardText>
-      </VCard>
-    </VDialog>
-
-    <!-- Modal Supprimer actualité -->
-    <VDialog v-model="showDeleteModal" max-width="500">
-      <VCard>
-        <VCardTitle class="d-flex align-center pa-4 pb-2">
-          <VIcon icon="ri-delete-bin-line" color="error" class="me-2" />
-          Supprimer l'actualité
-        </VCardTitle>
-
-        <VDivider />
-
-        <VCardText class="pa-4">
-          <p class="text-body-1 mb-4">
-            Êtes-vous sûr de vouloir supprimer cette actualité ?
-          </p>
-
-          <VCard v-if="selectedActualite" variant="outlined" class="pa-3">
-            <div class="d-flex align-center">
-              <VImg :src="getImageUrl(selectedActualite)" width="60" height="60" cover class="rounded me-3" />
-              <div>
-                <h4 class="text-subtitle-1 font-weight-bold">
-                  {{ selectedActualite.titre }}
-                </h4>
-                <p class="text-body-2 text-disabled mb-0">
-                  {{ selectedActualite.categorie }} • {{ formatDate(selectedActualite.date_publication) }}
-                </p>
-              </div>
-            </div>
-          </VCard>
-
-          <VAlert type="warning" variant="tonal" class="mt-4">
-            Cette action est irréversible.
-          </VAlert>
-        </VCardText>
-
-        <VDivider />
-
-        <VCardActions class="pa-4">
-          <VSpacer />
-          <VBtn variant="text" @click="showDeleteModal = false">
-            Annuler
-          </VBtn>
-          <VBtn color="error" variant="elevated" :loading="deleting" @click="confirmerSuppression">
-            Supprimer
-          </VBtn>
-        </VCardActions>
-      </VCard>
-    </VDialog>
+    <!-- Notification -->
+    <VSnackbar v-model="showNotification" :color="notificationType" location="top right" timeout="4000">
+      {{ notificationMessage }}
+      <template #actions>
+        <VBtn icon="ri-close-line" @click="showNotification = false" />
+      </template>
+    </VSnackbar>
   </div>
 </template>
 
@@ -1160,37 +820,6 @@ onMounted(async () => {
 
 .page-header {
   margin-block-end: 32px;
-}
-
-/* Cartes featured */
-.featured-card {
-  overflow: hidden;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.featured-card:hover {
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 15%);
-  transform: translateY(-4px);
-}
-
-.featured-image {
-  border-radius: 16px 16px 0 0;
-}
-
-.featured-badge {
-  position: absolute;
-  z-index: 2;
-  inset-block-start: 12px;
-  inset-inline-start: 12px;
-}
-
-.category-badge {
-  position: absolute;
-  z-index: 2;
-  inset-block-start: 12px;
-  inset-inline-end: 12px;
 }
 
 /* Actions sur les cartes */

@@ -131,6 +131,10 @@ export function useActualites() {
     error.value = null
 
     try {
+      console.log('=== PAYLOAD REÇU DANS createActualite ===')
+      console.log('Payload complet:', payload)
+      console.log('Image URL reçue:', payload.image_url)
+      console.log('Document URL reçue:', payload.document_url)
       console.log('=== DONNÉES ENVOYÉES À L\'API ===')
       console.log('Payload reçu:', payload)
       console.log('JSON stringifié:', JSON.stringify(payload, null, 2))
@@ -153,12 +157,9 @@ export function useActualites() {
         utilisateur_id: authStore.userId || 1, // Utiliser l'ID de l'utilisateur connecté ou 1 par défaut
       }
 
-      // Ajouter les champs optionnels seulement s'ils ont une valeur
-      if (payload.image_url && payload.image_url.trim())
-        cleanPayload.image_url = payload.image_url
-
-      if (payload.document_url && payload.document_url.trim())
-        cleanPayload.document_url = payload.document_url
+      // Ajouter les champs optionnels (même s'ils sont vides pour éviter les null)
+      cleanPayload.image_url = payload.image_url || ''
+      cleanPayload.document_url = payload.document_url || ''
 
       if (payload.date_debut_formation && payload.date_debut_formation.trim())
         cleanPayload.date_debut_formation = payload.date_debut_formation
@@ -196,11 +197,41 @@ export function useActualites() {
     error.value = null
 
     try {
-      // Validation et nettoyage des données si contenu HTML présent
-      if (payload.contenu_html)
-        payload.contenu_html = apiUtils.sanitizeHtml(payload.contenu_html)
+      // Nettoyer et valider les données
+      const cleanPayload: any = {}
 
-      const updatedActualite = await actualitesApi.updateActualite(id, payload) as Actualite
+      // Copier seulement les champs autorisés pour la modification
+      if (payload.titre?.trim())
+        cleanPayload.titre = payload.titre.trim()
+      if (payload.slug?.trim())
+        cleanPayload.slug = payload.slug.trim()
+      if (payload.categorie?.trim())
+        cleanPayload.categorie = payload.categorie.trim()
+      if (payload.chapeau?.trim())
+        cleanPayload.chapeau = payload.chapeau.trim()
+      if (payload.contenu_html?.trim())
+        cleanPayload.contenu_html = apiUtils.sanitizeHtml(payload.contenu_html.trim())
+
+      if (payload.auteur?.trim())
+        cleanPayload.auteur = payload.auteur.trim()
+      if (payload.date_publication)
+        cleanPayload.date_publication = payload.date_publication
+
+      // Champs optionnels
+      if (payload.image_url !== undefined)
+        cleanPayload.image_url = payload.image_url || ''
+      if (payload.document_url !== undefined)
+        cleanPayload.document_url = payload.document_url || ''
+      if (payload.date_debut_formation)
+        cleanPayload.date_debut_formation = payload.date_debut_formation
+      if (payload.date_fin_formation)
+        cleanPayload.date_fin_formation = payload.date_fin_formation
+
+      console.log('=== UPDATE PAYLOAD ===')
+      console.log('Payload original:', payload)
+      console.log('Payload nettoyé:', cleanPayload)
+
+      const updatedActualite = await actualitesApi.updateActualite(id, cleanPayload) as Actualite
 
       // Mettre à jour dans la liste
       const index = actualites.value.findIndex(a => a.id === id)
@@ -210,6 +241,7 @@ export function useActualites() {
       return updatedActualite
     }
     catch (err) {
+      console.error('Erreur lors de la mise à jour:', err)
       if (err instanceof ApiException)
         error.value = err.message
       else
