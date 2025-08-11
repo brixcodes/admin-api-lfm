@@ -1,5 +1,5 @@
 <template>
-  <VDialog v-model="isOpen" max-width="800" persistent>
+  <VDialog v-model="isOpen" max-width="1200" persistent>
     <VCard>
       <VCardTitle class="text-h5 pa-6 pb-4">
         <div class="d-flex align-center">
@@ -19,21 +19,21 @@
         <VForm ref="formRef" @submit.prevent="onSubmit">
           <VRow>
             <!-- Prénom -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VTextField v-model="form.prenom" :label="t('system.users.create.first_name')"
                 :placeholder="t('system.users.create.first_name_placeholder')" :error-messages="formErrors.prenom"
                 variant="outlined" prepend-inner-icon="ri-user-line" :rules="[rules.required]" required />
             </VCol>
 
             <!-- Nom -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VTextField v-model="form.nom" :label="t('system.users.create.last_name')"
                 :placeholder="t('system.users.create.last_name_placeholder')" :error-messages="formErrors.nom"
                 variant="outlined" prepend-inner-icon="ri-user-line" :rules="[rules.required]" required />
             </VCol>
 
             <!-- Email -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VTextField v-model="form.email" :label="t('system.users.create.email')"
                 :placeholder="t('system.users.create.email_placeholder')" :error-messages="formErrors.email"
                 variant="outlined" prepend-inner-icon="ri-mail-line" type="email" :rules="[rules.required, rules.email]"
@@ -41,14 +41,14 @@
             </VCol>
 
             <!-- Sexe -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VSelect v-model="form.sexe" :label="t('system.users.create.gender')" :items="genderOptions"
                 :error-messages="formErrors.sexe" variant="outlined" prepend-inner-icon="ri-user-line"
                 :rules="[rules.required]" required />
             </VCol>
 
             <!-- Date de naissance -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VTextField v-model="form.date_naissance" :label="t('system.users.create.birth_date')"
                 :placeholder="t('system.users.create.birth_date_placeholder')"
                 :error-messages="formErrors.date_naissance" variant="outlined" prepend-inner-icon="ri-calendar-line"
@@ -56,10 +56,53 @@
             </VCol>
 
             <!-- Rôle -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VSelect v-model="form.role_name" :label="t('system.users.create.role')" :items="roleOptions"
                 :error-messages="formErrors.role_name" variant="outlined" prepend-inner-icon="ri-shield-user-line"
                 :rules="[rules.required]" required />
+            </VCol>
+
+            <!-- Téléphone -->
+            <VCol cols="12" md="4">
+              <VTextField v-model="form.telephone" :label="t('system.users.create.phone')"
+                :placeholder="t('system.users.create.phone_placeholder')" variant="outlined"
+                prepend-inner-icon="ri-phone-line" maxlength="30" clearable />
+            </VCol>
+
+            <!-- Nationalité (Autocomplete) -->
+            <VCol cols="12" md="4">
+              <VAutocomplete v-model="form.nationalite" :label="t('system.users.create.nationality')"
+                :placeholder="t('system.users.create.nationality_placeholder')" :items="nationalityOptions"
+                item-title="title" item-value="value" variant="outlined" prepend-inner-icon="ri-passport-line" clearable
+                hide-selected />
+            </VCol>
+
+            <!-- Pays (Autocomplete) -->
+            <VCol cols="12" md="4">
+              <VAutocomplete v-model="form.pays" :label="t('system.users.create.country')"
+                :placeholder="t('system.users.create.country_placeholder')" :items="countryOptions" item-title="title"
+                item-value="value" variant="outlined" prepend-inner-icon="ri-map-pin-line" clearable hide-selected />
+            </VCol>
+
+            <!-- Région -->
+            <VCol cols="12" md="4">
+              <VTextField v-model="form.region" :label="t('system.users.create.region')"
+                :placeholder="t('system.users.create.region_placeholder')" variant="outlined"
+                prepend-inner-icon="ri-community-line" maxlength="100" clearable />
+            </VCol>
+
+            <!-- Ville -->
+            <VCol cols="12" md="4">
+              <VTextField v-model="form.ville" :label="t('system.users.create.city')"
+                :placeholder="t('system.users.create.city_placeholder')" variant="outlined"
+                prepend-inner-icon="ri-building-2-line" maxlength="100" clearable />
+            </VCol>
+
+            <!-- Adresse -->
+            <VCol cols="12" md="4">
+              <VTextField v-model="form.adresse" :label="t('system.users.create.address')"
+                :placeholder="t('system.users.create.address_placeholder')" variant="outlined"
+                prepend-inner-icon="ri-home-2-line" maxlength="255" clearable />
             </VCol>
           </VRow>
 
@@ -114,6 +157,15 @@
                 <div><strong>{{ t('system.users.create.role') }}:</strong> {{ selectedRoleLabel }}</div>
                 <div v-if="form.date_naissance"><strong>{{ t('system.users.create.birth_date') }}:</strong> {{
                   formatDate(form.date_naissance) }}</div>
+                <div v-if="form.telephone"><strong>{{ t('system.users.create.phone') }}:</strong> {{ form.telephone }}
+                </div>
+                <div v-if="form.nationalite"><strong>{{ t('system.users.create.nationality') }}:</strong> {{
+                  form.nationalite }}</div>
+                <div v-if="form.pays"><strong>{{ t('system.users.create.country') }}:</strong> {{ form.pays }}</div>
+                <div v-if="form.region"><strong>{{ t('system.users.create.region') }}:</strong> {{ form.region }}</div>
+                <div v-if="form.ville"><strong>{{ t('system.users.create.city') }}:</strong> {{ form.ville }}</div>
+                <div v-if="form.adresse"><strong>{{ t('system.users.create.address') }}:</strong> {{ form.adresse }}
+                </div>
               </div>
             </VCardText>
           </VCard>
@@ -140,6 +192,7 @@
 <script setup lang="ts">
 import type { RoleLight } from '@/utils/types/models'
 import { useI18n } from 'vue-i18n'
+import countries from 'world-countries'
 
 interface Props {
   modelValue: boolean
@@ -153,10 +206,12 @@ interface Emits {
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 // Form ref
 const formRef = ref()
+
+
 
 // Computed
 const isOpen = computed({
@@ -171,7 +226,13 @@ const form = ref({
   email: '',
   sexe: 'homme' as const,
   role_name: '' as any,
-  date_naissance: undefined as string | undefined
+  date_naissance: undefined as string | undefined,
+  telephone: '',
+  nationalite: '',
+  pays: '',
+  region: '',
+  ville: '',
+  adresse: ''
 })
 
 const formErrors = ref<Record<string, string[]>>({})
@@ -190,6 +251,35 @@ const roleOptions = computed(() =>
     value: role.nom
   }))
 )
+
+// Build localized country and nationality lists
+const countryOptions = computed<{ title: string; value: string }[]>(() => {
+  const lang = (locale.value || 'en').toString().startsWith('fr') ? 'fr' : 'en'
+  return (countries as any[])
+    .map((c: any) => ({
+      title: (c.translations?.[lang]?.common) || c.name?.common || '',
+      value: (c.translations?.[lang]?.common) || c.name?.common || ''
+    }))
+    .filter((opt: any) => !!opt.title)
+    .sort((a: any, b: any) => a.title.localeCompare(b.title))
+})
+
+// Derive nationality from demonyms if present, fallback to country name
+const nationalityOptions = computed<{ title: string; value: string }[]>(() => {
+  const lang = (locale.value || 'en').toString().startsWith('fr') ? 'fr' : 'en'
+  const demonymKey = lang === 'fr' ? 'fra' : 'eng'
+  const set = new Set<string>()
+  for (const c of (countries as any[])) {
+    const dem = c?.demonyms?.[demonymKey]?.m || c?.demonyms?.[demonymKey]?.f
+    const translated = c?.translations?.[lang]?.common || c?.name?.common
+    if (dem) set.add(dem)
+    else if (translated) set.add(translated)
+  }
+  return Array.from(set)
+    .map((n: string) => ({ title: n, value: n }))
+    .sort((a: any, b: any) => a.title.localeCompare(b.title))
+})
+
 
 // Computed for selected role label
 const selectedRoleLabel = computed(() => {
@@ -219,7 +309,13 @@ const resetForm = () => {
     email: '',
     sexe: 'homme' as const,
     role_name: '' as any,
-    date_naissance: undefined as string | undefined
+    date_naissance: undefined as string | undefined,
+    telephone: '',
+    nationalite: '',
+    pays: '',
+    region: '',
+    ville: '',
+    adresse: ''
   }
   formErrors.value = {}
   formRef.value?.resetValidation()

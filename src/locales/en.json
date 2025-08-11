@@ -12,6 +12,13 @@
     "search": "Search",
     "notifications": "Notifications"
   },
+  "common": {
+    "cancel": "Cancel"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Invalid email format"
+  },
   "auth": {
     "login": {
       "title": "Login",
@@ -84,7 +91,6 @@
       "title": "User management",
       "subtitle": "Manage user accounts, their roles and permissions",
       "add": "Add",
-      "edit": "Edit user",
       "delete": "Delete user",
       "search": "Search user",
       "total": "users",
@@ -152,6 +158,12 @@
         "status": "Status",
         "created_at": "Created at",
         "updated_at": "Updated at",
+        "phone": "Phone",
+        "nationality": "Nationality",
+        "country": "Country",
+        "region": "Region",
+        "city": "City",
+        "address": "Address",
         "username": "Username",
         "details_title": "Details",
         "permissions_count": "Permissions",
@@ -186,8 +198,32 @@
         "birth_date_placeholder": "Select birth date",
         "password_note": "A password will be automatically generated and sent to the user by email.",
         "submit": "Create User",
+        "phone": "Phone",
+        "phone_placeholder": "Enter phone number",
+        "nationality": "Nationality",
+        "nationality_placeholder": "Enter nationality",
+        "country": "Country",
+        "country_placeholder": "Enter country",
+        "region": "Region",
+        "region_placeholder": "Enter region",
+        "city": "City",
+        "city_placeholder": "Enter city",
+        "address": "Address",
+        "address_placeholder": "Enter address",
         "confirm": {
           "title": "Confirm Creation",
+          "phone": "Phone",
+          "phone_placeholder": "Enter phone number",
+          "nationality": "Nationality",
+          "nationality_placeholder": "Enter nationality",
+          "country": "Country",
+          "country_placeholder": "Enter country",
+          "region": "Region",
+          "region_placeholder": "Enter region",
+          "city": "City",
+          "city_placeholder": "Enter city",
+          "address": "Address",
+          "address_placeholder": "Enter address",
           "subtitle": "Review the information before creating the user",
           "message": "You are about to create a new user account with the following information:",
           "summary": "User Summary",
@@ -647,8 +683,7 @@
     "error": "An error occurred",
     "required": "This field is required",
     "invalid_email": "Invalid email",
-    "invalid_format": "Invalid format",
-    "refresh": "Refresh"
+    "invalid_format": "Invalid format"
   },
   "genetique": {
     "individuel": {

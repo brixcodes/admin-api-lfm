@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
@@ -180,9 +180,9 @@ const appCategories = computed(() => [
 // Résultats filtrés
 const filteredResults = computed(() => {
   if (!searchQuery.value.trim()) return []
-  
+
   const query = searchQuery.value.toLowerCase()
-  
+
   return appData.filter(item => {
     return (
       item.title.toLowerCase().includes(query) ||
@@ -242,34 +242,17 @@ defineExpose({
 
 <template>
   <!-- Modal de recherche -->
-  <VDialog
-    v-model="isOpen"
-    max-width="700"
-    persistent
-    class="global-search-dialog"
-  >
+  <VDialog v-model="isOpen" max-width="700" persistent class="global-search-dialog">
     <VCard class="global-search-card">
       <!-- En-tête avec champ de recherche -->
       <div class="search-header pa-4">
         <div class="d-flex align-center">
           <VIcon icon="ri-search-line" class="me-3 text-disabled" size="20" />
-          <VTextField
-            ref="searchInput"
-            v-model="searchQuery"
-            placeholder="Rechercher..."
-            variant="plain"
-            hide-details
-            class="search-input"
-            autofocus
-          />
+          <VTextField ref="searchInput" v-model="searchQuery" placeholder="Rechercher..." variant="plain" hide-details
+            class="search-input" autofocus />
           <div class="d-flex align-center gap-2 ms-3">
             <VChip size="x-small" variant="outlined" class="text-caption">[esc]</VChip>
-            <VBtn
-              icon
-              variant="text"
-              size="small"
-              @click="closeSearch"
-            >
+            <VBtn icon variant="text" size="small" @click="closeSearch">
               <VIcon icon="ri-close-line" />
             </VBtn>
           </div>
@@ -279,16 +262,13 @@ defineExpose({
       <VDivider />
 
       <!-- Contenu de la recherche -->
-      <div class="search-content" style="max-height: 500px; overflow-y: auto;">
+      <div class="search-content" style="max-block-size: 500px; overflow-y: auto;">
         <!-- Résultats de recherche -->
         <div v-if="searchQuery.trim() && filteredResults.length" class="pa-4">
           <div class="search-results">
-            <div
-              v-for="result in filteredResults"
-              :key="result.path + result.title"
+            <div v-for="result in filteredResults" :key="result.path + result.title"
               class="search-result-item pa-3 rounded cursor-pointer d-flex align-center"
-              @click="navigateToResult(result.path)"
-            >
+              @click="navigateToResult(result.path)">
               <VIcon :icon="result.icon" class="me-3 text-primary" size="20" />
               <div class="flex-grow-1">
                 <div class="font-weight-medium text-high-emphasis">{{ result.title }}</div>
@@ -310,21 +290,13 @@ defineExpose({
         <div v-else class="pa-4">
           <!-- Sections par catégorie -->
           <VRow>
-            <VCol
-              v-for="category in appCategories"
-              :key="category.title"
-              cols="12"
-              md="6"
-            >
+            <VCol v-for="category in appCategories" :key="category.title" cols="12" md="6">
               <div class="mb-4">
                 <h6 class="text-overline text-disabled mb-3 font-weight-medium">{{ category.title }}</h6>
                 <div class="search-results">
-                  <div
-                    v-for="item in category.items"
-                    :key="item.title"
+                  <div v-for="item in category.items" :key="item.title"
                     class="search-result-item pa-2 rounded cursor-pointer d-flex align-center"
-                    @click="item.path ? navigateToResult(item.path) : performQuickSearch(item.query || item.title)"
-                  >
+                    @click="'path' in item ? navigateToResult((item as any).path) : performQuickSearch((item as any).query || item.title)">
                     <VIcon :icon="item.icon" class="me-3" size="18" />
                     <span class="text-sm">{{ item.title }}</span>
                   </div>
@@ -340,27 +312,26 @@ defineExpose({
 
 <style scoped>
 .global-search-dialog :deep(.v-overlay__content) {
-  margin-top: 8vh;
-  margin-bottom: auto;
+  margin-block: 8vh auto;
 }
 
 .global-search-card {
   border-radius: 12px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  background: rgba(var(--v-theme-surface), 0.95);
   backdrop-filter: blur(20px);
+  background: rgba(var(--v-theme-surface), 0.95);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 10%), 0 10px 10px -5px rgba(0, 0, 0, 4%);
 }
 
 .search-header {
-  background: rgba(var(--v-theme-surface), 0.8);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(var(--v-theme-outline), 0.12);
+  background: rgba(var(--v-theme-surface), 0.8);
+  border-block-end: 1px solid rgba(var(--v-theme-outline), 0.12);
 }
 
 .search-input :deep(.v-field__input) {
-  font-size: 1.1rem;
   padding: 0;
-  min-height: auto;
+  font-size: 1.1rem;
+  min-block-size: auto;
 }
 
 .search-input :deep(.v-field__input input) {
@@ -368,14 +339,14 @@ defineExpose({
 }
 
 .search-result-item {
-  transition: all 0.2s ease;
   border: 1px solid transparent;
-  min-height: 44px;
+  min-block-size: 44px;
+  transition: all 0.2s ease;
 }
 
 .search-result-item:hover {
-  background: rgba(var(--v-theme-primary), 0.08);
   border-color: rgba(var(--v-theme-primary), 0.2);
+  background: rgba(var(--v-theme-primary), 0.08);
   transform: translateY(-1px);
 }
 

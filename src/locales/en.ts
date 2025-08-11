@@ -31,6 +31,48 @@ export default {
       permissions: 'Permissions',
       journal: 'Activity log',
     },
+    users: {
+      no_role: 'No role',
+      gender: { homme: 'Male', femme: 'Female', autre: 'Other' },
+      labels: {
+        phone: 'Phone', nationality: 'Nationality', country: 'Country', region: 'Region', city: 'City', address: 'Address'
+      },
+      details: {
+        details_title: 'User details', username: 'Username', email: 'Email', gender: 'Gender',
+        birth_date: 'Birth date', years_old: 'years old', status: 'Status', created_at: 'Created at',
+        phone: 'Phone', nationality: 'Nationality', country: 'Country', region: 'Region', city: 'City', address: 'Address'
+      },
+      create: {
+        title: 'Create user', subtitle: 'Fill in the information below',
+        first_name: 'First name', first_name_placeholder: 'e.g. John', last_name: 'Last name', last_name_placeholder: 'e.g. Doe',
+        email: 'Email', email_placeholder: 'example@domain.com', gender: 'Gender', birth_date: 'Birth date', birth_date_placeholder: 'YYYY-MM-DD',
+        role: 'Role', submit: 'Create', password_note: 'A password will be generated and sent by email.',
+        phone: 'Phone', phone_placeholder: 'e.g. +1 555 123 4567',
+        nationality: 'Nationality', nationality_placeholder: 'e.g. Ivorian',
+        country: 'Country', country_placeholder: 'e.g. Côte d’Ivoire',
+        region: 'Region', region_placeholder: 'e.g. Abidjan',
+        city: 'City', city_placeholder: 'e.g. Abobo',
+        address: 'Address', address_placeholder: 'e.g. Cocody 2 Plateaux, Street 12, House 34',
+        confirm: {
+          title: 'Confirmation', subtitle: 'Review the information before creating', message: 'Are you sure you want to create this user?',
+          summary: 'User summary', create: 'Confirm creation', password_info: 'The password will be sent by email.'
+        }
+      },
+      edit: {
+        subtitle: 'Edit this user information', first_name: 'First name', first_name_placeholder: 'e.g. John',
+        last_name: 'Last name', last_name_placeholder: 'e.g. Doe', email: 'Email', email_placeholder: 'example@domain.com',
+        gender: 'Gender', birth_date: 'Birth date', role: 'Role',
+        phone: 'Phone', nationality: 'Nationality', country: 'Country', region: 'Region', city: 'City', address: 'Address',
+        current_role: 'Current role'
+      },
+      actions: {
+        edit: 'Edit', assign_permissions: 'Assign permissions', revoke_permissions: 'Revoke permissions'
+      },
+      status: {
+        active: 'Active', inactive: 'Inactive', suspended: 'Suspended'
+      },
+      permissions_count: 'permissions'
+    }
   },
   formations: {
     title: 'Trainings',
@@ -324,6 +366,11 @@ export default {
     notFound: 'Page not found ⚠️',
     notFoundMessage: 'Sorry, the page you are looking for does not exist.',
   },
+  validation: {
+    required: 'This field is required',
+    email: 'Invalid email format',
+  },
+
   common: {
     save: 'Save',
     cancel: 'Cancel',

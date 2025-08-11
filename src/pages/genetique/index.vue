@@ -6,13 +6,43 @@ import PII from '@/pages/genetique/plan-intervention.vue'
 import Sante from '@/pages/genetique/sante.vue'
 
 import { useRoute } from 'vue-router'
+
 const route = useRoute()
-const activeTab = ref((route.query.tab as string) || 'individuel')
+
+// Fonction pour obtenir l'onglet par défaut avec persistance
+const getDefaultTab = () => {
+  // 1. Priorité à l'URL query parameter
+  if (route.query.tab) {
+    return route.query.tab as string
+  }
+
+  // 2. Fallback vers localStorage
+  const savedTab = localStorage.getItem('genetique-active-tab')
+  if (savedTab) {
+    return savedTab
+  }
+
+  // 3. Valeur par défaut
+  return 'individuel'
+}
+
+const activeTab = ref(getDefaultTab())
 
 watch(activeTab, val => {
+  // Sauvegarder dans localStorage
+  localStorage.setItem('genetique-active-tab', val)
+
+  // Mettre à jour l'URL
   const q = new URLSearchParams(route.query as any)
   q.set('tab', val)
   history.replaceState(null, '', `${route.path}?${q.toString()}`)
+})
+
+// Écouter les changements de route pour synchroniser l'onglet
+watch(() => route.query.tab, (newTab) => {
+  if (newTab && newTab !== activeTab.value) {
+    activeTab.value = newTab as string
+  }
 })
 const tabs = [
   { title: 'Individuel', icon: 'ri-user-3-line', tab: 'individuel', component: Individuel },
@@ -39,4 +69,3 @@ const tabs = [
     </VWindow>
   </div>
 </template>
-

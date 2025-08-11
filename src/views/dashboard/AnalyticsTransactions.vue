@@ -43,7 +43,7 @@ const statistics = [
 ]
 
 const moreList = [
-  { 
+  {
     title: {
       fr: 'Partager',
       en: 'Share'
@@ -83,29 +83,15 @@ const moreList = [
 
     <VCardText class="pt-10">
       <VRow>
-        <VCol
-          v-for="item in statistics"
-          :key="item.title[locale]"
-          cols="12"
-          sm="6"
-          md="3"
-        >
+        <VCol v-for="item in statistics" :key="item.title[locale as 'fr' | 'en']" cols="12" sm="6" md="3">
           <div class="d-flex align-center gap-x-3">
-            <VAvatar
-              :color="item.color"
-              rounded
-              size="40"
-              class="elevation-2"
-            >
-              <VIcon
-                size="24"
-                :icon="item.icon"
-              />
+            <VAvatar :color="item.color" rounded size="40" class="elevation-2">
+              <VIcon size="24" :icon="item.icon" />
             </VAvatar>
 
             <div class="d-flex flex-column">
               <div class="text-body-1">
-                {{ item.title[locale] }}
+                {{ item.title[locale as 'fr' | 'en'] }}
               </div>
               <h5 class="text-h5">
                 {{ item.stats }}

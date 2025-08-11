@@ -1,16 +1,16 @@
 import type {
-  EvaluationTypeEnum, FileTypeEnum, GenotypeTypeEnum, MethodePaiementEnum,
-  PermissionEnum,
-  RoleEnum, SexeEnum, StatutCompteEnum,
-  StatutFormationEnum,
-  StatutPaiementEnum
+    EvaluationTypeEnum, FileTypeEnum, GenotypeTypeEnum, MethodePaiementEnum,
+    PermissionEnum,
+    RoleEnum, SexeEnum, StatutCompteEnum,
+    StatutFormationEnum,
+    StatutPaiementEnum
 } from './enums';
 
 // Light interfaces
 export interface PermissionMinLight { id: number; nom: PermissionEnum }
 export interface PermissionLight { id: number; nom: PermissionEnum; roles: RoleLight[] }
 export interface RoleLight { id: number; nom: RoleEnum; permissions?: PermissionMinLight[] }
-export interface UtilisateurLight { id: number; nom: string; prenom?: string | null; sexe: SexeEnum; email: string; statut: StatutCompteEnum; est_actif: boolean; date_naissance?: string | null; created_at: string; updated_at: string; role?: RoleLight | null; permissions: PermissionLight[] }
+export interface UtilisateurLight { id: number; nom: string; prenom?: string | null; sexe: SexeEnum; email: string; statut: StatutCompteEnum; est_actif: boolean; date_naissance?: string | null; telephone?: string | null; nationalite?: string | null; pays?: string | null; region?: string | null; ville?: string | null; adresse?: string | null; created_at: string; updated_at: string; role?: RoleLight | null; permissions: PermissionLight[] }
 
 export interface UtilisateurMinLight { id: number; nom: string; prenom?: string | null; sexe: SexeEnum; email: string }
 
@@ -42,6 +42,12 @@ export interface Utilisateur {
   est_actif: boolean
   last_password_change?: string | null
   date_naissance?: string | null
+  telephone?: string | null
+  nationalite?: string | null
+  pays?: string | null
+  region?: string | null
+  ville?: string | null
+  adresse?: string | null
   created_at: string
   updated_at: string
   role?: RoleLight | null
@@ -60,6 +66,12 @@ export interface UtilisateurCreate {
   email: string
   role_name: RoleEnum
   date_naissance?: string | null
+  telephone?: string | null
+  nationalite?: string | null
+  pays?: string | null
+  region?: string | null
+  ville?: string | null
+  adresse?: string | null
 }
 export interface UtilisateurUpdate {
   nom?: string
@@ -71,6 +83,12 @@ export interface UtilisateurUpdate {
   est_actif?: boolean
   statut?: StatutCompteEnum
   date_naissance?: string | null
+  telephone?: string | null
+  nationalite?: string | null
+  pays?: string | null
+  region?: string | null
+  ville?: string | null
+  adresse?: string | null
   permission_ids?: number[]
 }
 

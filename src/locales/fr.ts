@@ -31,6 +31,48 @@ export default {
       permissions: 'Permissions',
       journal: 'Journal',
     },
+    users: {
+      no_role: 'Aucun rôle',
+      gender: { homme: 'Homme', femme: 'Femme', autre: 'Autre' },
+      labels: {
+        phone: 'Téléphone', nationality: 'Nationalité', country: 'Pays', region: 'Région', city: 'Ville', address: 'Adresse'
+      },
+      details: {
+        details_title: 'Détails utilisateur', username: 'Nom d’utilisateur', email: 'Email', gender: 'Sexe',
+        birth_date: 'Date de naissance', years_old: 'ans', status: 'Statut', created_at: 'Créé le',
+        phone: 'Téléphone', nationality: 'Nationalité', country: 'Pays', region: 'Région', city: 'Ville', address: 'Adresse'
+      },
+      create: {
+        title: 'Créer un utilisateur', subtitle: 'Renseignez les informations ci-dessous',
+        first_name: 'Prénom', first_name_placeholder: 'Ex: Jean', last_name: 'Nom', last_name_placeholder: 'Ex: Dupont',
+        email: 'Email', email_placeholder: 'exemple@domaine.com', gender: 'Sexe', birth_date: 'Date de naissance', birth_date_placeholder: 'AAAA-MM-JJ',
+        role: 'Rôle', submit: 'Créer', password_note: 'Un mot de passe sera généré et envoyé par email.',
+        phone: 'Téléphone', phone_placeholder: 'Ex: +225 01 23 45 67',
+        nationality: 'Nationalité', nationality_placeholder: 'Ex: Ivoirienne',
+        country: 'Pays', country_placeholder: 'Ex: Côte d’Ivoire',
+        region: 'Région', region_placeholder: 'Ex: Abidjan',
+        city: 'Ville', city_placeholder: 'Ex: Abobo',
+        address: 'Adresse', address_placeholder: 'Ex: Cocody 2 Plateaux, Rue 12, Villa 34',
+        confirm: {
+          title: 'Confirmation', subtitle: 'Vérifiez les informations avant de créer', message: 'Êtes-vous sûr de vouloir créer cet utilisateur ?',
+          summary: 'Récapitulatif utilisateur', create: 'Confirmer la création', password_info: 'Le mot de passe sera envoyé par email.'
+        }
+      },
+      edit: {
+        subtitle: 'Modifier les informations de cet utilisateur', first_name: 'Prénom', first_name_placeholder: 'Ex: Jean',
+        last_name: 'Nom', last_name_placeholder: 'Ex: Dupont', email: 'Email', email_placeholder: 'exemple@domaine.com',
+        gender: 'Sexe', birth_date: 'Date de naissance', role: 'Rôle',
+        phone: 'Téléphone', nationality: 'Nationalité', country: 'Pays', region: 'Région', city: 'Ville', address: 'Adresse',
+        current_role: 'Rôle actuel'
+      },
+      actions: {
+        edit: 'Modifier', assign_permissions: 'Assigner des permissions', revoke_permissions: 'Révoquer des permissions'
+      },
+      status: {
+        active: 'Actif', inactive: 'Inactif', suspended: 'Suspendu'
+      },
+      permissions_count: 'permissions'
+    }
   },
   formations: {
     title: 'Formations',
@@ -324,6 +366,11 @@ export default {
     notFound: 'Page non trouvée ⚠️',
     notFoundMessage: 'Désolé, la page que vous recherchez n\'existe pas.',
   },
+  validation: {
+    required: 'Ce champ est requis',
+    email: 'Format d’email invalide',
+  },
+
   common: {
     save: 'Enregistrer',
     cancel: 'Annuler',

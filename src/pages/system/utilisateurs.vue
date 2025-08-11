@@ -303,8 +303,9 @@ onMounted(() => {
       <div class="d-flex gap-3">
         <VTextField v-model="searchQuery" :placeholder="t('system.users.search')" prepend-inner-icon="ri-search-line"
           variant="outlined" density="compact" style="min-inline-size: 300px;" clearable />
-       
-          <VBtn color="primary" variant="outlined" @click="fetchAllData" :loading="isLoading" prepend-icon="ri-refresh-line">
+
+        <VBtn color="primary" variant="outlined" @click="fetchAllData" :loading="isLoading"
+          prepend-icon="ri-refresh-line">
           {{ t('common.refresh') }}
         </VBtn>
 

@@ -3,13 +3,43 @@ import Accreditations from '@/pages/accreditations.vue'
 import Actualites from '@/pages/actualites.vue'
 
 import { useRoute } from 'vue-router'
+
 const route = useRoute()
-const activeTab = ref((route.query.tab as string) || 'actualites')
+
+// Fonction pour obtenir l'onglet par défaut avec persistance
+const getDefaultTab = () => {
+  // 1. Priorité à l'URL query parameter
+  if (route.query.tab) {
+    return route.query.tab as string
+  }
+
+  // 2. Fallback vers localStorage
+  const savedTab = localStorage.getItem('infos-active-tab')
+  if (savedTab) {
+    return savedTab
+  }
+
+  // 3. Valeur par défaut
+  return 'actualites'
+}
+
+const activeTab = ref(getDefaultTab())
 
 watch(activeTab, val => {
+  // Sauvegarder dans localStorage
+  localStorage.setItem('infos-active-tab', val)
+
+  // Mettre à jour l'URL
   const q = new URLSearchParams(route.query as any)
   q.set('tab', val)
   history.replaceState(null, '', `${route.path}?${q.toString()}`)
+})
+
+// Écouter les changements de route pour synchroniser l'onglet
+watch(() => route.query.tab, (newTab) => {
+  if (newTab && newTab !== activeTab.value) {
+    activeTab.value = newTab as string
+  }
 })
 const tabs = [
   { title: 'Actualités', icon: 'ri-newspaper-line', tab: 'actualites', component: Actualites },
@@ -33,4 +63,3 @@ const tabs = [
     </VWindow>
   </div>
 </template>
-

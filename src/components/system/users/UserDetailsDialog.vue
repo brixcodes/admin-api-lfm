@@ -167,6 +167,32 @@ const closeDialog = () => {
                   <span class="text-caption text-medium-emphasis mr-2">{{ t('system.users.details.created_at') }}</span>
                   <span class="font-weight-medium">{{ formatDateTime(user.created_at) }}</span>
                 </div>
+
+                <div class="mb-3" v-if="user.telephone">
+                  <span class="text-caption text-medium-emphasis mr-2">{{ t('system.users.details.phone') }}</span>
+                  <span class="font-weight-medium">{{ user.telephone }}</span>
+                </div>
+                <div class="mb-3" v-if="user.nationalite">
+                  <span class="text-caption text-medium-emphasis mr-2">{{ t('system.users.details.nationality')
+                    }}</span>
+                  <span class="font-weight-medium">{{ user.nationalite }}</span>
+                </div>
+                <div class="mb-3" v-if="user.pays">
+                  <span class="text-caption text-medium-emphasis mr-2">{{ t('system.users.details.country') }}</span>
+                  <span class="font-weight-medium">{{ user.pays }}</span>
+                </div>
+                <div class="mb-3" v-if="user.region">
+                  <span class="text-caption text-medium-emphasis mr-2">{{ t('system.users.details.region') }}</span>
+                  <span class="font-weight-medium">{{ user.region }}</span>
+                </div>
+                <div class="mb-3" v-if="user.ville">
+                  <span class="text-caption text-medium-emphasis mr-2">{{ t('system.users.details.city') }}</span>
+                  <span class="font-weight-medium">{{ user.ville }}</span>
+                </div>
+                <div class="mb-3" v-if="user.adresse">
+                  <span class="text-caption text-medium-emphasis mr-2">{{ t('system.users.details.address') }}</span>
+                  <span class="font-weight-medium">{{ user.adresse }}</span>
+                </div>
               </div>
 
               <!-- Action Buttons -->

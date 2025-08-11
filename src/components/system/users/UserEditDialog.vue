@@ -29,7 +29,13 @@ const form = ref<UtilisateurUpdate>({
   email: '',
   sexe: 'homme',
   role_id: undefined,
-  date_naissance: undefined
+  date_naissance: undefined,
+  telephone: '',
+  nationalite: '',
+  pays: '',
+  region: '',
+  ville: '',
+  adresse: ''
 })
 
 const formErrors = ref<Record<string, string>>({})
@@ -152,7 +158,13 @@ const resetForm = () => {
       email: props.user.email,
       sexe: props.user.sexe,
       role_id: props.user.role?.id || undefined,
-      date_naissance: props.user.date_naissance || undefined
+      date_naissance: props.user.date_naissance || undefined,
+      telephone: props.user.telephone || '',
+      nationalite: props.user.nationalite || '',
+      pays: props.user.pays || '',
+      region: props.user.region || '',
+      ville: props.user.ville || '',
+      adresse: props.user.adresse || ''
     }
   }
   formErrors.value = {}
@@ -225,6 +237,42 @@ const resetForm = () => {
             <VCol cols="12" md="6">
               <VSelect v-model="form.role_id" :label="t('system.users.edit.role')" :items="roleOptions"
                 variant="outlined" prepend-inner-icon="ri-shield-user-line" clearable />
+            </VCol>
+
+            <!-- Phone -->
+            <VCol cols="12" md="6">
+              <VTextField v-model="form.telephone" :label="t('system.users.edit.phone')" variant="outlined"
+                prepend-inner-icon="ri-phone-line" maxlength="30" clearable />
+            </VCol>
+
+            <!-- Nationality -->
+            <VCol cols="12" md="6">
+              <VTextField v-model="form.nationalite" :label="t('system.users.edit.nationality')" variant="outlined"
+                prepend-inner-icon="ri-passport-line" maxlength="100" clearable />
+            </VCol>
+
+            <!-- Country -->
+            <VCol cols="12" md="6">
+              <VTextField v-model="form.pays" :label="t('system.users.edit.country')" variant="outlined"
+                prepend-inner-icon="ri-map-pin-line" maxlength="100" clearable />
+            </VCol>
+
+            <!-- Region -->
+            <VCol cols="12" md="6">
+              <VTextField v-model="form.region" :label="t('system.users.edit.region')" variant="outlined"
+                prepend-inner-icon="ri-community-line" maxlength="100" clearable />
+            </VCol>
+
+            <!-- City -->
+            <VCol cols="12" md="6">
+              <VTextField v-model="form.ville" :label="t('system.users.edit.city')" variant="outlined"
+                prepend-inner-icon="ri-building-2-line" maxlength="100" clearable />
+            </VCol>
+
+            <!-- Address -->
+            <VCol cols="12" md="12">
+              <VTextField v-model="form.adresse" :label="t('system.users.edit.address')" variant="outlined"
+                prepend-inner-icon="ri-home-2-line" maxlength="255" clearable />
             </VCol>
 
           </VRow>
