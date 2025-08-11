@@ -12,12 +12,35 @@
     "search": "Rechercher",
     "notifications": "Notifications"
   },
-  "common": {
-    "cancel": "Annuler"
-  },
-  "validation": {
-    "required": "Ce champ est requis",
-    "email": "Format d'email invalide"
+  "search": {
+    "placeholder": "Rechercher dans l'application...",
+    "searching": "Recherche en cours...",
+    "no_results": "Aucun résultat trouvé",
+    "popular_searches": "RECHERCHES POPULAIRES",
+    "apps_pages": "APPS & PAGES",
+    "popular": {
+      "users": "Utilisateurs",
+      "formations": "Formations",
+      "specialties": "Spécialités",
+      "projects": "Projets"
+    },
+    "categories": {
+      "system": "SYSTÈME",
+      "education": "FORMATION",
+      "management": "GESTION",
+      "projects": "PROJETS"
+    },
+    "results": {
+      "pages": "Pages",
+      "users": "Utilisateurs",
+      "formations": "Formations",
+      "specialties": "Spécialités"
+    },
+    "shortcuts": {
+      "navigate": "Naviguez avec ↑↓",
+      "select": "pour sélectionner",
+      "close": "pour fermer"
+    }
   },
   "auth": {
     "login": {
@@ -160,12 +183,6 @@
         "status": "Statut",
         "created_at": "Créé le",
         "updated_at": "Modifié le",
-        "phone": "Téléphone",
-        "nationality": "Nationalité",
-        "country": "Pays",
-        "region": "Région",
-        "city": "Ville",
-        "address": "Adresse",
         "username": "Nom d'utilisateur",
         "details_title": "Détails",
         "permissions_count": "Permissions",
@@ -200,32 +217,8 @@
         "birth_date_placeholder": "Sélectionnez la date de naissance",
         "password_note": "Un mot de passe sera généré automatiquement et envoyé par email à l'utilisateur.",
         "submit": "Enregistrer",
-        "phone": "Téléphone",
-        "phone_placeholder": "Entrez le numéro de téléphone",
-        "nationality": "Nationalité",
-        "nationality_placeholder": "Entrez la nationalité",
-        "country": "Pays",
-        "country_placeholder": "Entrez le pays",
-        "region": "Région",
-        "region_placeholder": "Entrez la région",
-        "city": "Ville",
-        "city_placeholder": "Entrez la ville",
-        "address": "Adresse",
-        "address_placeholder": "Entrez l'adresse",
         "confirm": {
           "title": "Confirmer la création",
-          "phone": "Téléphone",
-          "phone_placeholder": "Entrez le numéro de téléphone",
-          "nationality": "Nationalité",
-          "nationality_placeholder": "Entrez la nationalité",
-          "country": "Pays",
-          "country_placeholder": "Entrez le pays",
-          "region": "Région",
-          "region_placeholder": "Entrez la région",
-          "city": "Ville",
-          "city_placeholder": "Entrez la ville",
-          "address": "Adresse",
-          "address_placeholder": "Entrez l'adresse",
           "subtitle": "Vérifiez les informations avant de créer l'utilisateur",
           "message": "Vous êtes sur le point de créer un nouveau compte utilisateur avec les informations suivantes :",
           "summary": "Résumé de l'utilisateur",
@@ -1009,5 +1002,120 @@
   "error": {
     "notFound": "Page non trouvée ⚠️",
     "notFoundMessage": "Désolé, la page que vous recherchez n'existe pas."
+  },
+  "actualites": {
+    "title": "Actualités",
+    "subtitle": "Découvrez les dernières nouvelles de l'Institut Lafaom-Mao",
+    "newArticle": "Nouvelle actualité",
+    "search": {
+      "placeholder": "Rechercher dans les actualités...",
+      "results": "Résultats de recherche",
+      "noResults": "Aucune actualité trouvée",
+      "tryOtherKeywords": "Essayez avec d'autres mots-clés",
+      "noArticles": "Aucune actualité disponible pour le moment"
+    },
+    "categories": {
+      "all": "Toutes",
+      "formation": "Formation",
+      "partnership": "Partenariat",
+      "event": "Événement",
+      "testimonial": "Témoignage",
+      "project": "Projet",
+      "certification": "Certification",
+      "communication": "Communication"
+    },
+    "featured": "À la une",
+    "allArticles": "Toutes les actualités",
+    "loadMore": "Charger plus d'actualités",
+    "createFirst": "Créer la première actualité",
+    "loading": "Chargement des actualités...",
+    "readMore": "Lire la suite",
+    "views": "vues",
+    "by": "Par",
+    "actions": {
+      "view": "Voir",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "share": "Partager",
+      "cancel": "Annuler",
+      "save": "Sauvegarder",
+      "create": "Créer l'actualité",
+      "close": "Fermer"
+    },
+    "form": {
+      "title": "Titre",
+      "titleRequired": "Le titre est requis",
+      "slug": "Slug",
+      "slugRequired": "Le slug est requis",
+      "slugHint": "URL de l'actualité (généré automatiquement)",
+      "category": "Catégorie",
+      "categoryRequired": "La catégorie est requise",
+      "summary": "Chapeau",
+      "summaryRequired": "Le chapeau est requis",
+      "summaryHint": "Résumé court de l'actualité",
+      "content": "Contenu HTML",
+      "contentRequired": "Le contenu est requis",
+      "author": "Auteur",
+      "authorRequired": "L'auteur est requis",
+      "publicationDate": "Date de publication",
+      "publicationDateRequired": "La date de publication est requise",
+      "trainingStartDate": "Date début formation",
+      "trainingEndDate": "Date fin formation",
+      "optional": "Optionnel",
+      "mainImage": "Image principale",
+      "chooseImage": "Choisir une image",
+      "attachedDocument": "Document joint",
+      "chooseDocument": "Choisir un document",
+      "documentAttached": "Document joint",
+      "uploading": "Téléchargement en cours...",
+      "uploadSuccess": "Fichier téléchargé avec succès",
+      "uploadError": "Erreur lors du téléchargement"
+    },
+    "modal": {
+      "create": {
+        "title": "Nouvelle actualité"
+      },
+      "edit": {
+        "title": "Modifier l'actualité"
+      },
+      "view": {
+        "downloadDocument": "Télécharger le document",
+        "trainingDates": "Dates de formation",
+        "start": "Début",
+        "end": "Fin"
+      },
+      "delete": {
+        "title": "Supprimer l'actualité",
+        "confirm": "Êtes-vous sûr de vouloir supprimer cette actualité ?",
+        "warning": "Cette action est irréversible."
+      }
+    },
+    "errors": {
+      "loadingFailed": "Erreur lors du chargement des actualités",
+      "creationFailed": "Erreur lors de la création de l'actualité",
+      "updateFailed": "Erreur lors de la mise à jour de l'actualité",
+      "deletionFailed": "Erreur lors de la suppression de l'actualité",
+      "uploadFailed": "Erreur lors de l'upload du fichier",
+      "connectionError": "Erreur de connexion. Vérifiez votre connexion internet.",
+      "unknownError": "Erreur inconnue",
+      "validation": {
+        "titleRequired": "Le titre est requis",
+        "slugRequired": "Le slug est requis",
+        "slugInvalid": "Le slug doit contenir uniquement des lettres minuscules, chiffres et tirets",
+        "categoryRequired": "La catégorie est requise",
+        "summaryRequired": "Le chapeau est requis",
+        "contentRequired": "Le contenu est requis",
+        "authorRequired": "L'auteur est requis",
+        "publicationDateRequired": "La date de publication est requise",
+        "invalidDate": "Date non valide",
+        "invalidImageUrl": "L'URL de l'image n'est pas valide",
+        "invalidDocumentUrl": "L'URL du document n'est pas valide"
+      }
+    },
+    "success": {
+      "created": "Actualité créée avec succès",
+      "updated": "Actualité mise à jour avec succès",
+      "deleted": "Actualité supprimée avec succès"
+    }
   }
 }
