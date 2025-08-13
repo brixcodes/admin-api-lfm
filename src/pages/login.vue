@@ -4,6 +4,7 @@ import { useAuth } from '@/utils/auth'
 import { getRedirectAfterLogin } from '@/utils/authGuard'
 import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useTheme } from 'vuetify'
 
@@ -12,6 +13,13 @@ const logo = '/logo_lafaom.png'
 const router = useRouter()
 const { login, isLoading, error, clearError } = useAuth()
 const vuetifyTheme = useTheme()
+const { t } = useI18n()
+
+// Snackbar notifications
+const showSnack = ref(false)
+const snackMsg = ref('')
+const snackColor = ref<'success' | 'error' | 'info' | 'warning'>('success')
+
 const isPasswordVisible = ref(false)
 
 const form = ref({
@@ -36,18 +44,25 @@ const handleLogin = async () => {
   clearError()
 
   try {
-    await login({
-      email: form.value.email,
+    const res = await login({
+      email: form.value.email.trim(),
       password: form.value.password,
     })
-    
+
     if (form.value.remember) {
       localStorage.setItem('rememberMe', 'true')
     }
-    
-    router.push('/dashboard')
-  } catch (err) {
+
+    snackMsg.value = res.message || t('login.success')
+    snackColor.value = 'success'
+    showSnack.value = true
+
+    setTimeout(() => router.push(getRedirectAfterLogin()), 400)
+  } catch (err: any) {
     console.error('Erreur de connexion:', err)
+    snackMsg.value = err?.message || t('login.errorMessage', { error: t('login.unknownError') })
+    snackColor.value = 'error'
+    showSnack.value = true
   }
 }
 
@@ -68,13 +83,13 @@ onMounted(() => {
       <VCardItem class="justify-center">
         <RouterLink to="/" class="d-flex align-center gap-1">
           <VImg :src="logo" :alt="$t('login.title') + ' Logo'" width="60" height="40" contain />
-          <h2 class="font-weight-medium text-2xl">{{$t('login.title')}}</h2>
+          <h2 class="font-weight-medium text-2xl">{{ $t('login.title') }}</h2>
         </RouterLink>
       </VCardItem>
 
       <!-- Subtitle -->
       <VCardText class="pt-2 text-center">
-        <p class="mb-0">{{$t('login.subtitle')}}</p>
+        <p class="mb-0">{{ $t('login.subtitle') }}</p>
       </VCardText>
 
       <!-- Login Form -->
@@ -88,79 +103,61 @@ onMounted(() => {
                   <VIcon icon="ri-error-warning-line" />
                 </template>
                 <div>
-                <div class="font-weight-medium mb-1">{{$t('login.errorTitle')}}</div>
-                <div class="text-body-2">{{ error }}</div>
+                  <div class="font-weight-medium mb-1">{{ $t('login.errorTitle') }}</div>
+                  <div class="text-body-2">{{ error }}</div>
                 </div>
               </VAlert>
             </VCol>
 
             <!-- Email Field -->
             <VCol cols="12">
-              <VTextField
-                v-model="form.email"
-                :label="$t('login.email')"
-                type="email"
-                :disabled="isLoading"
-                :rules="[
+              <VTextField prepend-inner-icon="ri-mail-line" v-model="form.email" :label="$t('login.email')" type="email"
+                :disabled="isLoading" :rules="[
                   v => !!v || 'L\'email est requis',
                   v => /.+@.+\..+/.test(v) || 'Format d\'email invalide'
-                ]"
-                required
-              />
+                ]" required />
             </VCol>
 
             <!-- Password Field -->
             <VCol cols="12">
-              <VTextField
-                v-model="form.password"
-                :label="$t('login.password')"
-                placeholder="············"
-                :type="isPasswordVisible ? 'text' : 'password'"
-                autocomplete="current-password"
-                :disabled="isLoading"
+              <VTextField prepend-inner-icon="ri-lock-line" v-model="form.password" :label="$t('login.password')"
+                placeholder="············" :type="isPasswordVisible ? 'text' : 'password'"
+                autocomplete="current-password" :disabled="isLoading"
                 :append-inner-icon="isPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
-                @click:append-inner="isPasswordVisible = !isPasswordVisible"
-                :rules="[
+                @click:append-inner="isPasswordVisible = !isPasswordVisible" :rules="[
                   v => !!v || 'Le mot de passe est requis',
                   v => v.length >= 6 || 'Le mot de passe doit contenir au moins 6 caractères'
-                ]"
-                required
-              />
+                ]" required />
 
               <!-- Remember Me & Forgot Password -->
               <div class="d-flex align-center justify-space-between flex-wrap my-6">
                 <VCheckbox v-model="form.remember" :label="$t('login.remember')" :disabled="isLoading" />
                 <RouterLink class="text-primary" to="/forgot-password" :class="{ 'disabled': isLoading }">
-                  {{$t('login.forgot')}}
+                  {{ $t('login.forgot') }}
                 </RouterLink>
               </div>
 
               <!-- Login Button -->
-              <VBtn
-                block
-                type="submit"
-                :loading="isLoading"
-                :disabled="!isFormValid || isLoading"
-                color="primary"
-                size="large"
-              >
+              <VBtn block type="submit" :loading="isLoading" :disabled="!isFormValid || isLoading" color="primary"
+                size="large">
                 <VIcon v-if="isLoading" icon="ri-loader-4-line" class="me-2" start />
                 {{ isLoading ? $t('login.loading') : $t('login.login') }}
               </VBtn>
             </VCol>
 
             <!-- create account -->
-            <VCol
-              cols="12"
-              class="text-center text-base"
-            >
-              <span>{{$t('login.newHere')}}</span>
-              <RouterLink
-                class="text-primary ms-2"
-                to="/register"
-                :class="{ 'disabled': isLoading }"
-              >
-                {{$t('login.createAccount')}}
+            <!-- Login notifications -->
+            <VSnackbar v-model="showSnack" location="top right" :color="snackColor" timeout="3000">
+              {{ snackMsg }}
+              <template #actions>
+                <VBtn icon="ri-close-line" @click="showSnack = false" />
+              </template>
+            </VSnackbar>
+
+            <VCol cols="12" class="text-center text-base">
+              <span>{{ $t('login.newHere') }}</span>
+              <RouterLink class="text-primary ms-2" to="/register" :class="{ 'disabled': isLoading }">
+                {{ $t('login.createAccount') }}
               </RouterLink>
             </VCol>
           </VRow>
@@ -182,10 +179,10 @@ onMounted(() => {
 }
 
 .v-alert {
-  animation: slideInDown 0.3s ease-out;
+  animation: slide-in-down 0.3s ease-out;
 }
 
-@keyframes slideInDown {
+@keyframes slide-in-down {
   from {
     opacity: 0;
     transform: translateY(-10px);

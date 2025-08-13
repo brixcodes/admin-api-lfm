@@ -11,6 +11,11 @@ const logo = '/logo_lafaom.png'
 const router = useRouter()
 const { forgotPassword, isLoading, error, clearError, success } = useAuth()
 const { t } = useI18n()
+// Snackbar notifications
+const showSnack = ref(false)
+const snackMsg = ref('')
+const snackColor = ref<'success' | 'error' | 'info' | 'warning'>('success')
+
 
 const form = ref({
   email: '',
@@ -39,18 +44,23 @@ const handleForgotPassword = async () => {
   clearError()
 
   try {
-    await forgotPassword({
+    const res = await forgotPassword({
       email: form.value.email.trim(),
     })
-    
-    // Le message de succès sera affiché automatiquement
-    // Optionnel : redirection après quelques secondes
+
+    snackMsg.value = res?.message || t('forgotPassword.success')
+    snackColor.value = 'success'
+    showSnack.value = true
+
     setTimeout(() => {
       router.push('/login')
-    }, 3000)
-    
-  } catch (err) {
-    // L'erreur est déjà gérée par le service d'authentification
+    }, 1000)
+
+  } catch (err: any) {
+    const msg = err?.message || t('auth.forgot.unknownError')
+    snackMsg.value = msg
+    snackColor.value = 'error'
+    showSnack.value = true
     console.error('Erreur de réinitialisation:', err)
   }
 }
@@ -68,22 +78,10 @@ onMounted(() => {
   <!-- eslint-disable vue/no-v-html -->
 
   <div class="auth-wrapper d-flex align-center justify-center pa-4">
-    <VCard
-      class="auth-card pa-4 pt-7"
-      max-width="500"
-    >
+    <VCard class="auth-card pa-4 pt-7" max-width="500">
       <VCardItem class="justify-center">
-        <RouterLink
-          to="/"
-          class="d-flex align-center gap-1"
-        >
-          <VImg
-            :src="logo"
-            alt="Lafaom-MAO Logo"
-            width="60"
-            height="40"
-            contain
-          />
+        <RouterLink to="/" class="d-flex align-center gap-1">
+          <VImg :src="logo" alt="Lafaom-MAO Logo" width="60" height="40" contain />
           <h2 class="font-weight-medium text-2xl ">
             Lafaom-MAO
           </h2>
@@ -104,13 +102,7 @@ onMounted(() => {
           <VRow>
             <!-- Message d'erreur -->
             <VCol cols="12" v-if="error">
-              <VAlert
-                type="error"
-                variant="tonal"
-                closable
-                @click:close="clearError"
-                class="mb-4"
-              >
+              <VAlert type="error" variant="tonal" closable @click:close="clearError" class="mb-4">
                 <template #prepend>
                   <VIcon icon="ri-error-warning-line" />
                 </template>
@@ -123,13 +115,7 @@ onMounted(() => {
 
             <!-- Message de succès -->
             <VCol cols="12" v-if="success">
-              <VAlert
-                type="success"
-                variant="tonal"
-                closable
-                @click:close="clearError"
-                class="mb-4"
-              >
+              <VAlert type="success" variant="tonal" closable @click:close="clearError" class="mb-4">
                 <template #prepend>
                   <VIcon icon="ri-check-line" />
                 </template>
@@ -145,73 +131,50 @@ onMounted(() => {
 
             <!-- Email -->
             <VCol cols="12">
-              <VTextField
-                v-model="form.email"
-                :label="$t('forgotPassword.email')"
-                type="email"
-                :placeholder="$t('forgotPassword.emailPlaceholder')"
-                :disabled="isLoading"
-                :rules="[
+              <VTextField prepend-inner-icon="ri-mail-line" v-model="form.email" :label="$t('forgotPassword.email')"
+                type="email" :placeholder="$t('forgotPassword.emailPlaceholder')" :disabled="isLoading" :rules="[
                   v => !!v || $t('forgotPassword.emailRequired'),
                   v => /.+@.+\..+/.test(v) || $t('forgotPassword.emailInvalid')
-                ]"
-                required
-              />
+                ]" required />
             </VCol>
 
             <!-- Bouton d'envoi -->
             <VCol cols="12">
-              <VBtn
-                block
-                type="submit"
-                :loading="isLoading"
-                :disabled="!isFormValid || isLoading"
-                color="primary"
-                size="large"
-              >
-                <VIcon
-                  v-if="isLoading"
-                  icon="ri-loader-4-line"
-                  class="me-2"
-                  start
-                />
+              <VBtn block type="submit" :loading="isLoading" :disabled="!isFormValid || isLoading" color="primary"
+                size="large">
+                <VIcon v-if="isLoading" icon="ri-loader-4-line" class="me-2" start />
                 {{ isLoading ? $t('forgotPassword.sending') : $t('forgotPassword.sendButton') }}
               </VBtn>
             </VCol>
 
             <!-- Retour à la connexion -->
-            <VCol
-              cols="12"
-              class="text-center text-base"
-            >
-              <RouterLink
-                class="text-primary d-flex align-center justify-center gap-2"
-                to="/login"
-                :class="{ 'disabled': isLoading }"
-              >
+            <VCol cols="12" class="text-center text-base">
+              <RouterLink class="text-primary d-flex align-center justify-center gap-2" to="/login"
+                :class="{ 'disabled': isLoading }">
                 <VIcon icon="ri-arrow-left-line" size="small" />
                 {{ $t('forgotPassword.backToLogin') }}
               </RouterLink>
             </VCol>
 
-            <VCol
-              cols="12"
-              class="d-flex align-center"
-            >
-              
+            <VCol cols="12" class="d-flex align-center">
+
             </VCol>
-           
+
           </VRow>
         </VForm>
       </VCardText>
     </VCard>
 
     <!-- bg img -->
-    <VImg
-      class="auth-footer-mask d-none d-md-block"
-      :src="authThemeMask"
-    />
+    <VImg class="auth-footer-mask d-none d-md-block" :src="authThemeMask" />
   </div>
+  <!-- Toast notifications -->
+  <VSnackbar v-model="showSnack" location="top right" :color="snackColor" timeout="3500">
+    {{ snackMsg }}
+    <template #actions>
+      <VBtn icon="ri-close-line" @click="showSnack = false" />
+    </template>
+  </VSnackbar>
 </template>
 
 <style lang="scss">
@@ -224,10 +187,10 @@ onMounted(() => {
 
 // Animation pour les alertes d'erreur et de succès
 .v-alert {
-  animation: slideInDown 0.3s ease-out;
+  animation: slide-in-down 0.3s ease-out;
 }
 
-@keyframes slideInDown {
+@keyframes slide-in-down {
   from {
     opacity: 0;
     transform: translateY(-10px);
@@ -251,7 +214,7 @@ onMounted(() => {
   text-decoration: none;
 
   &:hover {
-    text-decoration: underline;
+    text-decoration: none;
   }
 }
-</style> 
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <VDialog v-model="isOpen" max-width="1200" persistent>
+  <VDialog v-model="isOpen" max-width="1250" persistent>
     <VCard>
       <VCardTitle class="text-h5 pa-6 pb-4">
         <div class="d-flex align-center">
@@ -73,7 +73,7 @@
             <VCol cols="12" md="4">
               <VAutocomplete v-model="form.nationalite" :label="t('system.users.create.nationality')"
                 :placeholder="t('system.users.create.nationality_placeholder')" :items="nationalityOptions"
-                item-title="title" item-value="value" variant="outlined" prepend-inner-icon="ri-passport-line" clearable
+                item-title="title" item-value="code" variant="outlined" prepend-inner-icon="ri-passport-line" clearable
                 hide-selected />
             </VCol>
 
@@ -81,7 +81,19 @@
             <VCol cols="12" md="4">
               <VAutocomplete v-model="form.pays" :label="t('system.users.create.country')"
                 :placeholder="t('system.users.create.country_placeholder')" :items="countryOptions" item-title="title"
-                item-value="value" variant="outlined" prepend-inner-icon="ri-map-pin-line" clearable hide-selected />
+                item-value="code" variant="outlined" prepend-inner-icon="ri-map-pin-line" clearable hide-selected>
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props" :title="item.raw.title">
+                    <template #prepend>
+                      <span class="me-3" style="font-size: 1.2em;">{{ item.raw.flag }}</span>
+                    </template>
+                  </VListItem>
+                </template>
+                <template #selection="{ item }">
+                  <span class="me-2" style="font-size: 1.1em;">{{ item.raw.flag }}</span>
+                  {{ item.raw.title }}
+                </template>
+              </VAutocomplete>
             </VCol>
 
             <!-- Région -->
@@ -253,30 +265,36 @@ const roleOptions = computed(() =>
 )
 
 // Build localized country and nationality lists
-const countryOptions = computed<{ title: string; value: string }[]>(() => {
+const countryOptions = computed<{ title: string; code: string; flag: string }[]>(() => {
   const lang = (locale.value || 'en').toString().startsWith('fr') ? 'fr' : 'en'
   return (countries as any[])
     .map((c: any) => ({
       title: (c.translations?.[lang]?.common) || c.name?.common || '',
-      value: (c.translations?.[lang]?.common) || c.name?.common || ''
+      code: c.cca2 || c.ccn3 || (c.name?.common || ''),
+      flag: c.flag || (c.cca2 ? String.fromCodePoint(...[...c.cca2.toUpperCase()].map(ch => 127397 + ch.charCodeAt(0))) : '🏳️')
     }))
     .filter((opt: any) => !!opt.title)
     .sort((a: any, b: any) => a.title.localeCompare(b.title))
 })
 
 // Derive nationality from demonyms if present, fallback to country name
-const nationalityOptions = computed<{ title: string; value: string }[]>(() => {
+const nationalityOptions = computed<{ title: string; code: string }[]>(() => {
   const lang = (locale.value || 'en').toString().startsWith('fr') ? 'fr' : 'en'
   const demonymKey = lang === 'fr' ? 'fra' : 'eng'
   const set = new Set<string>()
+  const map = new Map<string, string>()
   for (const c of (countries as any[])) {
     const dem = c?.demonyms?.[demonymKey]?.m || c?.demonyms?.[demonymKey]?.f
     const translated = c?.translations?.[lang]?.common || c?.name?.common
-    if (dem) set.add(dem)
-    else if (translated) set.add(translated)
+    const title = dem || translated
+    const code = c.cca2 || c.ccn3 || translated
+    if (title && code) {
+      set.add(title)
+      map.set(title, code)
+    }
   }
   return Array.from(set)
-    .map((n: string) => ({ title: n, value: n }))
+    .map((n: string) => ({ title: n, code: map.get(n) as string }))
     .sort((a: any, b: any) => a.title.localeCompare(b.title))
 })
 
@@ -325,6 +343,16 @@ const onCancel = () => {
   resetForm()
   isOpen.value = false
 }
+
+
+// Keep displayed title in sync with locale for selected codes
+watch(locale, () => {
+  // On locale change, keep v-model as code; display updates automatically from computed items
+  const co = countryOptions.value.find(o => o.code === form.value.pays)
+  if (co) form.value.pays = co.code
+  const no = nationalityOptions.value.find(o => o.code === form.value.nationalite)
+  if (no) form.value.nationalite = no.code
+})
 
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()

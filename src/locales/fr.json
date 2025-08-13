@@ -13,7 +13,9 @@
     "notifications": "Notifications"
   },
   "common": {
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "reset": "Réinitialiser",
+    "save": "Enregistrer"
   },
   "validation": {
     "required": "Ce champ est requis",
@@ -54,7 +56,8 @@
       "email": "Email",
       "submit": "Envoyer le lien",
       "back": "Retour à la connexion",
-      "success": "Email envoyé ! Vérifiez votre boîte de réception."
+      "success": "Email envoyé ! Vérifiez votre boîte de réception.",
+      "unknownError": "Erreur inconnue"
     },
     "change_password": {
       "title": "Changer le mot de passe",
@@ -230,7 +233,28 @@
           "message": "Vous êtes sur le point de créer un nouveau compte utilisateur avec les informations suivantes :",
           "summary": "Résumé de l'utilisateur",
           "password_info": "Un mot de passe temporaire sera généré et envoyé à l'utilisateur par email.",
-          "create": "Confirmer"
+          "create": "Confirmer",
+          "edit": {
+            "title": "Modifier un utilisateur",
+            "subtitle": "Modifier les informations de l'utilisateur",
+            "first_name": "Prénom",
+            "first_name_placeholder": "Entrez le prénom",
+            "last_name": "Nom",
+            "last_name_placeholder": "Entrez le nom",
+            "email": "Email",
+            "email_placeholder": "Entrez l'email",
+            "gender": "Sexe",
+            "birth_date": "Date de naissance",
+            "birth_date_placeholder": "Sélectionnez la date de naissance",
+            "role": "Rôle",
+            "phone": "Téléphone",
+            "nationality": "Nationalité",
+            "country": "Pays",
+            "region": "Région",
+            "city": "Ville",
+            "address": "Adresse",
+            "current_role": "Rôle actuel"
+          }
         }
       },
       "permissions": {
@@ -252,6 +276,27 @@
         "revoke_title": "Confirmer la révocation",
         "revoke_message": "Voulez-vous vraiment révoquer ces permissions de cet utilisateur ?",
         "status_title": "Confirmer le changement de statut",
+        "edit": {
+          "title": "Modifier un utilisateur",
+          "subtitle": "Modifier les informations de l'utilisateur",
+          "first_name": "Prénom",
+          "first_name_placeholder": "Entrez le prénom",
+          "last_name": "Nom",
+          "last_name_placeholder": "Entrez le nom",
+          "email": "Email",
+          "email_placeholder": "Entrez l'email",
+          "gender": "Sexe",
+          "birth_date": "Date de naissance",
+          "birth_date_placeholder": "Sélectionnez la date de naissance",
+          "role": "Rôle",
+          "phone": "Téléphone",
+          "nationality": "Nationalité",
+          "country": "Pays",
+          "region": "Région",
+          "city": "Ville",
+          "address": "Adresse",
+          "current_role": "Rôle actuel"
+        },
         "status_message": "Voulez-vous vraiment changer le statut de cet utilisateur ?",
         "edit_title": "Confirmer la modification",
         "edit_message": "Voulez-vous vraiment sauvegarder ces modifications ?"
@@ -700,7 +745,9 @@
     "errorTitle": "Erreur de connexion",
     "errorMessage": "{{error}}",
     "createAccount": "Créer un compte",
-    "newHere": "Nouveau sur notre plateforme?"
+    "newHere": "Nouveau sur notre plateforme?",
+    "success": "Connexion réussie",
+    "unknownError": "Erreur inconnue"
   },
   "dashboard": {
     "welcome": {

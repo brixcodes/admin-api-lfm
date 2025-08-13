@@ -2,6 +2,7 @@
 import type { RoleLight, UtilisateurLight, UtilisateurUpdate } from '@/utils/types/models'
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import countries from 'world-countries'
 
 interface Props {
   modelValue: boolean
@@ -21,6 +22,40 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<Emits>()
 const { t } = useI18n()
+
+
+const { locale } = useI18n()
+const countryOptions = computed<{ title: string; code: string; flag: string }[]>(() => {
+  const lang = (locale.value || 'en').toString().startsWith('fr') ? 'fr' : 'en'
+  return (countries as any[])
+    .map((c: any) => ({
+      title: (c.translations?.[lang]?.common) || c.name?.common || '',
+      code: c.cca2 || c.ccn3 || (c.name?.common || ''),
+      flag: c.flag || (c.cca2 ? String.fromCodePoint(...[...c.cca2.toUpperCase()].map(ch => 127397 + ch.charCodeAt(0))) : '🏳️')
+    }))
+    .filter((opt: any) => !!opt.title)
+    .sort((a: any, b: any) => a.title.localeCompare(b.title))
+})
+const nationalityOptions = computed<{ title: string; code: string }[]>(() => {
+  const lang = (locale.value || 'en').toString().startsWith('fr') ? 'fr' : 'en'
+  const demonymKey = lang === 'fr' ? 'fra' : 'eng'
+  const set = new Set<string>()
+  const map = new Map<string, string>()
+  for (const c of (countries as any[])) {
+    const dem = c?.demonyms?.[demonymKey]?.m || c?.demonyms?.[demonymKey]?.f
+    const translated = c?.translations?.[lang]?.common || c?.name?.common
+    const title = dem || translated
+    const code = c.cca2 || c.ccn3 || translated
+    if (title && code) {
+      set.add(title)
+      map.set(title, code)
+    }
+  }
+  return Array.from(set)
+    .map((n: string) => ({ title: n, code: map.get(n) as string }))
+    .sort((a: any, b: any) => a.title.localeCompare(b.title))
+})
+
 
 // Form state
 const form = ref<UtilisateurUpdate>({
@@ -172,7 +207,7 @@ const resetForm = () => {
 </script>
 
 <template>
-  <VDialog :model-value="modelValue" @update:model-value="emit('update:modelValue', $event)" max-width="900" persistent>
+  <VDialog :model-value="modelValue" @update:model-value="emit('update:modelValue', $event)" max-width="1250" persistent>
     <VCard v-if="user">
       <VCardTitle class="d-flex align-center justify-space-between">
         <div class="d-flex justify-end"></div>
@@ -198,14 +233,14 @@ const resetForm = () => {
         <VForm @submit.prevent="saveUser">
           <VRow>
             <!-- First Name -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VTextField v-model="form.prenom" :label="t('system.users.edit.first_name')"
                 :placeholder="t('system.users.edit.first_name_placeholder')" variant="outlined"
                 prepend-inner-icon="ri-user-line" clearable />
             </VCol>
 
             <!-- Last Name -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VTextField v-model="form.nom" :label="t('system.users.edit.last_name')"
                 :placeholder="t('system.users.edit.last_name_placeholder')" :rules="rules.nom"
                 :error-messages="formErrors.nom" variant="outlined" prepend-inner-icon="ri-user-line" required
@@ -213,7 +248,7 @@ const resetForm = () => {
             </VCol>
 
             <!-- Email -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VTextField v-model="form.email" :label="t('system.users.edit.email')"
                 :placeholder="t('system.users.edit.email_placeholder')" :rules="rules.email"
                 :error-messages="formErrors.email" variant="outlined" prepend-inner-icon="ri-mail-line" type="email"
@@ -221,56 +256,69 @@ const resetForm = () => {
             </VCol>
 
             <!-- Date de naissance -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VTextField v-model="form.date_naissance" :label="t('system.users.edit.birth_date')"
                 :placeholder="t('system.users.edit.birth_date_placeholder')" variant="outlined"
                 prepend-inner-icon="ri-calendar-line" type="date" clearable />
             </VCol>
 
             <!-- Gender -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VSelect v-model="form.sexe" :label="t('system.users.edit.gender')" :items="genderOptions"
                 variant="outlined" prepend-inner-icon="ri-user-3-line" />
             </VCol>
 
             <!-- Role -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VSelect v-model="form.role_id" :label="t('system.users.edit.role')" :items="roleOptions"
                 variant="outlined" prepend-inner-icon="ri-shield-user-line" clearable />
             </VCol>
 
             <!-- Phone -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VTextField v-model="form.telephone" :label="t('system.users.edit.phone')" variant="outlined"
                 prepend-inner-icon="ri-phone-line" maxlength="30" clearable />
             </VCol>
 
             <!-- Nationality -->
-            <VCol cols="12" md="6">
-              <VTextField v-model="form.nationalite" :label="t('system.users.edit.nationality')" variant="outlined"
-                prepend-inner-icon="ri-passport-line" maxlength="100" clearable />
+            <VCol cols="12" md="4">
+              <VAutocomplete v-model="form.nationalite" :label="t('system.users.edit.nationality')"
+                :items="nationalityOptions" item-title="title" item-value="code" variant="outlined"
+                prepend-inner-icon="ri-passport-line" clearable />
             </VCol>
 
             <!-- Country -->
-            <VCol cols="12" md="6">
-              <VTextField v-model="form.pays" :label="t('system.users.edit.country')" variant="outlined"
-                prepend-inner-icon="ri-map-pin-line" maxlength="100" clearable />
+            <VCol cols="12" md="4">
+              <VAutocomplete v-model="form.pays" :label="t('system.users.edit.country')" :items="countryOptions"
+                item-title="title" item-value="code" variant="outlined" prepend-inner-icon="ri-map-pin-line" clearable>
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props" :title="item.raw.title">
+                    <template #prepend>
+                      <span class="me-3" style="font-size: 1.2em;">{{ item.raw.flag }}</span>
+                    </template>
+                  </VListItem>
+                </template>
+                <template #selection="{ item }">
+                  <span class="me-2" style="font-size: 1.1em;">{{ item.raw.flag }}</span>
+                  {{ item.raw.title }}
+                </template>
+              </VAutocomplete>
             </VCol>
 
             <!-- Region -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VTextField v-model="form.region" :label="t('system.users.edit.region')" variant="outlined"
                 prepend-inner-icon="ri-community-line" maxlength="100" clearable />
             </VCol>
 
             <!-- City -->
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <VTextField v-model="form.ville" :label="t('system.users.edit.city')" variant="outlined"
                 prepend-inner-icon="ri-building-2-line" maxlength="100" clearable />
             </VCol>
 
             <!-- Address -->
-            <VCol cols="12" md="12">
+            <VCol cols="12" md="4">
               <VTextField v-model="form.adresse" :label="t('system.users.edit.address')" variant="outlined"
                 prepend-inner-icon="ri-home-2-line" maxlength="255" clearable />
             </VCol>

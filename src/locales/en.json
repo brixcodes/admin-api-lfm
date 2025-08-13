@@ -54,7 +54,8 @@
       "email": "Email",
       "submit": "Send link",
       "back": "Back to login",
-      "success": "Email sent! Check your inbox."
+      "success": "Email sent! Check your inbox.",
+      "unknownError": "Unknown error"
     },
     "change_password": {
       "title": "Change password",
@@ -244,6 +245,14 @@
         "role": "Role",
         "current_role": "Current role"
       },
+      "birth_date": "Birth date",
+      "birth_date_placeholder": "Select birth date",
+      "phone": "Phone",
+      "nationality": "Nationality",
+      "country": "Country",
+      "region": "Region",
+      "city": "City",
+      "address": "Address",
       "permissions": {
         "title": "Permission management",
         "userLabel": "User:",
@@ -772,7 +781,9 @@
     "errorTitle": "Login error",
     "errorMessage": "{{error}}",
     "createAccount": "Create an account",
-    "newHere": "New to our platform?"
+    "newHere": "New to our platform?",
+    "success": "Login successful",
+    "unknownError": "Unknown error"
   },
   "dashboard": {
     "welcome": {
