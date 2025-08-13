@@ -2,6 +2,13 @@
   command = "npm run build"
   publish = "dist"
 
+# API proxy pour éviter les erreurs CORS
+[[redirects]]
+  from = "/api/*"
+  to = "https://lafaom-mao.vertex-cam.com/:splat"
+  status = 200
+  force = true
+
 # SPA redirect rules
 [[redirects]]
   from = "/*"
