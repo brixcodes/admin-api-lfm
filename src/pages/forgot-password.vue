@@ -57,7 +57,7 @@ const handleForgotPassword = async () => {
     }, 1000)
 
   } catch (err: any) {
-    const msg = err?.message || t('auth.forgot.unknownError')
+    const msg = err?.message || t('forgotPassword.unknownError')
     snackMsg.value = msg
     snackColor.value = 'error'
     showSnack.value = true

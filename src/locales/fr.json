@@ -19,220 +19,262 @@
   },
   "validation": {
     "required": "Ce champ est requis",
-    "email": "Format d'email invalide"
-  "search": {
-    "placeholder": "Rechercher dans l'application...",
-    "searching": "Recherche en cours...",
-    "no_results": "Aucun résultat trouvé",
-    "popular_searches": "RECHERCHES POPULAIRES",
-    "apps_pages": "APPS & PAGES",
-    "popular": {
-      "users": "Utilisateurs",
-      "formations": "Formations",
-      "specialties": "Spécialités",
-      "projects": "Projets"
-    },
-    "categories": {
-      "system": "SYSTÈME",
-      "education": "FORMATION",
-      "management": "GESTION",
-      "projects": "PROJETS"
-    },
-    "results": {
-      "pages": "Pages",
-      "users": "Utilisateurs",
-      "formations": "Formations",
-      "specialties": "Spécialités"
-    },
-    "shortcuts": {
-      "navigate": "Naviguez avec ↑↓",
-      "select": "pour sélectionner",
-      "close": "pour fermer"
-    }
-  },
-  "auth": {
-    "login": {
-      "title": "Connexion",
-      "subtitle": "Connectez-vous à votre compte",
-      "email": "Email",
-      "password": "Mot de passe",
-      "remember": "Se souvenir de moi",
-      "forgot": "Mot de passe oublié ?",
-      "submit": "Se connecter",
-      "register_link": "Créer un compte",
-      "error_required": "Ce champ est requis",
-      "error_email": "Email invalide"
-    },
-    "register": {
-      "title": "Inscription",
-      "subtitle": "Créez votre compte",
-      "first_name": "Prénom",
-      "last_name": "Nom",
-      "email": "Email",
-      "password": "Mot de passe",
-      "confirm_password": "Confirmer le mot de passe",
-      "birth_date": "Date de naissance",
-      "gender": "Sexe",
-      "role": "Rôle dans le système",
-      "terms": "J'accepte les conditions d'utilisation et la politique de confidentialité",
-      "submit": "S'inscrire",
-      "login_link": "Déjà un compte ? Se connecter",
-      "success": "Inscription réussie ! Vous pouvez maintenant vous connecter."
-    },
-    "forgot": {
-      "title": "Mot de passe oublié",
-      "subtitle": "Entrez votre email pour recevoir un lien de réinitialisation",
-      "email": "Email",
-      "submit": "Envoyer le lien",
-      "back": "Retour à la connexion",
-      "success": "Email envoyé ! Vérifiez votre boîte de réception.",
-      "unknownError": "Erreur inconnue"
-    },
-    "change_password": {
-      "title": "Changer le mot de passe",
-      "subtitle": "Définissez un nouveau mot de passe",
-      "new_password": "Nouveau mot de passe",
-      "confirm_password": "Confirmer le mot de passe",
-      "submit": "Valider",
-      "success": "Mot de passe changé avec succès. Vous allez être redirigé.",
-      "error_required": "Tous les champs sont obligatoires.",
-      "error_criteria": "Le mot de passe ne respecte pas les critères.",
-      "error_match": "Les mots de passe ne correspondent pas."
-    }
-  },
-  "profile": {
-    "tabs": {
-      "profile": "Profil",
-      "security": "Sécurité",
-      "notifications": "Notifications",
-      "gen_individual": "Individuel",
-      "gen_ancestry": "Ascendance",
-      "gen_health": "Santé",
-      "gen_education": "Éducation",
-      "gen_pii": "PII"
-    }
-  },
-  "system": {
-    "tabs": {
-      "users": "Utilisateurs",
-      "roles": "Rôles",
-      "permissions": "Permissions",
-      "journal": "Journal"
-    },
-    "users": {
-      "title": "Gestion des utilisateurs",
-      "subtitle": "Gérez les comptes utilisateurs, leurs rôles et permissions",
-      "add": "Ajouter",
-      "edit": "Modifier l'utilisateur",
-      "delete": "Supprimer l'utilisateur",
-      "search": "Rechercher un utilisateur",
-      "total": "utilisateurs",
-      "no_role": "Aucun rôle",
-      "permissions_count": "permissions",
-      "from_role": "du rôle",
-      "role_permissions": "Permissions du rôle",
-      "has_role": "A un rôle",
-      "role_info": "Informations du rôle",
-      "table": {
-        "title": "Liste des utilisateurs",
-        "user": "UTILISATEUR",
-        "gender": "SEXE",
-        "role": "RÔLE",
-        "permissions": "PERMISSIONS",
-        "status": "STATUT",
-        "created": "CRÉÉ LE",
-        "actions": "ACTIONS",
-        "no_data": "Aucun utilisateur trouvé"
+    "email": "Format d'email invalide",
+    "search": {
+      "placeholder": "Rechercher dans l'application...",
+      "searching": "Recherche en cours...",
+      "no_results": "Aucun résultat trouvé",
+      "popular_searches": "RECHERCHES POPULAIRES",
+      "apps_pages": "APPS & PAGES",
+      "popular": {
+        "users": "Utilisateurs",
+        "formations": "Formations",
+        "specialties": "Spécialités",
+        "projects": "Projets"
       },
-      "status": {
-        "active": "Actif",
-        "inactive": "Inactif",
-        "suspended": "Suspendu"
+      "categories": {
+        "system": "SYSTÈME",
+        "education": "FORMATION",
+        "management": "GESTION",
+        "projects": "PROJETS"
       },
-      "gender": {
-        "homme": "Homme",
-        "femme": "Femme"
+      "results": {
+        "pages": "Pages",
+        "users": "Utilisateurs",
+        "formations": "Formations",
+        "specialties": "Spécialités"
       },
-      "actions": {
-        "view": "Voir les détails",
-        "edit": "Modifier",
-        "assign": "Affecter",
-        "revoke": "Révoquer",
-        "assign_permissions": "Affecter",
-        "revoke_permissions": "Révoquer",
-        "activate": "Activer",
-        "deactivate": "Désactiver",
-        "delete": "Supprimer"
+      "shortcuts": {
+        "navigate": "Naviguez avec ↑↓",
+        "select": "pour sélectionner",
+        "close": "pour fermer"
+      }
+    },
+    "auth": {
+      "login": {
+        "title": "Connexion",
+        "subtitle": "Connectez-vous à votre compte",
+        "email": "Email",
+        "password": "Mot de passe",
+        "remember": "Se souvenir de moi",
+        "forgot": "Mot de passe oublié ?",
+        "submit": "Se connecter",
+        "register_link": "Créer un compte",
+        "error_required": "Ce champ est requis",
+        "error_email": "Email invalide"
       },
-      "stats": {
-        "total_users": "Total utilisateurs",
-        "active_users": "Utilisateurs actifs",
-        "with_roles": "Avec des rôles",
-        "total_permissions": "Total permissions",
-        "last_week": "Stats de la semaine dernière"
-      },
-      "filters": {
-        "status": "Statut",
+      "register": {
+        "title": "Inscription",
+        "subtitle": "Créez votre compte",
+        "first_name": "Prénom",
+        "last_name": "Nom",
+        "email": "Email",
+        "password": "Mot de passe",
+        "confirm_password": "Confirmer le mot de passe",
+        "birth_date": "Date de naissance",
         "gender": "Sexe",
-        "role": "Rôle",
+        "role": "Rôle dans le système",
+        "terms": "J'accepte les conditions d'utilisation et la politique de confidentialité",
+        "submit": "S'inscrire",
+        "login_link": "Déjà un compte ? Se connecter",
+        "success": "Inscription réussie ! Vous pouvez maintenant vous connecter."
+      },
+      "forgot": {
+        "title": "Mot de passe oublié",
+        "subtitle": "Entrez votre email pour recevoir un lien de réinitialisation",
+        "email": "Email",
+        "submit": "Envoyer le lien",
+        "back": "Retour à la connexion",
+        "success": "Email envoyé ! Vérifiez votre boîte de réception.",
+        "unknownError": "Erreur inconnue"
+      },
+      "change_password": {
+        "title": "Changer le mot de passe",
+        "subtitle": "Définissez un nouveau mot de passe",
+        "new_password": "Nouveau mot de passe",
+        "confirm_password": "Confirmer le mot de passe",
+        "submit": "Valider",
+        "success": "Mot de passe changé avec succès. Vous allez être redirigé.",
+        "error_required": "Tous les champs sont obligatoires.",
+        "error_criteria": "Le mot de passe ne respecte pas les critères.",
+        "error_match": "Les mots de passe ne correspondent pas."
+      }
+    },
+    "profile": {
+      "tabs": {
+        "profile": "Profil",
+        "security": "Sécurité",
+        "notifications": "Notifications",
+        "gen_individual": "Individuel",
+        "gen_ancestry": "Ascendance",
+        "gen_health": "Santé",
+        "gen_education": "Éducation",
+        "gen_pii": "PII"
+      }
+    },
+    "system": {
+      "tabs": {
+        "users": "Utilisateurs",
+        "roles": "Rôles",
         "permissions": "Permissions",
-        "clear_all": "Effacer tous les filtres"
+        "journal": "Journal"
       },
-      "details": {
-        "title": "Détails de l'utilisateur",
-        "personal_info": "Informations personnelles",
-        "account_info": "Informations du compte",
-        "permissions": "Rôles et permissions",
-        "first_name": "Prénom",
-        "last_name": "Nom",
-        "gender": "Sexe",
-        "birth_date": "Date de naissance",
-        "years_old": "ans",
-        "email": "Email",
-        "status": "Statut",
-        "created_at": "Créé le",
-        "updated_at": "Modifié le",
-        "username": "Nom d'utilisateur",
-        "details_title": "Détails",
-        "permissions_count": "Permissions",
-        "projects_count": "Projets",
+      "users": {
+        "title": "Gestion des utilisateurs",
+        "subtitle": "Gérez les comptes utilisateurs, leurs rôles et permissions",
+        "add": "Ajouter",
+        "edit": "Modifier l'utilisateur",
+        "delete": "Supprimer l'utilisateur",
+        "search": "Rechercher un utilisateur",
+        "total": "utilisateurs",
+        "no_role": "Aucun rôle",
+        "permissions_count": "permissions",
+        "from_role": "du rôle",
         "role_permissions": "Permissions du rôle",
-        "direct_permissions": "Permissions directes",
-        "no_permissions": "Aucune permission assignée",
-        "project_list": "Liste des projets",
-        "project": "PROJET",
-        "total_task": "TÂCHES TOTALES",
-        "progress": "PROGRÈS",
-        "hours": "HEURES",
-        "activity_coming_soon": "L'historique des activités sera bientôt disponible",
-        "tabs": {
-          "overview": "Aperçu",
+        "has_role": "A un rôle",
+        "role_info": "Informations du rôle",
+        "table": {
+          "title": "Liste des utilisateurs",
+          "user": "UTILISATEUR",
+          "gender": "SEXE",
+          "role": "RÔLE",
+          "permissions": "PERMISSIONS",
+          "status": "STATUT",
+          "created": "CRÉÉ LE",
+          "actions": "ACTIONS",
+          "no_data": "Aucun utilisateur trouvé"
+        },
+        "status": {
+          "active": "Actif",
+          "inactive": "Inactif",
+          "suspended": "Suspendu"
+        },
+        "gender": {
+          "homme": "Homme",
+          "femme": "Femme"
+        },
+        "actions": {
+          "view": "Voir les détails",
+          "edit": "Modifier",
+          "assign": "Affecter",
+          "revoke": "Révoquer",
+          "assign_permissions": "Affecter",
+          "revoke_permissions": "Révoquer",
+          "activate": "Activer",
+          "deactivate": "Désactiver",
+          "delete": "Supprimer"
+        },
+        "stats": {
+          "total_users": "Total utilisateurs",
+          "active_users": "Utilisateurs actifs",
+          "with_roles": "Avec des rôles",
+          "total_permissions": "Total permissions",
+          "last_week": "Stats de la semaine dernière"
+        },
+        "filters": {
+          "status": "Statut",
+          "gender": "Sexe",
+          "role": "Rôle",
           "permissions": "Permissions",
-          "activity": "Activité"
-        }
-      },
-      "create": {
-        "title": "Ajouter un utilisateur",
-        "subtitle": "Créez un nouveau compte utilisateur",
-        "first_name": "Prénom",
-        "first_name_placeholder": "Entrez le prénom",
-        "last_name": "Nom",
-        "last_name_placeholder": "Entrez le nom",
-        "email": "Email",
-        "email_placeholder": "Entrez l'adresse email",
-        "gender": "Sexe",
-        "role": "Rôle",
-        "birth_date": "Date de naissance",
-        "birth_date_placeholder": "Sélectionnez la date de naissance",
-        "password_note": "Un mot de passe sera généré automatiquement et envoyé par email à l'utilisateur.",
-        "submit": "Enregistrer",
+          "clear_all": "Effacer tous les filtres"
+        },
+        "details": {
+          "title": "Détails de l'utilisateur",
+          "personal_info": "Informations personnelles",
+          "account_info": "Informations du compte",
+          "permissions": "Rôles et permissions",
+          "first_name": "Prénom",
+          "last_name": "Nom",
+          "gender": "Sexe",
+          "birth_date": "Date de naissance",
+          "years_old": "ans",
+          "email": "Email",
+          "status": "Statut",
+          "created_at": "Créé le",
+          "updated_at": "Modifié le",
+          "username": "Nom d'utilisateur",
+          "details_title": "Détails",
+          "permissions_count": "Permissions",
+          "projects_count": "Projets",
+          "role_permissions": "Permissions du rôle",
+          "direct_permissions": "Permissions directes",
+          "no_permissions": "Aucune permission assignée",
+          "project_list": "Liste des projets",
+          "project": "PROJET",
+          "total_task": "TÂCHES TOTALES",
+          "progress": "PROGRÈS",
+          "hours": "HEURES",
+          "activity_coming_soon": "L'historique des activités sera bientôt disponible",
+          "tabs": {
+            "overview": "Aperçu",
+            "permissions": "Permissions",
+            "activity": "Activité"
+          }
+        },
+        "create": {
+          "title": "Ajouter un utilisateur",
+          "subtitle": "Créez un nouveau compte utilisateur",
+          "first_name": "Prénom",
+          "first_name_placeholder": "Entrez le prénom",
+          "last_name": "Nom",
+          "last_name_placeholder": "Entrez le nom",
+          "email": "Email",
+          "email_placeholder": "Entrez l'adresse email",
+          "gender": "Sexe",
+          "role": "Rôle",
+          "birth_date": "Date de naissance",
+          "birth_date_placeholder": "Sélectionnez la date de naissance",
+          "password_note": "Un mot de passe sera généré automatiquement et envoyé par email à l'utilisateur.",
+          "submit": "Enregistrer",
+          "confirm": {
+            "title": "Confirmer la création",
+            "subtitle": "Vérifiez les informations avant de créer l'utilisateur",
+            "message": "Vous êtes sur le point de créer un nouveau compte utilisateur avec les informations suivantes :",
+            "summary": "Résumé de l'utilisateur",
+            "password_info": "Un mot de passe temporaire sera généré et envoyé à l'utilisateur par email.",
+            "create": "Confirmer",
+            "edit": {
+              "title": "Modifier un utilisateur",
+              "subtitle": "Modifier les informations de l'utilisateur",
+              "first_name": "Prénom",
+              "first_name_placeholder": "Entrez le prénom",
+              "last_name": "Nom",
+              "last_name_placeholder": "Entrez le nom",
+              "email": "Email",
+              "email_placeholder": "Entrez l'email",
+              "gender": "Sexe",
+              "birth_date": "Date de naissance",
+              "birth_date_placeholder": "Sélectionnez la date de naissance",
+              "role": "Rôle",
+              "phone": "Téléphone",
+              "nationality": "Nationalité",
+              "country": "Pays",
+              "region": "Région",
+              "city": "Ville",
+              "address": "Adresse",
+              "current_role": "Rôle actuel"
+            }
+          }
+        },
+        "permissions": {
+          "title": "Gestion des permissions",
+          "userLabel": "Utilisateur :",
+          "assignTab": "Affecter",
+          "revokeTab": "Révoquer",
+          "assignSection": "Sélectionner des permissions à ajouter",
+          "revokeSection": "Sélectionner des permissions à retirer",
+          "searchPlaceholder": "Rechercher et sélectionner",
+          "selectAll": "Tout sélectionner",
+          "clear": "Effacer",
+          "nothingToAssign": "Aucune permission disponible à ajouter.",
+          "nothingToRevoke": "Aucune permission associée à retirer."
+        },
         "confirm": {
-          "title": "Confirmer la création",
-          "subtitle": "Vérifiez les informations avant de créer l'utilisateur",
-          "message": "Vous êtes sur le point de créer un nouveau compte utilisateur avec les informations suivantes :",
-          "summary": "Résumé de l'utilisateur",
-          "password_info": "Un mot de passe temporaire sera généré et envoyé à l'utilisateur par email.",
-          "create": "Confirmer",
+          "assign_title": "Confirmer l'affectation",
+          "assign_message": "Voulez-vous vraiment affecter ces permissions à cet utilisateur ?",
+          "revoke_title": "Confirmer la révocation",
+          "revoke_message": "Voulez-vous vraiment révoquer ces permissions de cet utilisateur ?",
+          "status_title": "Confirmer le changement de statut",
           "edit": {
             "title": "Modifier un utilisateur",
             "subtitle": "Modifier les informations de l'utilisateur",
@@ -253,118 +295,105 @@
             "city": "Ville",
             "address": "Adresse",
             "current_role": "Rôle actuel"
-          }
+          },
+          "status_message": "Voulez-vous vraiment changer le statut de cet utilisateur ?",
+          "edit_title": "Confirmer la modification",
+          "edit_message": "Voulez-vous vraiment sauvegarder ces modifications ?"
+        },
+        "notifications": {
+          "created_success": "Utilisateur créé avec succès",
+          "created_error": "Erreur lors de la création de l'utilisateur",
+          "assign_success": "Permissions affectées avec succès",
+          "revoke_success": "Permissions révoquées avec succès",
+          "update_success": "Utilisateur modifié avec succès",
+          "status_success": "Statut modifié avec succès",
+          "update_error": "Erreur lors de la modification",
+          "action_error": "Erreur lors de l'action"
+        },
+        "validation": {
+          "name_required": "Le nom est requis",
+          "name_min_length": "Le nom doit contenir au moins 2 caractères",
+          "email_required": "L'email est requis",
+          "email_invalid": "Format d'email invalide"
+        },
+        "errors": {
+          "fetch_failed": "Erreur lors de la récupération des utilisateurs"
+        }
+      },
+      "roles": {
+        "title": "Gestion des rôles",
+        "add": "Ajouter un rôle",
+        "edit": "Modifier le rôle",
+        "delete": "Supprimer le rôle",
+        "search": "Rechercher un rôle",
+        "table": {
+          "role": "RÔLE",
+          "permissions": "PERMISSIONS",
+          "actions": "ACTIONS"
+        },
+        "actions": {
+          "assign": "Affecter",
+          "revoke": "Révoquer",
+          "assignTooltip": "Affecter des permissions",
+          "revokeTooltip": "Révoquer des permissions"
+        },
+        "confirm": {
+          "assignTitle": "Confirmer l’affectation",
+          "assignMessage": "Voulez-vous vraiment affecter ces permissions à ce rôle ?",
+          "revokeTitle": "Confirmer la révocation",
+          "revokeMessage": "Voulez-vous vraiment révoquer ces permissions de ce rôle ?"
+        },
+        "notifications": {
+          "assignSuccess": "Permissions affectées avec succès",
+          "revokeSuccess": "Permissions révoquées avec succès"
+        },
+        "stats": {
+          "total_roles": "Rôles totaux",
+          "with_users": "Rôles avec des utilisateurs",
+          "without_users": "Rôles sans utilisateurs",
+          "total_users": "Total utilisateurs (par rôle)",
+          "last_week": "Stats de la semaine dernière"
+        },
+        "permissions": {
+          "title": "Gestion des permissions",
+          "roleLabel": "Rôle :",
+          "assignSection": "Sélectionner des permissions à ajouter",
+          "revokeSection": "Sélectionner des permissions à retirer",
+          "searchPlaceholder": "Rechercher et sélectionner",
+          "selectAll": "Tout sélectionner",
+          "clear": "Effacer",
+          "nothingToAssign": "Aucune permission disponible à ajouter.",
+          "nothingToRevoke": "Aucune permission associée à retirer."
+        },
+        "labels": {
+          "admin": "Administrateur",
+          "coordonnateur": "Coordonnateur",
+          "formateur": "Formateur",
+          "referent": "Référent",
+          "apprenant": "Apprenant"
         }
       },
       "permissions": {
         "title": "Gestion des permissions",
-        "userLabel": "Utilisateur :",
-        "assignTab": "Affecter",
-        "revokeTab": "Révoquer",
-        "assignSection": "Sélectionner des permissions à ajouter",
-        "revokeSection": "Sélectionner des permissions à retirer",
-        "searchPlaceholder": "Rechercher et sélectionner",
-        "selectAll": "Tout sélectionner",
-        "clear": "Effacer",
-        "nothingToAssign": "Aucune permission disponible à ajouter.",
-        "nothingToRevoke": "Aucune permission associée à retirer."
-      },
-      "confirm": {
-        "assign_title": "Confirmer l'affectation",
-        "assign_message": "Voulez-vous vraiment affecter ces permissions à cet utilisateur ?",
-        "revoke_title": "Confirmer la révocation",
-        "revoke_message": "Voulez-vous vraiment révoquer ces permissions de cet utilisateur ?",
-        "status_title": "Confirmer le changement de statut",
-        "edit": {
-          "title": "Modifier un utilisateur",
-          "subtitle": "Modifier les informations de l'utilisateur",
-          "first_name": "Prénom",
-          "first_name_placeholder": "Entrez le prénom",
-          "last_name": "Nom",
-          "last_name_placeholder": "Entrez le nom",
-          "email": "Email",
-          "email_placeholder": "Entrez l'email",
-          "gender": "Sexe",
-          "birth_date": "Date de naissance",
-          "birth_date_placeholder": "Sélectionnez la date de naissance",
-          "role": "Rôle",
-          "phone": "Téléphone",
-          "nationality": "Nationalité",
-          "country": "Pays",
-          "region": "Région",
-          "city": "Ville",
-          "address": "Adresse",
-          "current_role": "Rôle actuel"
+        "init_all": "Initialiser toutes les permissions",
+        "add": "Ajouter une permission",
+        "edit": "Modifier la permission",
+        "delete": "Supprimer la permission",
+        "search": "Rechercher une permission",
+        "add_subtitle": "Ajoutez des permissions selon vos besoins.",
+        "warning_title": "Attention !",
+        "warning_desc": "En ajoutant un nom de permission, vous pouvez potentiellement altérer le fonctionnement du système.",
+        "enter_name": "Saisir le nom de la permission",
+        "set_core": "Définir comme permission coeur",
+        "columns": {
+          "name": "Nom",
+          "assigned_to": "Assignée à",
+          "actions": "Actions"
         },
-        "status_message": "Voulez-vous vraiment changer le statut de cet utilisateur ?",
-        "edit_title": "Confirmer la modification",
-        "edit_message": "Voulez-vous vraiment sauvegarder ces modifications ?"
-      },
-      "notifications": {
-        "created_success": "Utilisateur créé avec succès",
-        "created_error": "Erreur lors de la création de l'utilisateur",
-        "assign_success": "Permissions affectées avec succès",
-        "revoke_success": "Permissions révoquées avec succès",
-        "update_success": "Utilisateur modifié avec succès",
-        "status_success": "Statut modifié avec succès",
-        "update_error": "Erreur lors de la modification",
-        "action_error": "Erreur lors de l'action"
-      },
-      "validation": {
-        "name_required": "Le nom est requis",
-        "name_min_length": "Le nom doit contenir au moins 2 caractères",
-        "email_required": "L'email est requis",
-        "email_invalid": "Format d'email invalide"
-      },
-      "errors": {
-        "fetch_failed": "Erreur lors de la récupération des utilisateurs"
+        "rows_per_page": "Lignes par page:"
       }
     },
     "roles": {
-      "title": "Gestion des rôles",
-      "add": "Ajouter un rôle",
-      "edit": "Modifier le rôle",
-      "delete": "Supprimer le rôle",
-      "search": "Rechercher un rôle",
-      "table": {
-        "role": "RÔLE",
-        "permissions": "PERMISSIONS",
-        "actions": "ACTIONS"
-      },
-      "actions": {
-        "assign": "Affecter",
-        "revoke": "Révoquer",
-        "assignTooltip": "Affecter des permissions",
-        "revokeTooltip": "Révoquer des permissions"
-      },
-      "confirm": {
-        "assignTitle": "Confirmer l’affectation",
-        "assignMessage": "Voulez-vous vraiment affecter ces permissions à ce rôle ?",
-        "revokeTitle": "Confirmer la révocation",
-        "revokeMessage": "Voulez-vous vraiment révoquer ces permissions de ce rôle ?"
-      },
-      "notifications": {
-        "assignSuccess": "Permissions affectées avec succès",
-        "revokeSuccess": "Permissions révoquées avec succès"
-      },
-      "stats": {
-        "total_roles": "Rôles totaux",
-        "with_users": "Rôles avec des utilisateurs",
-        "without_users": "Rôles sans utilisateurs",
-        "total_users": "Total utilisateurs (par rôle)",
-        "last_week": "Stats de la semaine dernière"
-      },
-      "permissions": {
-        "title": "Gestion des permissions",
-        "roleLabel": "Rôle :",
-        "assignSection": "Sélectionner des permissions à ajouter",
-        "revokeSection": "Sélectionner des permissions à retirer",
-        "searchPlaceholder": "Rechercher et sélectionner",
-        "selectAll": "Tout sélectionner",
-        "clear": "Effacer",
-        "nothingToAssign": "Aucune permission disponible à ajouter.",
-        "nothingToRevoke": "Aucune permission associée à retirer."
-      },
       "labels": {
         "admin": "Administrateur",
         "coordonnateur": "Coordonnateur",
@@ -373,13 +402,223 @@
         "apprenant": "Apprenant"
       }
     },
+    "users": {
+      "title": "Gestion des Utilisateurs",
+      "subtitle": "Trouvez tous les comptes administrateurs de votre entreprise et leurs rôles associés.",
+      "addUser": "Ajouter un utilisateur",
+      "searchPlaceholder": "Rechercher un utilisateur",
+      "filterByRole": "Filtrer par rôle",
+      "noRole": "Aucun rôle",
+      "table": {
+        "name": "UTILISATEUR",
+        "email": "EMAIL",
+        "role": "RÔLE",
+        "status": "STATUT",
+        "createdAt": "DATE CRÉATION",
+        "actions": "ACTIONS"
+      },
+      "status": {
+        "active": "Actif",
+        "inactive": "Inactif",
+        "suspended": "Suspendu"
+      },
+      "roles": {
+        "admin": "Administrateur",
+        "coordinator": "Coordinateur pédagogique",
+        "trainer": "Formateur référent",
+        "referent": "Référent de spécialité",
+        "learner": "Apprenant auxiliaire de vie",
+        "technical_assistant": "Technicien d'assistance",
+        "penitentiary_support": "Appui aux services pénitentiaires",
+        "reception_support": "Accueil, écoute et accompagnement"
+      },
+      "actions": {
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "view": "Voir"
+      },
+      "deleteDialog": {
+        "title": "Confirmer la suppression",
+        "message": "Êtes-vous sûr de vouloir supprimer l'utilisateur {name} ? Cette action est irréversible."
+      },
+      "addDialog": {
+        "title": "Ajouter un utilisateur",
+        "form": {
+          "lastName": "Nom",
+          "firstName": "Prénom",
+          "email": "Email",
+          "gender": "Sexe",
+          "role": "Rôle",
+          "genderOptions": {
+            "male": "Homme",
+            "female": "Femme"
+          }
+        },
+        "actions": {
+          "cancel": "Annuler",
+          "add": "Ajouter"
+        }
+      },
+      "errors": {
+        "fetchFailed": "Erreur lors de la récupération des utilisateurs",
+        "deleteFailed": "Erreur lors de la suppression de l'utilisateur",
+        "addFailed": "Erreur lors de l'ajout de l'utilisateur"
+      },
+      "count": {
+        "single": "utilisateur",
+        "plural": "utilisateurs",
+        "filtered": "{count} sur {total}"
+      },
+      "specialties": {
+        "title": "Spécialités",
+        "technical_assistant": {
+          "name": "Technicien d'assistance",
+          "description": "Construction et viabilisation du réseau-parrain, gestion de la redevabilité financière"
+        },
+        "penitentiary_support": {
+          "name": "Appui aux services pénitentiaires",
+          "description": "Facilitation de l'accès aux services d'insertion et de probation"
+        },
+        "reception_support": {
+          "name": "Accueil, écoute et accompagnement",
+          "description": "Maintien de la socialité et accompagnement psycho-social"
+        }
+      },
+      "training": {
+        "duration": "12 mois de formation",
+        "location": "Institut Lafaom-Mao, Ziguinchor, Sénégal",
+        "phases": {
+          "integration": "2 mois d'intégration",
+          "masterpiece": "Choix du chef d'œuvre",
+          "collective_project": "4 mois de projet collectif",
+          "humanitarian_mission": "3 mois de mission humanitaire"
+        }
+      }
+    },
+    "formations": {
+      "title": "Formations",
+      "description": "Catalogue des formations.",
+      "tabs": {
+        "catalog": "Catalogue",
+        "modules": "Modules",
+        "resources": "Ressources",
+        "assessments": "Évaluations"
+      },
+      "catalog": {
+        "title": "Catalogue des formations",
+        "add": "Ajouter une formation",
+        "edit": "Modifier la formation",
+        "delete": "Supprimer la formation"
+      },
+      "modules": {
+        "title": "Modules de formation",
+        "description": "Gestion des modules par formation.",
+        "add": "Ajouter un module",
+        "edit": "Modifier le module",
+        "delete": "Supprimer le module"
+      },
+      "resources": {
+        "title": "Ressources pédagogiques",
+        "description": "Documents, images, vidéos et audios liés aux formations.",
+        "add": "Ajouter une ressource",
+        "edit": "Modifier la ressource",
+        "delete": "Supprimer la ressource"
+      },
+      "assessments": {
+        "title": "Évaluations",
+        "description": "Questions, propositions et résultats d'évaluation.",
+        "add": "Ajouter une évaluation",
+        "edit": "Modifier l'évaluation",
+        "delete": "Supprimer l'évaluation"
+      }
+    },
+    "gestion": {
+      "tabs": {
+        "enrollments": "Inscriptions",
+        "payments": "Paiements"
+      },
+      "enrollments": {
+        "title": "Gestion des inscriptions",
+        "add": "Ajouter une inscription",
+        "edit": "Modifier l'inscription",
+        "delete": "Supprimer l'inscription"
+      },
+      "payments": {
+        "title": "Gestion des paiements",
+        "add": "Ajouter un paiement",
+        "edit": "Modifier le paiement",
+        "delete": "Supprimer le paiement"
+      }
+    },
+    "projects": {
+      "tabs": {
+        "masterpieces": "Chefs-d'œuvres",
+        "collective": "Collectifs"
+      },
+      "masterpieces": {
+        "title": "Chefs-d'œuvres",
+        "add": "Ajouter un chef-d'œuvre",
+        "edit": "Modifier le chef-d'œuvre",
+        "delete": "Supprimer le chef-d'œuvre"
+      },
+      "collective": {
+        "title": "Projets collectifs",
+        "add": "Ajouter un projet collectif",
+        "edit": "Modifier le projet collectif",
+        "delete": "Supprimer le projet collectif"
+      }
+    },
+    "files": {
+      "tabs": {
+        "documents": "Documents",
+        "images": "Images",
+        "audios": "Audios",
+        "videos": "Vidéos"
+      },
+      "documents": {
+        "title": "Documents",
+        "description": "Liste des documents (liés à /static/documents)."
+      },
+      "images": {
+        "title": "Images",
+        "description": "Liste des images (liées à /static/images)."
+      },
+      "audios": {
+        "title": "Audios",
+        "description": "Liste des audios (liés à /static/audios)."
+      },
+      "videos": {
+        "title": "Vidéos",
+        "description": "Liste des vidéos (liées à /static/videos)."
+      },
+      "actions": {
+        "upload": "Téléverser",
+        "delete": "Supprimer",
+        "download": "Télécharger"
+      }
+    },
+    "infos": {
+      "tabs": {
+        "news": "Actualités",
+        "accreditations": "Accréditations"
+      },
+      "news": {
+        "title": "Actualités",
+        "add": "Ajouter une actualité",
+        "edit": "Modifier l'actualité",
+        "delete": "Supprimer l'actualité"
+      },
+      "accreditations": {
+        "title": "Accréditations",
+        "add": "Ajouter une accréditation",
+        "edit": "Modifier l'accréditation",
+        "delete": "Supprimer l'accréditation"
+      }
+    },
     "permissions": {
       "title": "Gestion des permissions",
-      "init_all": "Initialiser toutes les permissions",
-      "add": "Ajouter une permission",
-      "edit": "Modifier la permission",
-      "delete": "Supprimer la permission",
       "search": "Rechercher une permission",
+      "add": "Ajouter une permission",
       "add_subtitle": "Ajoutez des permissions selon vos besoins.",
       "warning_title": "Attention !",
       "warning_desc": "En ajoutant un nom de permission, vous pouvez potentiellement altérer le fonctionnement du système.",
@@ -388,837 +627,601 @@
       "columns": {
         "name": "Nom",
         "assigned_to": "Assignée à",
+        "created": "Date de création",
         "actions": "Actions"
       },
       "rows_per_page": "Lignes par page:"
-    }
-  },
-  "roles": {
-    "labels": {
-      "admin": "Administrateur",
-      "coordonnateur": "Coordonnateur",
-      "formateur": "Formateur",
-      "referent": "Référent",
-      "apprenant": "Apprenant"
-    }
-  },
-  "users": {
-    "title": "Gestion des Utilisateurs",
-    "subtitle": "Trouvez tous les comptes administrateurs de votre entreprise et leurs rôles associés.",
-    "addUser": "Ajouter un utilisateur",
-    "searchPlaceholder": "Rechercher un utilisateur",
-    "filterByRole": "Filtrer par rôle",
-    "noRole": "Aucun rôle",
-    "table": {
-      "name": "UTILISATEUR",
-      "email": "EMAIL",
-      "role": "RÔLE",
-      "status": "STATUT",
-      "createdAt": "DATE CRÉATION",
-      "actions": "ACTIONS"
     },
-    "status": {
-      "active": "Actif",
-      "inactive": "Inactif",
-      "suspended": "Suspendu"
-    },
-    "roles": {
-      "admin": "Administrateur",
-      "coordinator": "Coordinateur pédagogique",
-      "trainer": "Formateur référent",
-      "referent": "Référent de spécialité",
-      "learner": "Apprenant auxiliaire de vie",
-      "technical_assistant": "Technicien d'assistance",
-      "penitentiary_support": "Appui aux services pénitentiaires",
-      "reception_support": "Accueil, écoute et accompagnement"
-    },
-    "actions": {
+    "common": {
+      "save": "Enregistrer",
+      "cancel": "Annuler",
       "edit": "Modifier",
       "delete": "Supprimer",
-      "view": "Voir"
-    },
-    "deleteDialog": {
-      "title": "Confirmer la suppression",
-      "message": "Êtes-vous sûr de vouloir supprimer l'utilisateur {name} ? Cette action est irréversible."
-    },
-    "addDialog": {
-      "title": "Ajouter un utilisateur",
-      "form": {
-        "lastName": "Nom",
-        "firstName": "Prénom",
-        "email": "Email",
-        "gender": "Sexe",
-        "role": "Rôle",
-        "genderOptions": {
-          "male": "Homme",
-          "female": "Femme"
-        }
-      },
-      "actions": {
-        "cancel": "Annuler",
-        "add": "Ajouter"
-      }
-    },
-    "errors": {
-      "fetchFailed": "Erreur lors de la récupération des utilisateurs",
-      "deleteFailed": "Erreur lors de la suppression de l'utilisateur",
-      "addFailed": "Erreur lors de l'ajout de l'utilisateur"
-    },
-    "count": {
-      "single": "utilisateur",
-      "plural": "utilisateurs",
-      "filtered": "{count} sur {total}"
-    },
-    "specialties": {
-      "title": "Spécialités",
-      "technical_assistant": {
-        "name": "Technicien d'assistance",
-        "description": "Construction et viabilisation du réseau-parrain, gestion de la redevabilité financière"
-      },
-      "penitentiary_support": {
-        "name": "Appui aux services pénitentiaires",
-        "description": "Facilitation de l'accès aux services d'insertion et de probation"
-      },
-      "reception_support": {
-        "name": "Accueil, écoute et accompagnement",
-        "description": "Maintien de la socialité et accompagnement psycho-social"
-      }
-    },
-    "training": {
-      "duration": "12 mois de formation",
-      "location": "Institut Lafaom-Mao, Ziguinchor, Sénégal",
-      "phases": {
-        "integration": "2 mois d'intégration",
-        "masterpiece": "Choix du chef d'œuvre",
-        "collective_project": "4 mois de projet collectif",
-        "humanitarian_mission": "3 mois de mission humanitaire"
-      }
-    }
-  },
-  "formations": {
-    "title": "Formations",
-    "description": "Catalogue des formations.",
-    "tabs": {
-      "catalog": "Catalogue",
-      "modules": "Modules",
-      "resources": "Ressources",
-      "assessments": "Évaluations"
-    },
-    "catalog": {
-      "title": "Catalogue des formations",
-      "add": "Ajouter une formation",
-      "edit": "Modifier la formation",
-      "delete": "Supprimer la formation"
-    },
-    "modules": {
-      "title": "Modules de formation",
-      "description": "Gestion des modules par formation.",
-      "add": "Ajouter un module",
-      "edit": "Modifier le module",
-      "delete": "Supprimer le module"
-    },
-    "resources": {
-      "title": "Ressources pédagogiques",
-      "description": "Documents, images, vidéos et audios liés aux formations.",
-      "add": "Ajouter une ressource",
-      "edit": "Modifier la ressource",
-      "delete": "Supprimer la ressource"
-    },
-    "assessments": {
-      "title": "Évaluations",
-      "description": "Questions, propositions et résultats d'évaluation.",
-      "add": "Ajouter une évaluation",
-      "edit": "Modifier l'évaluation",
-      "delete": "Supprimer l'évaluation"
-    }
-  },
-  "gestion": {
-    "tabs": {
-      "enrollments": "Inscriptions",
-      "payments": "Paiements"
-    },
-    "enrollments": {
-      "title": "Gestion des inscriptions",
-      "add": "Ajouter une inscription",
-      "edit": "Modifier l'inscription",
-      "delete": "Supprimer l'inscription"
-    },
-    "payments": {
-      "title": "Gestion des paiements",
-      "add": "Ajouter un paiement",
-      "edit": "Modifier le paiement",
-      "delete": "Supprimer le paiement"
-    }
-  },
-  "projects": {
-    "tabs": {
-      "masterpieces": "Chefs-d'œuvres",
-      "collective": "Collectifs"
-    },
-    "masterpieces": {
-      "title": "Chefs-d'œuvres",
-      "add": "Ajouter un chef-d'œuvre",
-      "edit": "Modifier le chef-d'œuvre",
-      "delete": "Supprimer le chef-d'œuvre"
-    },
-    "collective": {
-      "title": "Projets collectifs",
-      "add": "Ajouter un projet collectif",
-      "edit": "Modifier le projet collectif",
-      "delete": "Supprimer le projet collectif"
-    }
-  },
-  "files": {
-    "tabs": {
-      "documents": "Documents",
-      "images": "Images",
-      "audios": "Audios",
-      "videos": "Vidéos"
-    },
-    "documents": {
-      "title": "Documents",
-      "description": "Liste des documents (liés à /static/documents)."
-    },
-    "images": {
-      "title": "Images",
-      "description": "Liste des images (liées à /static/images)."
-    },
-    "audios": {
-      "title": "Audios",
-      "description": "Liste des audios (liés à /static/audios)."
-    },
-    "videos": {
-      "title": "Vidéos",
-      "description": "Liste des vidéos (liées à /static/videos)."
-    },
-    "actions": {
-      "upload": "Téléverser",
-      "delete": "Supprimer",
-      "download": "Télécharger"
-    }
-  },
-  "infos": {
-    "tabs": {
-      "news": "Actualités",
-      "accreditations": "Accréditations"
-    },
-    "news": {
-      "title": "Actualités",
-      "add": "Ajouter une actualité",
-      "edit": "Modifier l'actualité",
-      "delete": "Supprimer l'actualité"
-    },
-    "accreditations": {
-      "title": "Accréditations",
-      "add": "Ajouter une accréditation",
-      "edit": "Modifier l'accréditation",
-      "delete": "Supprimer l'accréditation"
-    }
-  },
-  "permissions": {
-    "title": "Gestion des permissions",
-    "search": "Rechercher une permission",
-    "add": "Ajouter une permission",
-    "add_subtitle": "Ajoutez des permissions selon vos besoins.",
-    "warning_title": "Attention !",
-    "warning_desc": "En ajoutant un nom de permission, vous pouvez potentiellement altérer le fonctionnement du système.",
-    "enter_name": "Saisir le nom de la permission",
-    "set_core": "Définir comme permission coeur",
-    "columns": {
-      "name": "Nom",
-      "assigned_to": "Assignée à",
-      "created": "Date de création",
-      "actions": "Actions"
-    },
-    "rows_per_page": "Lignes par page:"
-  },
-  "common": {
-    "save": "Enregistrer",
-    "cancel": "Annuler",
-    "edit": "Modifier",
-    "delete": "Supprimer",
-    "add": "Ajouter",
-    "search": "Rechercher",
-    "filter": "Filtrer",
-    "export": "Exporter",
-    "import": "Importer",
-    "loading": "Chargement...",
-    "refresh": "Actualiser",
-    "reset": "Réinitialiser",
-    "more": "plus",
-    "not_specified": "Non spécifié",
-    "confirm": "Confirmer",
-    "close": "Fermer",
-    "no_data": "Aucune donnée",
-    "confirm_delete": "Êtes-vous sûr de vouloir supprimer cet élément ?",
-    "success": "Opération réussie",
-    "error": "Une erreur s'est produite",
-    "required": "Ce champ est requis",
-    "invalid_email": "Email invalide",
-    "invalid_format": "Format invalide"
-  },
-  "genetique": {
-    "individuel": {
-      "title": "Profil génétique individuel"
-    },
-    "ascendance": {
-      "title": "Ascendance génétique"
-    },
-    "sante": {
-      "title": "Santé génétique"
-    },
-    "education": {
-      "title": "Éducation"
-    },
-    "pii": {
-      "title": "Plan d'intervention individualisé"
-    }
-  },
-  "validation": {
-    "required": "Ce champ est requis",
-    "email": "Adresse email invalide",
-    "minLength": "Doit contenir au moins {min} caractères",
-    "maxLength": "Doit contenir au plus {max} caractères",
-    "lengthBetween": "Doit contenir entre {min} et {max} caractères",
-    "pattern": "Format invalide",
-    "url": "URL invalide",
-    "numeric": "Doit être un nombre",
-    "integer": "Doit être un entier",
-    "min": "Doit être supérieur ou égal à {min}",
-    "max": "Doit être inférieur ou égal à {max}",
-    "between": "Doit être entre {min} et {max}",
-    "phone": "Numéro de téléphone invalide",
-    "date": "Date invalide",
-    "minDate": "La date doit être postérieure ou égale à {date}",
-    "maxDate": "La date doit être antérieure ou égale à {date}",
-    "password": {
-      "min": "Le mot de passe doit contenir au moins {min} caractères",
-      "upper": "Le mot de passe doit contenir au moins une lettre majuscule",
-      "lower": "Le mot de passe doit contenir au moins une lettre minuscule",
-      "number": "Le mot de passe doit contenir au moins un chiffre",
-      "special": "Le mot de passe doit contenir au moins un caractère spécial"
-    },
-    "passwords_mismatch": "Les mots de passe ne correspondent pas",
-    "oneOf": "La valeur doit être parmi: {values}",
-    "notOneOf": "La valeur ne doit pas être parmi: {values}",
-    "equals": "La valeur doit être égale à {value}",
-    "notEquals": "La valeur doit être différente de {value}",
-    "json": "Doit être un JSON valide",
-    "uuid": "UUID invalide",
-    "iban": "IBAN invalide",
-    "bic": "BIC/SWIFT invalide",
-    "slug": "Slug invalide (caractères autorisés: lettres, chiffres, tirets)",
-    "hexColor": "Couleur hexadécimale invalide",
-    "creditCard": "Numéro de carte invalide",
-    "postalCode": "Code postal invalide",
-    "time": "Heure invalide (HH:mm)",
-    "accept": "Vous devez accepter pour continuer",
-    "afterDate": "La date doit être postérieure ou égale à la date de début",
-    "beforeDate": "La date doit être antérieure ou égale à la date de fin",
-    "file": {
-      "required": "Au moins un fichier est requis",
-      "maxSize": "{name}: taille supérieure à la limite ({max} octets)",
-      "minSize": "{name}: taille inférieure à la limite ({min} octets)",
-      "mimeType": "{name}: type de fichier non autorisé ({types})",
-      "extension": "{name}: extension non autorisée ({exts})",
-      "maxFiles": "Nombre maximal de fichiers: {max}",
-      "minFiles": "Nombre minimal de fichiers: {min}",
-      "totalMaxSize": "Taille totale des fichiers supérieure à la limite ({max} octets)",
-      "emptyFile": "{name}: fichier vide",
-      "filenameSafe": "{name}: nom de fichier invalide",
-      "imageMaxDimensions": "{name}: dimensions supérieures à {w}x{h}",
-      "imageMinDimensions": "{name}: dimensions inférieures à {w}x{h}",
-      "imageAspectRatio": "{name}: ratio d'image hors plage autorisée ({min}-{max})",
-      "imageLoad": "Impossible de lire les dimensions de l'image"
-    }
-  },
-  "login": {
-    "title": "Lafaom-MAO",
-    "subtitle": "Institut de formation et d'intervention sociale dans l'univers carcéral",
-    "email": "Adresse email",
-    "password": "Mot de passe",
-    "remember": "Se souvenir de moi",
-    "forgot": "Mot de passe oublié?",
-    "login": "Se connecter",
-    "loading": "Connexion en cours...",
-    "errorTitle": "Erreur de connexion",
-    "errorMessage": "{{error}}",
-    "createAccount": "Créer un compte",
-    "newHere": "Nouveau sur notre plateforme?",
-    "success": "Connexion réussie",
-    "unknownError": "Erreur inconnue"
-  },
-  "dashboard": {
-    "welcome": {
-      "title": "Bienvenue sur le tableau de bord",
-      "message": "Bienvenue sur la plateforme LAFAOM-MAO.",
-      "actionLabel": "En savoir plus"
-    },
-    "stats": {
-      "general": "Stats générales"
-    },
-    "statistics": {
-      "title": "Stats",
-      "subtitle": "Aperçu des données importantes de la plateforme"
-    },
-    "weeklyOverview": "Aperçu hebdomadaire",
-    "totalEarning": "Gains totaux",
-    "salesByCountries": "Ventes par pays",
-    "deposit": "Dépôt",
-    "withdraw": "Retrait",
-    "viewAll": "Voir tout",
-    "details": "Détails",
-    "submit": "Soumettre",
-    "reset": "Réinitialiser",
-    "rememberMe": "Se souvenir de moi"
-  },
-  "account": {
-    "details": "Détails du compte",
-    "deactivate": "Désactiver le compte",
-    "deactivateTitle": "Désactiver le compte",
-    "deactivateConfirm": "Je confirme la désactivation de mon compte",
-    "changePassword": "Changer le mot de passe",
-    "twoFactor": "Vérification en deux étapes",
-    "apiKey": "Créer une clé API",
-    "apiKeyList": "Liste des clés API et accès",
-    "recentDevices": "Appareils récents",
-    "uploadPhoto": "Télécharger une nouvelle photo",
-    "reset": "Réinitialiser",
-    "saveChanges": "Enregistrer les modifications",
-    "learnMore": "En savoir plus",
-    "requestPermission": "Demander la permission",
-    "firstName": "Prénom",
-    "lastName": "Nom",
-    "email": "E-mail",
-    "organization": "Organisation",
-    "phone": "Numéro de téléphone",
-    "address": "Adresse",
-    "state": "État/Province",
-    "zipCode": "Code postal",
-    "country": "Pays",
-    "language": "Langue",
-    "timezone": "Fuseau horaire",
-    "currency": "Devise",
-    "placeholders": {
-      "firstName": "Jean",
-      "lastName": "Dupont",
-      "email": "jean.dupont@example.com",
-      "organization": "Mon Organisation",
-      "phone": "+33 1 23 45 67 89",
-      "address": "123 Rue de la Paix, Paris",
-      "state": "Île-de-France",
-      "zipCode": "75001",
-      "selectCountry": "Sélectionner un pays",
-      "selectLanguage": "Sélectionner une langue",
-      "selectTimezone": "Sélectionner un fuseau horaire",
-      "selectCurrency": "Sélectionner une devise"
-    },
-    "allowedFormats": "Formats autorisés : JPG, GIF ou PNG. Taille max : 800Ko"
-  },
-  "security": {
-    "changePassword": "Changer le mot de passe",
-    "currentPassword": "Mot de passe actuel",
-    "newPassword": "Nouveau mot de passe",
-    "confirmPassword": "Confirmer le nouveau mot de passe",
-    "passwordRequirements": "Exigences du mot de passe :",
-    "requirements": {
-      "minLength": "Minimum 8 caractères - plus c'est long, mieux c'est",
-      "lowercase": "Au moins un caractère minuscule",
-      "numberOrSymbol": "Au moins un chiffre, symbole ou espace"
-    },
-    "browser": "Navigateur",
-    "device": "Appareil",
-    "location": "Localisation",
-    "recentActivity": "Activité récente",
-    "changePasswordError": "Erreur lors du changement de mot de passe",
-    "changePasswordSuccess": "Mot de passe modifié avec succès",
-    "passwordMismatch": "Les mots de passe ne correspondent pas",
-    "currentPasswordRequired": "Le mot de passe actuel est requis",
-    "newPasswordRequired": "Le nouveau mot de passe est requis",
-    "invalidCredentials": "Identifiants invalides",
-    "wrongCurrentPassword": "Le mot de passe actuel est incorrect",
-    "twoFactorAuth": "Authentification à deux facteurs",
-    "twoFactorNotEnabled": "L'authentification à deux facteurs n'est pas encore activée.",
-    "twoFactorDescription": "L'authentification à deux facteurs ajoute une couche de sécurité supplémentaire à votre compte en exigeant plus qu'un simple mot de passe pour se connecter.",
-    "enableTwoFactor": "Activer l'authentification à deux facteurs",
-    "createApiKey": "Créer une clé API",
-    "chooseApiKeyType": "Choisissez le type de clé API que vous souhaitez créer",
-    "selectApiKeyType": "Sélectionner le type de clé API",
-    "nameApiKey": "Nommer la clé API",
-    "createKey": "Créer la clé",
-    "apiKeyList": "Liste des clés API et accès",
-    "apiKeyDescription": "Une clé API est une chaîne cryptée simple qui identifie une application sans principal. Elles sont utiles pour accéder aux données publiques de manière anonyme et sont utilisées pour associer les requêtes API à votre projet pour les quotas et la facturation.",
-    "recentDevicesTitle": "Appareils récents"
-  },
-  "notifications": {
-    "title": "Notifications",
-    "recentDevices": "Appareils récents",
-    "permissionRequest": "Nous avons besoin de l'autorisation de votre navigateur pour afficher les notifications.",
-    "requestPermission": "Demander l'autorisation",
-    "type": "Type",
-    "email": "EMAIL",
-    "browser": "NAVIGATEUR",
-    "app": "APPLICATION",
-    "types": {
-      "newForYou": "Nouveau pour vous",
-      "accountActivity": "Activité du compte",
-      "newBrowserSignIn": "Un nouveau navigateur utilisé pour se connecter",
-      "newDeviceLinked": "Un nouvel appareil est lié"
-    },
-    "whenToNotify": "Quand vous notifier",
-    "options": {
-      "onlyOnline": "Seulement quand je suis en ligne",
-      "always": "Toujours",
-      "never": "Jamais"
-    }
-  },
-  "userProfile": {
-    "profile": "Profil",
-    "settings": "Paramètres",
-    "pricing": "Tarification",
-    "faq": "FAQ",
-    "logout": "Déconnexion",
-    "confirmLogout": "Confirmer la déconnexion",
-    "logoutMessage": "Êtes-vous sûr de vouloir vous déconnecter ?"
-  },
-  "footer": {
-    "themeSelection": "Sélection de thème",
-    "license": "Licence",
-    "moreThemes": "Plus de thèmes",
-    "documentation": "Documentation",
-    "support": "Support"
-  },
-  "password": {
-    "title": "Changer le mot de passe",
-    "currentPassword": "Mot de passe actuel",
-    "newPassword": "Nouveau mot de passe",
-    "confirmPassword": "Confirmer le mot de passe",
-    "rules": {
-      "minLength": "Au moins {{minLength}} caractères",
-      "uppercase": "Au moins une majuscule",
-      "lowercase": "Au moins une minuscule",
-      "number": "Au moins un chiffre",
-      "special": "Au moins un caractère spécial"
-    },
-    "validate": "Valider",
-    "resetError": "Erreur de réinitialisation",
-    "resetSuccess": "Email envoyé avec succès!"
-  },
-  "forgotPassword": {
-    "title": "Mot de passe oublié? 🔐",
-    "subtitle": "Entrez votre adresse email et nous vous enverrons les instructions pour réinitialiser votre mot de passe",
-    "email": "Adresse email",
-    "emailPlaceholder": "Entrez votre adresse email",
-    "emailRequired": "L'email est requis",
-    "emailInvalid": "Format d'email invalide",
-    "sendButton": "Envoyer le lien de réinitialisation",
-    "sending": "Envoi en cours...",
-    "backToLogin": "Retour à la connexion",
-    "redirectMessage": "Vous allez être redirigé vers la page de connexion dans quelques secondes..."
-  },
-  "register": {
-    "title": "Créer un compte",
-    "subtitle": "Rejoignez notre plateforme de formation",
-    "welcomeTitle": "Rejoignez LAFAOM-MAO! 🚀",
-    "welcomeSubtitle": "Formation et intervention sociale dans l'univers carcéral",
-    "firstName": "Prénom",
-    "lastName": "Nom",
-    "email": "Adresse email",
-    "gender": "Sexe",
-    "male": "Homme",
-    "female": "Femme",
-    "role": "Rôle",
-    "roleInSystem": "Rôle dans le système",
-    "student": "Apprenant - Étudiant/apprenant",
-    "studentDesc": "Accès aux formations et projets pédagogiques",
-    "trainer": "Formateur - Formateur/enseignant",
-    "trainerDesc": "Gestion des modules et évaluation des apprenants",
-    "referent": "Référent - Formateur référent",
-    "referentDesc": "Accompagnement personnalisé et suivi des parcours",
-    "coordinator": "Coordonnateur - Responsable de programme",
-    "coordinatorDesc": "Coordination des formations et gestion des équipes",
-    "admin": "Administrateur - Administrateur du système",
-    "adminDesc": "Gestion complète de la plateforme et des utilisateurs",
-    "register": "Créer le compte",
-    "signUp": "S'inscrire",
-    "loading": "Création en cours...",
-    "signingUp": "Inscription en cours...",
-    "errorTitle": "Erreur de création",
-    "errorMessage": "{{error}}",
-    "alreadyHaveAccount": "Vous avez déjà un compte?",
-    "login": "Se connecter",
-    "or": "ou",
-    "acceptTerms": "J'accepte les conditions d'utilisation et la politique de confidentialité",
-    "validation": {
-      "firstNameRequired": "Le prénom est requis",
-      "firstNameMinLength": "Le prénom doit contenir au moins 2 caractères",
-      "lastNameRequired": "Le nom est requis",
-      "lastNameMinLength": "Le nom doit contenir au moins 2 caractères",
-      "emailRequired": "L'email est requis",
-      "emailInvalid": "Format d'email invalide",
-      "genderRequired": "Le sexe est requis",
-      "roleRequired": "Le rôle est requis"
-    }
-  },
-  "pages": {
-    "actualites": {
-      "title": "Actualités",
-      "description": "Actualités et communications."
-    },
-    "accreditations": {
-      "title": "Accréditations",
-      "description": "Gestion des accréditations."
-    },
-    "paiements": {
-      "title": "Paiements",
-      "description": "Gestion des paiements et transactions."
-    },
-    "inscriptions": {
-      "title": "Inscriptions",
-      "description": "Suivi des inscriptions aux formations."
-    },
-    "utilisateurs": {
-      "title": "Utilisateurs",
-      "description": "Liste, création et gestion des utilisateurs."
-    },
-    "roles": {
-      "title": "Rôles",
-      "description": "Configuration des rôles et des permissions."
-    },
-    "permissions": {
-      "title": "Permissions",
-      "description": "Gestion des permissions."
-    },
-    "journal": {
-      "title": "Journal",
-      "description": "Historique des actions et audits."
+      "add": "Ajouter",
+      "search": "Rechercher",
+      "filter": "Filtrer",
+      "export": "Exporter",
+      "import": "Importer",
+      "loading": "Chargement...",
+      "refresh": "Actualiser",
+      "reset": "Réinitialiser",
+      "more": "plus",
+      "not_specified": "Non spécifié",
+      "confirm": "Confirmer",
+      "close": "Fermer",
+      "no_data": "Aucune donnée",
+      "confirm_delete": "Êtes-vous sûr de vouloir supprimer cet élément ?",
+      "success": "Opération réussie",
+      "error": "Une erreur s'est produite",
+      "required": "Ce champ est requis",
+      "invalid_email": "Email invalide",
+      "invalid_format": "Format invalide"
     },
     "genetique": {
-      "ascendance": {
-        "title": "Ascendance",
-        "description": "Gestion de l'ascendance génétique."
+      "individuel": {
+        "title": "Profil génétique individuel"
       },
-      "education": {
-        "title": "Éducation",
-        "description": "Parcours éducatif lié au génotype."
+      "ascendance": {
+        "title": "Ascendance génétique"
       },
       "sante": {
-        "title": "Santé",
-        "description": "Données de santé liées au génotype."
+        "title": "Santé génétique"
       },
-      "individuel": {
-        "title": "Individuel",
-        "description": "Gestion des données individuelles (génotype).",
-        "genotype": "Génotype"
+      "education": {
+        "title": "Éducation"
       },
-      "planIntervention": {
-        "title": "Plan d'intervention",
-        "description": "Plans d'intervention personnalisés.",
-        "individualized": "individualisé"
+      "pii": {
+        "title": "Plan d'intervention individualisé"
       }
     },
-    "projets": {
-      "collectifs": {
-        "title": "Collectifs",
-        "description": "Groupes, missions et réalisations collectives."
+    "validation": {
+      "required": "Ce champ est requis",
+      "email": "Adresse email invalide",
+      "minLength": "Doit contenir au moins {min} caractères",
+      "maxLength": "Doit contenir au plus {max} caractères",
+      "lengthBetween": "Doit contenir entre {min} et {max} caractères",
+      "pattern": "Format invalide",
+      "url": "URL invalide",
+      "numeric": "Doit être un nombre",
+      "integer": "Doit être un entier",
+      "min": "Doit être supérieur ou égal à {min}",
+      "max": "Doit être inférieur ou égal à {max}",
+      "between": "Doit être entre {min} et {max}",
+      "phone": "Numéro de téléphone invalide",
+      "date": "Date invalide",
+      "minDate": "La date doit être postérieure ou égale à {date}",
+      "maxDate": "La date doit être antérieure ou égale à {date}",
+      "password": {
+        "min": "Le mot de passe doit contenir au moins {min} caractères",
+        "upper": "Le mot de passe doit contenir au moins une lettre majuscule",
+        "lower": "Le mot de passe doit contenir au moins une lettre minuscule",
+        "number": "Le mot de passe doit contenir au moins un chiffre",
+        "special": "Le mot de passe doit contenir au moins un caractère spécial"
       },
-      "chefsOeuvre": {
-        "title": "Chefs-d'œuvres",
-        "description": "Gestion des projets individuels (chefs-d'œuvre)."
+      "passwords_mismatch": "Les mots de passe ne correspondent pas",
+      "oneOf": "La valeur doit être parmi: {values}",
+      "notOneOf": "La valeur ne doit pas être parmi: {values}",
+      "equals": "La valeur doit être égale à {value}",
+      "notEquals": "La valeur doit être différente de {value}",
+      "json": "Doit être un JSON valide",
+      "uuid": "UUID invalide",
+      "iban": "IBAN invalide",
+      "bic": "BIC/SWIFT invalide",
+      "slug": "Slug invalide (caractères autorisés: lettres, chiffres, tirets)",
+      "hexColor": "Couleur hexadécimale invalide",
+      "creditCard": "Numéro de carte invalide",
+      "postalCode": "Code postal invalide",
+      "time": "Heure invalide (HH:mm)",
+      "accept": "Vous devez accepter pour continuer",
+      "afterDate": "La date doit être postérieure ou égale à la date de début",
+      "beforeDate": "La date doit être antérieure ou égale à la date de fin",
+      "file": {
+        "required": "Au moins un fichier est requis",
+        "maxSize": "{name}: taille supérieure à la limite ({max} octets)",
+        "minSize": "{name}: taille inférieure à la limite ({min} octets)",
+        "mimeType": "{name}: type de fichier non autorisé ({types})",
+        "extension": "{name}: extension non autorisée ({exts})",
+        "maxFiles": "Nombre maximal de fichiers: {max}",
+        "minFiles": "Nombre minimal de fichiers: {min}",
+        "totalMaxSize": "Taille totale des fichiers supérieure à la limite ({max} octets)",
+        "emptyFile": "{name}: fichier vide",
+        "filenameSafe": "{name}: nom de fichier invalide",
+        "imageMaxDimensions": "{name}: dimensions supérieures à {w}x{h}",
+        "imageMinDimensions": "{name}: dimensions inférieures à {w}x{h}",
+        "imageAspectRatio": "{name}: ratio d'image hors plage autorisée ({min}-{max})",
+        "imageLoad": "Impossible de lire les dimensions de l'image"
       }
-    }
-  },
-  "ui": {
-    "typography": {
-      "headlines": "Titres",
-      "texts": "Textes"
     },
-    "tables": {
-      "dessert": "Dessert",
-      "calories": "Calories",
-      "fat": "Matières grasses",
-      "carbs": "Glucides",
-      "protein": "Protéines"
+    "login": {
+      "title": "Lafaom-MAO",
+      "subtitle": "Institut de formation et d'intervention sociale dans l'univers carcéral",
+      "email": "Adresse email",
+      "password": "Mot de passe",
+      "remember": "Se souvenir de moi",
+      "forgot": "Mot de passe oublié?",
+      "login": "Se connecter",
+      "loading": "Connexion en cours...",
+      "errorTitle": "Erreur de connexion",
+      "errorMessage": "{{error}}",
+      "createAccount": "Créer un compte",
+      "newHere": "Nouveau sur notre plateforme?",
+      "success": "Connexion réussie",
+      "unknownError": "Erreur inconnue"
     },
-    "cards": {
-      "solid": "Carte solide",
-      "navigation": "Navigation",
-      "users": "Utilisateurs"
+    "dashboard": {
+      "welcome": {
+        "title": "Bienvenue sur le tableau de bord",
+        "message": "Bienvenue sur la plateforme LAFAOM-MAO.",
+        "actionLabel": "En savoir plus"
+      },
+      "stats": {
+        "general": "Stats générales"
+      },
+      "statistics": {
+        "title": "Stats",
+        "subtitle": "Aperçu des données importantes de la plateforme"
+      },
+      "weeklyOverview": "Aperçu hebdomadaire",
+      "totalEarning": "Gains totaux",
+      "salesByCountries": "Ventes par pays",
+      "deposit": "Dépôt",
+      "withdraw": "Retrait",
+      "viewAll": "Voir tout",
+      "details": "Détails",
+      "submit": "Soumettre",
+      "reset": "Réinitialiser",
+      "rememberMe": "Se souvenir de moi"
     },
-    "forms": {
+    "account": {
+      "details": "Détails du compte",
+      "deactivate": "Désactiver le compte",
+      "deactivateTitle": "Désactiver le compte",
+      "deactivateConfirm": "Je confirme la désactivation de mon compte",
+      "changePassword": "Changer le mot de passe",
+      "twoFactor": "Vérification en deux étapes",
+      "apiKey": "Créer une clé API",
+      "apiKeyList": "Liste des clés API et accès",
+      "recentDevices": "Appareils récents",
+      "uploadPhoto": "Télécharger une nouvelle photo",
+      "reset": "Réinitialiser",
+      "saveChanges": "Enregistrer les modifications",
+      "learnMore": "En savoir plus",
+      "requestPermission": "Demander la permission",
       "firstName": "Prénom",
-      "email": "Email",
-      "mobile": "Mobile",
-      "password": "Mot de passe"
-    }
-  },
-  "error": {
-    "notFound": "Page non trouvée ⚠️",
-    "notFoundMessage": "Désolé, la page que vous recherchez n'existe pas."
-  },
-  "actualites": {
-    "title": "Actualités",
-    "subtitle": "Découvrez les dernières nouvelles de l'Institut Lafaom-Mao",
-    "newArticle": "Nouvelle actualité",
-    "search": {
-      "placeholder": "Rechercher dans les actualités...",
-      "results": "Résultats de recherche",
-      "noResults": "Aucune actualité trouvée",
-      "tryOtherKeywords": "Essayez avec d'autres mots-clés",
-      "noArticles": "Aucune actualité disponible pour le moment"
-    },
-    "categories": {
-      "all": "Toutes",
-      "partnership": "Partenariat",
-      "event": "Événement",
-      "testimonial": "Témoignage",
-      "project": "Projet",
-      "certification": "Certification",
-      "communication": "Communication"
-    },
-    "featured": "À la une",
-    "allArticles": "Toutes les actualités",
-    "loadMore": "Charger plus d'actualités",
-    "createFirst": "Créer la première actualité",
-    "loading": "Chargement des actualités...",
-    "readMore": "Lire la suite",
-    "views": "vues",
-    "by": "Par",
-    "actions": {
-      "view": "Voir",
-      "edit": "Modifier",
-      "delete": "Supprimer",
-      "share": "Partager",
-      "cancel": "Annuler",
-      "save": "Sauvegarder",
-      "create": "Créer l'actualité",
-      "close": "Fermer"
-    },
-    "form": {
-      "title": "Titre",
-      "titleRequired": "Le titre est requis",
-      "slug": "Slug",
-      "slugRequired": "Le slug est requis",
-      "slugHint": "URL de l'actualité (généré automatiquement)",
-      "category": "Catégorie",
-      "categoryRequired": "La catégorie est requise",
-      "summary": "Chapeau",
-      "summaryRequired": "Le chapeau est requis",
-      "summaryHint": "Résumé court de l'actualité",
-      "content": "Contenu HTML",
-      "contentRequired": "Le contenu est requis",
-      "author": "Auteur",
-      "authorRequired": "L'auteur est requis",
-      "publicationDate": "Date de publication",
-      "publicationDateRequired": "La date de publication est requise",
-      "trainingStartDate": "Date début formation",
-      "trainingEndDate": "Date fin formation",
-      "optional": "Optionnel",
-      "mainImage": "Image principale",
-      "chooseImage": "Choisir une image",
-      "attachedDocument": "Document joint",
-      "chooseDocument": "Choisir un document",
-      "documentAttached": "Document joint",
-      "uploading": "Téléchargement en cours...",
-      "uploadSuccess": "Fichier téléchargé avec succès",
-      "uploadError": "Erreur lors du téléchargement"
-    },
-    "modal": {
-      "create": {
-        "title": "Nouvelle actualité",
-        "subtitle": "Ajoutez une nouvelle actualité au système",
-        "confirm": {
-          "title": "Confirmer la création",
-          "subtitle": "Vérifiez les informations avant de créer",
-          "message": "Êtes-vous sûr de vouloir créer cette actualité avec les informations suivantes ?",
-          "summary": "Résumé de l'actualité",
-          "info": "Cette action créera une nouvelle actualité dans le système.",
-          "create": "Créer l'actualité"
-        }
+      "lastName": "Nom",
+      "email": "E-mail",
+      "organization": "Organisation",
+      "phone": "Numéro de téléphone",
+      "address": "Adresse",
+      "state": "État/Province",
+      "zipCode": "Code postal",
+      "country": "Pays",
+      "language": "Langue",
+      "timezone": "Fuseau horaire",
+      "currency": "Devise",
+      "placeholders": {
+        "firstName": "Jean",
+        "lastName": "Dupont",
+        "email": "jean.dupont@example.com",
+        "organization": "Mon Organisation",
+        "phone": "+33 1 23 45 67 89",
+        "address": "123 Rue de la Paix, Paris",
+        "state": "Île-de-France",
+        "zipCode": "75001",
+        "selectCountry": "Sélectionner un pays",
+        "selectLanguage": "Sélectionner une langue",
+        "selectTimezone": "Sélectionner un fuseau horaire",
+        "selectCurrency": "Sélectionner une devise"
       },
-      "edit": {
-        "title": "Modifier l'actualité",
-        "subtitle": "Modifiez les informations de l'actualité",
-        "confirm": {
-          "title": "Confirmer les modifications",
-          "subtitle": "Vérifiez les changements avant de sauvegarder",
-          "message": "Êtes-vous sûr de vouloir appliquer ces modifications ?",
-          "summary": "Modifications apportées",
-          "info": "Cette action mettra à jour l'actualité existante.",
-          "save": "Sauvegarder"
-        }
+      "allowedFormats": "Formats autorisés : JPG, GIF ou PNG. Taille max : 800Ko"
+    },
+    "security": {
+      "changePassword": "Changer le mot de passe",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le nouveau mot de passe",
+      "passwordRequirements": "Exigences du mot de passe :",
+      "requirements": {
+        "minLength": "Minimum 8 caractères - plus c'est long, mieux c'est",
+        "lowercase": "Au moins un caractère minuscule",
+        "numberOrSymbol": "Au moins un chiffre, symbole ou espace"
       },
-      "view": {
-        "title": "Détails de l'actualité",
-        "subtitle": "Informations complètes",
-        "downloadDocument": "Télécharger le document",
-        "trainingDates": "Dates de formation",
-        "start": "Début",
-        "end": "Fin",
-        "tabs": {
-          "overview": "Aperçu",
-          "content": "Contenu",
-          "files": "Fichiers"
-        },
-        "files": {
-          "title": "Fichiers joints",
-          "image": "Image principale",
-          "document": "Document joint",
-          "none": "Aucun fichier joint à cette actualité"
-        }
-      },
-      "delete": {
-        "title": "Supprimer l'actualité",
-        "subtitle": "Cette action est irréversible",
-        "confirm": "Êtes-vous sûr de vouloir supprimer cette actualité ?",
-        "warning": "Cette action supprimera définitivement l'actualité et tous ses fichiers associés.",
-        "confirmButton": "Supprimer définitivement"
-      }
+      "browser": "Navigateur",
+      "device": "Appareil",
+      "location": "Localisation",
+      "recentActivity": "Activité récente",
+      "changePasswordError": "Erreur lors du changement de mot de passe",
+      "changePasswordSuccess": "Mot de passe modifié avec succès",
+      "passwordMismatch": "Les mots de passe ne correspondent pas",
+      "currentPasswordRequired": "Le mot de passe actuel est requis",
+      "newPasswordRequired": "Le nouveau mot de passe est requis",
+      "invalidCredentials": "Identifiants invalides",
+      "wrongCurrentPassword": "Le mot de passe actuel est incorrect",
+      "twoFactorAuth": "Authentification à deux facteurs",
+      "twoFactorNotEnabled": "L'authentification à deux facteurs n'est pas encore activée.",
+      "twoFactorDescription": "L'authentification à deux facteurs ajoute une couche de sécurité supplémentaire à votre compte en exigeant plus qu'un simple mot de passe pour se connecter.",
+      "enableTwoFactor": "Activer l'authentification à deux facteurs",
+      "createApiKey": "Créer une clé API",
+      "chooseApiKeyType": "Choisissez le type de clé API que vous souhaitez créer",
+      "selectApiKeyType": "Sélectionner le type de clé API",
+      "nameApiKey": "Nommer la clé API",
+      "createKey": "Créer la clé",
+      "apiKeyList": "Liste des clés API et accès",
+      "apiKeyDescription": "Une clé API est une chaîne cryptée simple qui identifie une application sans principal. Elles sont utiles pour accéder aux données publiques de manière anonyme et sont utilisées pour associer les requêtes API à votre projet pour les quotas et la facturation.",
+      "recentDevicesTitle": "Appareils récents"
     },
     "notifications": {
-      "created": {
-        "title": "Actualité créée",
-        "message": "L'actualité \"{titre}\" a été créée avec succès"
+      "title": "Notifications",
+      "recentDevices": "Appareils récents",
+      "permissionRequest": "Nous avons besoin de l'autorisation de votre navigateur pour afficher les notifications.",
+      "requestPermission": "Demander l'autorisation",
+      "type": "Type",
+      "email": "EMAIL",
+      "browser": "NAVIGATEUR",
+      "app": "APPLICATION",
+      "types": {
+        "newForYou": "Nouveau pour vous",
+        "accountActivity": "Activité du compte",
+        "newBrowserSignIn": "Un nouveau navigateur utilisé pour se connecter",
+        "newDeviceLinked": "Un nouvel appareil est lié"
       },
-      "updated": {
-        "title": "Actualité modifiée",
-        "message": "L'actualité \"{titre}\" a été modifiée avec succès"
-      },
-      "deleted": {
-        "title": "Actualité supprimée",
-        "message": "L'actualité \"{titre}\" a été supprimée avec succès"
-      },
-      "error": {
-        "title": "Erreur",
-        "message": "Une erreur est survenue lors de l'opération"
+      "whenToNotify": "Quand vous notifier",
+      "options": {
+        "onlyOnline": "Seulement quand je suis en ligne",
+        "always": "Toujours",
+        "never": "Jamais"
       }
     },
-    "errors": {
-      "loadingFailed": "Erreur lors du chargement des actualités",
-      "creationFailed": "Erreur lors de la création de l'actualité",
-      "updateFailed": "Erreur lors de la mise à jour de l'actualité",
-      "deletionFailed": "Erreur lors de la suppression de l'actualité",
-      "uploadFailed": "Erreur lors de l'upload du fichier",
-      "connectionError": "Erreur de connexion. Vérifiez votre connexion internet.",
-      "unknownError": "Erreur inconnue",
+    "userProfile": {
+      "profile": "Profil",
+      "settings": "Paramètres",
+      "pricing": "Tarification",
+      "faq": "FAQ",
+      "logout": "Déconnexion",
+      "confirmLogout": "Confirmer la déconnexion",
+      "logoutMessage": "Êtes-vous sûr de vouloir vous déconnecter ?"
+    },
+    "footer": {
+      "themeSelection": "Sélection de thème",
+      "license": "Licence",
+      "moreThemes": "Plus de thèmes",
+      "documentation": "Documentation",
+      "support": "Support"
+    },
+    "password": {
+      "title": "Changer le mot de passe",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "rules": {
+        "minLength": "Au moins {{minLength}} caractères",
+        "uppercase": "Au moins une majuscule",
+        "lowercase": "Au moins une minuscule",
+        "number": "Au moins un chiffre",
+        "special": "Au moins un caractère spécial"
+      },
+      "validate": "Valider",
+      "resetError": "Erreur de réinitialisation",
+      "resetSuccess": "Email envoyé avec succès!"
+    },
+    "forgotPassword": {
+      "title": "Mot de passe oublié? 🔐",
+      "subtitle": "Entrez votre adresse email et nous vous enverrons les instructions pour réinitialiser votre mot de passe",
+      "email": "Adresse email",
+      "emailPlaceholder": "Entrez votre adresse email",
+      "emailRequired": "L'email est requis",
+      "emailInvalid": "Format d'email invalide",
+      "sendButton": "Envoyer le lien de réinitialisation",
+      "sending": "Envoi en cours...",
+      "backToLogin": "Retour à la connexion",
+      "redirectMessage": "Vous allez être redirigé vers la page de connexion dans quelques secondes...",
+      "success": "Email envoyé ! Vérifiez votre boîte de réception.",
+      "unknownError": "Erreur inconnue"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "subtitle": "Rejoignez notre plateforme de formation",
+      "welcomeTitle": "Rejoignez LAFAOM-MAO! 🚀",
+      "welcomeSubtitle": "Formation et intervention sociale dans l'univers carcéral",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Adresse email",
+      "gender": "Sexe",
+      "male": "Homme",
+      "female": "Femme",
+      "role": "Rôle",
+      "roleInSystem": "Rôle dans le système",
+      "student": "Apprenant - Étudiant/apprenant",
+      "studentDesc": "Accès aux formations et projets pédagogiques",
+      "trainer": "Formateur - Formateur/enseignant",
+      "trainerDesc": "Gestion des modules et évaluation des apprenants",
+      "referent": "Référent - Formateur référent",
+      "referentDesc": "Accompagnement personnalisé et suivi des parcours",
+      "coordinator": "Coordonnateur - Responsable de programme",
+      "coordinatorDesc": "Coordination des formations et gestion des équipes",
+      "admin": "Administrateur - Administrateur du système",
+      "adminDesc": "Gestion complète de la plateforme et des utilisateurs",
+      "register": "Créer le compte",
+      "signUp": "S'inscrire",
+      "loading": "Création en cours...",
+      "signingUp": "Inscription en cours...",
+      "errorTitle": "Erreur de création",
+      "errorMessage": "{{error}}",
+      "alreadyHaveAccount": "Vous avez déjà un compte?",
+      "login": "Se connecter",
+      "or": "ou",
+      "acceptTerms": "J'accepte les conditions d'utilisation et la politique de confidentialité",
       "validation": {
-        "titleRequired": "Le titre est requis",
-        "slugRequired": "Le slug est requis",
-        "slugInvalid": "Le slug doit contenir uniquement des lettres minuscules, chiffres et tirets",
-        "categoryRequired": "La catégorie est requise",
-        "summaryRequired": "Le chapeau est requis",
-        "contentRequired": "Le contenu est requis",
-        "authorRequired": "L'auteur est requis",
-        "publicationDateRequired": "La date de publication est requise",
-        "invalidDate": "Date non valide",
-        "invalidImageUrl": "L'URL de l'image n'est pas valide",
-        "invalidDocumentUrl": "L'URL du document n'est pas valide"
+        "firstNameRequired": "Le prénom est requis",
+        "firstNameMinLength": "Le prénom doit contenir au moins 2 caractères",
+        "lastNameRequired": "Le nom est requis",
+        "lastNameMinLength": "Le nom doit contenir au moins 2 caractères",
+        "emailRequired": "L'email est requis",
+        "emailInvalid": "Format d'email invalide",
+        "genderRequired": "Le sexe est requis",
+        "roleRequired": "Le rôle est requis"
       }
     },
-    "success": {
-      "created": "Actualité créée avec succès",
-      "updated": "Actualité mise à jour avec succès",
-      "deleted": "Actualité supprimée avec succès"
+    "pages": {
+      "actualites": {
+        "title": "Actualités",
+        "description": "Actualités et communications."
+      },
+      "accreditations": {
+        "title": "Accréditations",
+        "description": "Gestion des accréditations."
+      },
+      "paiements": {
+        "title": "Paiements",
+        "description": "Gestion des paiements et transactions."
+      },
+      "inscriptions": {
+        "title": "Inscriptions",
+        "description": "Suivi des inscriptions aux formations."
+      },
+      "utilisateurs": {
+        "title": "Utilisateurs",
+        "description": "Liste, création et gestion des utilisateurs."
+      },
+      "roles": {
+        "title": "Rôles",
+        "description": "Configuration des rôles et des permissions."
+      },
+      "permissions": {
+        "title": "Permissions",
+        "description": "Gestion des permissions."
+      },
+      "journal": {
+        "title": "Journal",
+        "description": "Historique des actions et audits."
+      },
+      "genetique": {
+        "ascendance": {
+          "title": "Ascendance",
+          "description": "Gestion de l'ascendance génétique."
+        },
+        "education": {
+          "title": "Éducation",
+          "description": "Parcours éducatif lié au génotype."
+        },
+        "sante": {
+          "title": "Santé",
+          "description": "Données de santé liées au génotype."
+        },
+        "individuel": {
+          "title": "Individuel",
+          "description": "Gestion des données individuelles (génotype).",
+          "genotype": "Génotype"
+        },
+        "planIntervention": {
+          "title": "Plan d'intervention",
+          "description": "Plans d'intervention personnalisés.",
+          "individualized": "individualisé"
+        }
+      },
+      "projets": {
+        "collectifs": {
+          "title": "Collectifs",
+          "description": "Groupes, missions et réalisations collectives."
+        },
+        "chefsOeuvre": {
+          "title": "Chefs-d'œuvres",
+          "description": "Gestion des projets individuels (chefs-d'œuvre)."
+        }
+      }
+    },
+    "ui": {
+      "typography": {
+        "headlines": "Titres",
+        "texts": "Textes"
+      },
+      "tables": {
+        "dessert": "Dessert",
+        "calories": "Calories",
+        "fat": "Matières grasses",
+        "carbs": "Glucides",
+        "protein": "Protéines"
+      },
+      "cards": {
+        "solid": "Carte solide",
+        "navigation": "Navigation",
+        "users": "Utilisateurs"
+      },
+      "forms": {
+        "firstName": "Prénom",
+        "email": "Email",
+        "mobile": "Mobile",
+        "password": "Mot de passe"
+      }
+    },
+    "error": {
+      "notFound": "Page non trouvée ⚠️",
+      "notFoundMessage": "Désolé, la page que vous recherchez n'existe pas."
+    },
+    "actualites": {
+      "title": "Actualités",
+      "subtitle": "Découvrez les dernières nouvelles de l'Institut Lafaom-Mao",
+      "newArticle": "Nouvelle actualité",
+      "search": {
+        "placeholder": "Rechercher dans les actualités...",
+        "results": "Résultats de recherche",
+        "noResults": "Aucune actualité trouvée",
+        "tryOtherKeywords": "Essayez avec d'autres mots-clés",
+        "noArticles": "Aucune actualité disponible pour le moment"
+      },
+      "categories": {
+        "all": "Toutes",
+        "partnership": "Partenariat",
+        "event": "Événement",
+        "testimonial": "Témoignage",
+        "project": "Projet",
+        "certification": "Certification",
+        "communication": "Communication"
+      },
+      "featured": "À la une",
+      "allArticles": "Toutes les actualités",
+      "loadMore": "Charger plus d'actualités",
+      "createFirst": "Créer la première actualité",
+      "loading": "Chargement des actualités...",
+      "readMore": "Lire la suite",
+      "views": "vues",
+      "by": "Par",
+      "actions": {
+        "view": "Voir",
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "share": "Partager",
+        "cancel": "Annuler",
+        "save": "Sauvegarder",
+        "create": "Créer l'actualité",
+        "close": "Fermer"
+      },
+      "form": {
+        "title": "Titre",
+        "titleRequired": "Le titre est requis",
+        "slug": "Slug",
+        "slugRequired": "Le slug est requis",
+        "slugHint": "URL de l'actualité (généré automatiquement)",
+        "category": "Catégorie",
+        "categoryRequired": "La catégorie est requise",
+        "summary": "Chapeau",
+        "summaryRequired": "Le chapeau est requis",
+        "summaryHint": "Résumé court de l'actualité",
+        "content": "Contenu HTML",
+        "contentRequired": "Le contenu est requis",
+        "author": "Auteur",
+        "authorRequired": "L'auteur est requis",
+        "publicationDate": "Date de publication",
+        "publicationDateRequired": "La date de publication est requise",
+        "trainingStartDate": "Date début formation",
+        "trainingEndDate": "Date fin formation",
+        "optional": "Optionnel",
+        "mainImage": "Image principale",
+        "chooseImage": "Choisir une image",
+        "attachedDocument": "Document joint",
+        "chooseDocument": "Choisir un document",
+        "documentAttached": "Document joint",
+        "uploading": "Téléchargement en cours...",
+        "uploadSuccess": "Fichier téléchargé avec succès",
+        "uploadError": "Erreur lors du téléchargement"
+      },
+      "modal": {
+        "create": {
+          "title": "Nouvelle actualité",
+          "subtitle": "Ajoutez une nouvelle actualité au système",
+          "confirm": {
+            "title": "Confirmer la création",
+            "subtitle": "Vérifiez les informations avant de créer",
+            "message": "Êtes-vous sûr de vouloir créer cette actualité avec les informations suivantes ?",
+            "summary": "Résumé de l'actualité",
+            "info": "Cette action créera une nouvelle actualité dans le système.",
+            "create": "Créer l'actualité"
+          }
+        },
+        "edit": {
+          "title": "Modifier l'actualité",
+          "subtitle": "Modifiez les informations de l'actualité",
+          "confirm": {
+            "title": "Confirmer les modifications",
+            "subtitle": "Vérifiez les changements avant de sauvegarder",
+            "message": "Êtes-vous sûr de vouloir appliquer ces modifications ?",
+            "summary": "Modifications apportées",
+            "info": "Cette action mettra à jour l'actualité existante.",
+            "save": "Sauvegarder"
+          }
+        },
+        "view": {
+          "title": "Détails de l'actualité",
+          "subtitle": "Informations complètes",
+          "downloadDocument": "Télécharger le document",
+          "trainingDates": "Dates de formation",
+          "start": "Début",
+          "end": "Fin",
+          "tabs": {
+            "overview": "Aperçu",
+            "content": "Contenu",
+            "files": "Fichiers"
+          },
+          "files": {
+            "title": "Fichiers joints",
+            "image": "Image principale",
+            "document": "Document joint",
+            "none": "Aucun fichier joint à cette actualité"
+          }
+        },
+        "delete": {
+          "title": "Supprimer l'actualité",
+          "subtitle": "Cette action est irréversible",
+          "confirm": "Êtes-vous sûr de vouloir supprimer cette actualité ?",
+          "warning": "Cette action supprimera définitivement l'actualité et tous ses fichiers associés.",
+          "confirmButton": "Supprimer définitivement"
+        }
+      },
+      "notifications": {
+        "created": {
+          "title": "Actualité créée",
+          "message": "L'actualité \"{titre}\" a été créée avec succès"
+        },
+        "updated": {
+          "title": "Actualité modifiée",
+          "message": "L'actualité \"{titre}\" a été modifiée avec succès"
+        },
+        "deleted": {
+          "title": "Actualité supprimée",
+          "message": "L'actualité \"{titre}\" a été supprimée avec succès"
+        },
+        "error": {
+          "title": "Erreur",
+          "message": "Une erreur est survenue lors de l'opération"
+        }
+      },
+      "errors": {
+        "loadingFailed": "Erreur lors du chargement des actualités",
+        "creationFailed": "Erreur lors de la création de l'actualité",
+        "updateFailed": "Erreur lors de la mise à jour de l'actualité",
+        "deletionFailed": "Erreur lors de la suppression de l'actualité",
+        "uploadFailed": "Erreur lors de l'upload du fichier",
+        "connectionError": "Erreur de connexion. Vérifiez votre connexion internet.",
+        "unknownError": "Erreur inconnue",
+        "validation": {
+          "titleRequired": "Le titre est requis",
+          "slugRequired": "Le slug est requis",
+          "slugInvalid": "Le slug doit contenir uniquement des lettres minuscules, chiffres et tirets",
+          "categoryRequired": "La catégorie est requise",
+          "summaryRequired": "Le chapeau est requis",
+          "contentRequired": "Le contenu est requis",
+          "authorRequired": "L'auteur est requis",
+          "publicationDateRequired": "La date de publication est requise",
+          "invalidDate": "Date non valide",
+          "invalidImageUrl": "L'URL de l'image n'est pas valide",
+          "invalidDocumentUrl": "L'URL du document n'est pas valide"
+        }
+      },
+      "success": {
+        "created": "Actualité créée avec succès",
+        "updated": "Actualité mise à jour avec succès",
+        "deleted": "Actualité supprimée avec succès"
+      }
     }
   }
 }

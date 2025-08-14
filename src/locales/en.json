@@ -946,7 +946,9 @@
     "sendButton": "Send reset link",
     "sending": "Sending...",
     "backToLogin": "Back to login",
-    "redirectMessage": "You will be redirected to the login page in a few seconds..."
+    "redirectMessage": "You will be redirected to the login page in a few seconds...",
+    "success": "Email sent! Check your inbox.",
+    "unknownError": "Unknown error"
   },
   "register": {
     "title": "Create an account",
