@@ -151,7 +151,7 @@
                 <div><strong>{{ t('actualites.form.category') }}:</strong> {{ form.categorie }}</div>
                 <div><strong>{{ t('actualites.form.author') }}:</strong> {{ form.auteur }}</div>
                 <div><strong>{{ t('actualites.form.publicationDate') }}:</strong> {{ formatDate(form.date_publication)
-                  }}</div>
+                }}</div>
                 <div><strong>{{ t('actualites.form.summary') }}:</strong> {{ form.chapeau.substring(0, 100) }}{{
                   form.chapeau.length > 100 ? '...' : '' }}</div>
                 <div v-if="form.image_url"><strong>Image:</strong> ✓ Présente</div>
@@ -189,6 +189,7 @@ import { useI18n } from 'vue-i18n'
 import RichTextEditor from '@/components/RichTextEditorSimple.vue'
 import type { Actualite, CreateActualitePayload } from '@/composables/useActualites'
 import { useActualites } from '@/composables/useActualites'
+import { useAuthStore } from '@/stores/auth'
 
 interface Props {
   modelValue: boolean
@@ -205,6 +206,12 @@ const emit = defineEmits<Emits>()
 const { t } = useI18n()
 
 const { uploadFile, generateSlug } = useActualites()
+const authStore = useAuthStore()
+
+// S'assurer qu'un utilisateur est disponible (pour le développement)
+if (!authStore.user) {
+  authStore.initDemoUser()
+}
 
 // Reactive state
 const isOpen = computed({
@@ -225,7 +232,7 @@ const form = ref<CreateActualitePayload>({
   date_fin_formation: '',
   document_url: '',
   auteur: '',
-  utilisateur_id: 1
+  utilisateur_id: authStore.userId || 1
 })
 
 const formRef = ref()

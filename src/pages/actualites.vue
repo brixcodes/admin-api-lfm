@@ -640,8 +640,6 @@ onMounted(async () => {
                 <VIcon icon="ri-calendar-line" size="14" class="me-1 text-disabled" />
                 <span class="text-caption text-disabled">{{ formatDate(actualite.date_publication) }}</span>
                 <VSpacer />
-                <VIcon icon="ri-eye-line" size="14" class="me-1 text-disabled" />
-                <span class="text-caption text-disabled">{{ actualite.vues || 0 }}</span>
               </div>
 
               <h4 class="text-subtitle-1 font-weight-bold mb-2 text-high-emphasis line-clamp-2">
@@ -702,8 +700,6 @@ onMounted(async () => {
                   </VChip>
                   <VIcon icon="ri-calendar-line" size="14" class="me-1 text-disabled" />
                   <span class="text-caption text-disabled me-3">{{ formatDate(actualite.date_publication) }}</span>
-                  <VIcon icon="ri-eye-line" size="14" class="me-1 text-disabled" />
-                  <span class="text-caption text-disabled">{{ actualite.vues || 0 }} vues</span>
                 </div>
 
                 <h3 class="text-h6 font-weight-bold mb-2 text-high-emphasis">

@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import RichTextEditor from '@/components/RichTextEditorSimple.vue'
 import type { CreateActualitePayload } from '@/composables/useActualites'
 import { useActualites } from '@/composables/useActualites'
+import { useAuthStore } from '@/stores/auth'
 
 interface Props {
   modelValue: boolean
@@ -19,6 +20,38 @@ const emit = defineEmits<Emits>()
 const { t } = useI18n()
 
 const { uploadFile, generateSlug } = useActualites()
+const authStore = useAuthStore()
+
+// Debug de l'authentification AVANT toute modification
+console.log('=== DEBUG AUTH STORE (AVANT) ===')
+console.log('User avant:', authStore.user)
+console.log('User ID avant:', authStore.userId)
+console.log('Is authenticated avant:', authStore.isAuthenticated)
+console.log('Token:', authStore.token)
+
+// Essayer de récupérer l'utilisateur connecté depuis l'API
+if (authStore.token && !authStore.user) {
+  console.log('Token présent mais pas d\'utilisateur, récupération depuis l\'API...')
+  authStore.fetchCurrentUser().then(() => {
+    console.log('=== UTILISATEUR RÉCUPÉRÉ DEPUIS L\'API ===')
+    console.log('User récupéré:', authStore.user)
+    console.log('User ID récupéré:', authStore.userId)
+  }).catch(error => {
+    console.error('Erreur lors de la récupération de l\'utilisateur:', error)
+    console.log('Utilisation de l\'utilisateur démo')
+    authStore.initDemoUser()
+  })
+}
+else if (!authStore.user && !authStore.token) {
+  console.log('Aucun utilisateur connecté, initialisation utilisateur démo')
+  authStore.initDemoUser()
+}
+
+// Debug de l'authentification APRÈS
+console.log('=== DEBUG AUTH STORE (APRÈS) ===')
+console.log('User après:', authStore.user)
+console.log('User ID après:', authStore.userId)
+console.log('Is authenticated après:', authStore.isAuthenticated)
 
 // Reactive state
 const isOpen = computed({
@@ -39,7 +72,15 @@ const form = ref<CreateActualitePayload>({
   date_fin_formation: '',
   document_url: '',
   auteur: '',
-  utilisateur_id: 1,
+  utilisateur_id: (() => {
+    const userId = authStore.userId || 1
+
+    console.log('=== INITIALISATION FORMULAIRE ===')
+    console.log('authStore.userId:', authStore.userId)
+    console.log('userId utilisé:', userId)
+
+    return userId
+  })(),
 })
 
 const formRef = ref()
@@ -89,7 +130,7 @@ const resetForm = () => {
     date_fin_formation: '',
     document_url: '',
     auteur: '',
-    utilisateur_id: 1,
+    utilisateur_id: authStore.userId || 1,
   }
   imageFile.value = []
   documentFile.value = []
@@ -117,11 +158,21 @@ const onConfirmCreate = async () => {
 
   try {
     console.log('=== DONNÉES ENVOYÉES POUR CRÉATION ===')
-    console.log('Form data:', form.value)
-    console.log('Image URL:', form.value.image_url)
-    console.log('Document URL:', form.value.document_url)
+    console.log('Form data avant copie:', form.value)
+    console.log('Image URL avant copie:', form.value.image_url)
+    console.log('Document URL avant copie:', form.value.document_url)
 
-    emit('created', form.value)
+    // Créer une copie des données avant de réinitialiser le formulaire
+    const formData = { ...form.value }
+
+    console.log('=== COPIE DES DONNÉES ===')
+    console.log('Form data copié:', formData)
+    console.log('Image URL copié:', formData.image_url)
+    console.log('Document URL copié:', formData.document_url)
+
+    emit('created', formData)
+
+    // Réinitialiser le formulaire APRÈS avoir émis les données
     resetForm()
     showConfirmDialog.value = false
     isOpen.value = false
@@ -135,7 +186,10 @@ const onConfirmCreate = async () => {
 }
 
 const onImageUpload = async (event: Event) => {
-  const files = imageFile.value
+  // Récupérer les fichiers directement depuis l'événement
+  const target = event.target as HTMLInputElement
+  const files = target.files
+
   if (!files || files.length === 0)
     return
 
@@ -170,6 +224,7 @@ const onImageUpload = async (event: Event) => {
     // S'assurer que l'URL est complète
     form.value.image_url = response.url
     console.log('URL image sauvegardée:', form.value.image_url)
+    console.log('Form complet après upload image:', form.value)
   }
   catch (err: any) {
     console.error('Erreur upload image:', err)
@@ -181,7 +236,10 @@ const onImageUpload = async (event: Event) => {
 }
 
 const onDocumentUpload = async (event: Event) => {
-  const files = documentFile.value
+  // Récupérer les fichiers directement depuis l'événement
+  const target = event.target as HTMLInputElement
+  const files = target.files
+
   if (!files || files.length === 0)
     return
 
@@ -218,6 +276,7 @@ const onDocumentUpload = async (event: Event) => {
     // S'assurer que l'URL est complète
     form.value.document_url = response.url
     console.log('URL document sauvegardée:', form.value.document_url)
+    console.log('Form complet après upload document:', form.value)
   }
   catch (err: any) {
     console.error('Erreur upload document:', err)

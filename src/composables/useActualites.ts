@@ -173,9 +173,6 @@ export function useActualites() {
       console.log('Payload complet:', payload)
       console.log('Image URL reçue:', payload.image_url)
       console.log('Document URL reçue:', payload.document_url)
-      console.log('=== DONNÉES ENVOYÉES À L\'API ===')
-      console.log('Payload reçu:', payload)
-      console.log('JSON stringifié:', JSON.stringify(payload, null, 2))
 
       // Désactiver temporairement la validation côté client pour laisser l'API valider
       // const validation = apiUtils.validateActualite(payload)
@@ -207,9 +204,26 @@ export function useActualites() {
 
       console.log('=== CLEAN PAYLOAD FINAL ===')
       console.log('Clean payload:', cleanPayload)
+      console.log('Image URL dans clean payload:', cleanPayload.image_url)
+      console.log('Document URL dans clean payload:', cleanPayload.document_url)
       console.log('JSON stringifié:', JSON.stringify(cleanPayload, null, 2))
 
-      const response = await actualitesApi.createActualite(cleanPayload)
+      let response
+      try {
+        response = await actualitesApi.createActualite(cleanPayload)
+      }
+      catch (err) {
+        // Si erreur 409 (conflit), probablement slug déjà existant
+        if (err instanceof ApiException && err.status === 409) {
+          console.log('Conflit détecté (409), génération d\'un slug unique...')
+          cleanPayload.slug = generateUniqueSlug(payload.titre)
+          console.log('Nouveau slug unique:', cleanPayload.slug)
+          response = await actualitesApi.createActualite(cleanPayload)
+        }
+        else {
+          throw err
+        }
+      }
 
       // Normaliser la réponse pour gérer les deux formats d'API
       const newActualite = normalizeActualite(response)
@@ -368,6 +382,14 @@ export function useActualites() {
       .replace(/-+/g, '-') // Éviter les tirets multiples
   }
 
+  // Générer un slug unique en ajoutant un timestamp si nécessaire
+  const generateUniqueSlug = (titre: string): string => {
+    const baseSlug = generateSlug(titre)
+    const timestamp = Date.now().toString().slice(-6) // Derniers 6 chiffres du timestamp
+
+    return `${baseSlug}-${timestamp}`
+  }
+
   return {
     // État
     actualites,
@@ -392,5 +414,6 @@ export function useActualites() {
     deleteActualite,
     uploadFile,
     generateSlug,
+    generateUniqueSlug,
   }
 }
