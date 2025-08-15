@@ -102,7 +102,20 @@ const withDetentionInfo = computed(() => genotypes.value.filter(g => g.pays_dete
 
 // Handlers
 const openCreate = () => {
-  createForm.value = { type: 'detenu', nom: '', prenom: '', age: undefined, sexe: undefined, motif_detention: '', date_debut_detention: '', duree_detention: '', pays_detention: '', maison_detention: '', profession: '', activite_avant_detention: '' }
+  createForm.value = {
+    type: 'detenu',
+    nom: '',
+    prenom: '',
+    age: undefined,
+    sexe: (user.value?.sexe as any) || undefined,
+    motif_detention: '',
+    date_debut_detention: '',
+    duree_detention: '',
+    pays_detention: '',
+    maison_detention: '',
+    profession: '',
+    activite_avant_detention: ''
+  }
   showCreateDialog.value = true
 }
 const openEdit = (g: GenotypeIndividuel) => {
@@ -250,7 +263,7 @@ const openDetails = async (g: GenotypeIndividuel) => {
               </h6>
               <VSkeletonLoader v-if="isLoading" type="text" width="120" />
               <span v-else class="text-sm text-medium-emphasis">{{ $t('genetique.individuel.stats.with_detention_info')
-              }}</span>
+                }}</span>
               <VSkeletonLoader v-if="isLoading" type="text" width="100" />
               <span v-else class="text-xs text-disabled">{{ $t('system.users.stats.last_week') }}</span>
             </div>
@@ -372,79 +385,106 @@ const openDetails = async (g: GenotypeIndividuel) => {
       </VCardText>
     </VCard>
 
-    <!-- Create Dialog -->
-    <VDialog v-model="showCreateDialog" max-width="720" persistent>
+    <!-- Create Dialog (enhanced) -->
+    <VDialog v-model="showCreateDialog" max-width="1200" persistent>
       <VCard>
-        <VCardTitle class="text-h6">{{ $t('genetique.individuel.actions.add') }}</VCardTitle>
-        <VCardText>
+        <VCardTitle class="text-h5 pa-6 pb-4">
+          <div class="d-flex align-center">
+            <VAvatar size="40" color="primary" variant="tonal" class="me-3">
+              <VIcon icon="ri-dna-line" />
+            </VAvatar>
+            <div>
+              <div class="text-h5">{{ $t('genetique.individuel.actions.add') }}</div>
+              <div class="text-body-2 text-medium-emphasis">
+                {{ ((user?.prenom || '') + ' ' + (user?.nom || '')).trim() }}
+              </div>
+            </div>
+          </div>
+        </VCardTitle>
+
+        <VDivider />
+
+        <VCardText class="pa-6">
           <VForm ref="createFormRef">
             <VRow>
-              <VCol cols="12" md="6">
+              <VCol cols="12" md="12">
                 <VSelect v-model="createForm.type" :label="$t('genetique.individuel.form.type')" :items="[
                   { title: $t('genetique.individuel.types.detenu'), value: 'detenu' },
                   { title: $t('genetique.individuel.types.proche'), value: 'proche' },
-                ]" prepend-inner-icon="ri-user-heart-line" :rules="[rules.required]" />
+                ]" prepend-inner-icon="ri-user-heart-line" :rules="[rules.required]" variant="outlined" />
               </VCol>
-              <VCol cols="12" md="6">
+              <VCol cols="12" md="4">
                 <VTextField v-model="createForm.nom" :label="$t('genetique.individuel.form.last_name')"
                   :placeholder="$t('genetique.individuel.placeholders.last_name')" prepend-inner-icon="ri-user-3-line"
-                  :rules="[rules.required, rules.max(255)]" />
+                  :rules="[rules.required, rules.max(255)]" variant="outlined" />
               </VCol>
-              <VCol cols="12" md="6">
+              <VCol cols="12" md="4">
                 <VTextField v-model="createForm.prenom" :label="$t('genetique.individuel.form.first_name')"
                   :placeholder="$t('genetique.individuel.placeholders.first_name')" prepend-inner-icon="ri-user-line"
-                  :rules="[rules.max(255)]" />
+                  :rules="[rules.max(255)]" variant="outlined" />
               </VCol>
-              <VCol cols="12" md="6">
+
+              <VCol cols="12" md="4">
                 <VTextField v-model.number="createForm.age" type="number" :label="$t('genetique.individuel.form.age')"
                   prepend-inner-icon="ri-hourglass-line" :rules="[rules.integer, rules.between15And99]" min="15"
-                  max="99" step="1" />
+                  max="99" step="1" variant="outlined" />
               </VCol>
-              <VCol cols="12" md="6">
+              <VCol cols="12" md="4">
                 <VSelect v-model="createForm.sexe" :label="$t('system.users.details.gender')" :items="[
                   { value: 'homme', title: $t('system.users.gender.homme') as string },
                   { value: 'femme', title: $t('system.users.gender.femme') as string },
                   { value: 'autre', title: $t('system.users.gender.autre') as string }
-                ]" prepend-inner-icon="ri-genderless-line" />
+                ]" prepend-inner-icon="ri-genderless-line" variant="outlined" />
               </VCol>
-              <VCol cols="12" md="6">
-                <VTextField v-model="createForm.motif_detention"
-                  :label="$t('genetique.individuel.form.motif_detention')" prepend-inner-icon="ri-article-line"
-                  :rules="[rules.max(255)]" />
-              </VCol>
-              <VCol cols="12" md="6">
+
+              <VCol cols="12" md="4">
                 <VTextField v-model="createForm.date_debut_detention" type="date"
-                  :label="$t('genetique.individuel.form.date_debut_detention')" prepend-inner-icon="ri-calendar-line" />
+                  :label="$t('genetique.individuel.form.date_debut_detention')" prepend-inner-icon="ri-calendar-line"
+                  variant="outlined" />
               </VCol>
-              <VCol cols="12" md="6">
+              <VCol cols="12" md="4">
                 <VTextField v-model="createForm.duree_detention"
                   :label="$t('genetique.individuel.form.duree_detention')" prepend-inner-icon="ri-timer-line"
-                  :rules="[rules.max(50)]" />
+                  :rules="[rules.max(50)]" variant="outlined" />
               </VCol>
-              <VCol cols="12" md="6">
+              <VCol cols="12" md="4">
                 <VTextField v-model="createForm.pays_detention" :label="$t('genetique.individuel.form.pays_detention')"
-                  prepend-inner-icon="ri-earth-line" :rules="[rules.max(255)]" />
+                  prepend-inner-icon="ri-earth-line" :rules="[rules.max(255)]" variant="outlined" />
               </VCol>
-              <VCol cols="12" md="6">
+
+              <VCol cols="12" md="4">
                 <VTextField v-model="createForm.maison_detention"
                   :label="$t('genetique.individuel.form.maison_detention')" prepend-inner-icon="ri-building-2-line"
-                  :rules="[rules.max(255)]" />
+                  :rules="[rules.max(255)]" variant="outlined" />
               </VCol>
-              <VCol cols="12" md="6">
+              <VCol cols="12" md="4">
                 <VTextField v-model="createForm.profession" :label="$t('genetique.individuel.form.profession')"
-                  prepend-inner-icon="ri-briefcase-2-line" :rules="[rules.max(255)]" />
+                  prepend-inner-icon="ri-briefcase-2-line" :rules="[rules.max(255)]" variant="outlined" />
               </VCol>
-              <VCol cols="12">
+              <VCol cols="12" md="8">
+                <VTextField v-model="createForm.motif_detention"
+                  :label="$t('genetique.individuel.form.motif_detention')" prepend-inner-icon="ri-article-line"
+                  :rules="[rules.max(255)]" variant="outlined" />
+              </VCol>
+              <VCol cols="12" md="4">
                 <VTextField v-model="createForm.activite_avant_detention"
-                  :label="$t('genetique.individuel.form.activite_avant_detention')" prepend-inner-icon="ri-run-line" />
+                  :label="$t('genetique.individuel.form.activite_avant_detention')" prepend-inner-icon="ri-run-line"
+                  variant="outlined" />
               </VCol>
             </VRow>
           </VForm>
         </VCardText>
-        <VCardActions>
+
+        <VDivider />
+
+        <VCardActions class="pa-6">
           <VSpacer />
-          <VBtn variant="outlined" color="secondary" @click="showCreateDialog = false">{{ $t('common.cancel') }}</VBtn>
-          <VBtn color="primary" @click="requestCreate">{{ $t('common.save') }}</VBtn>
+          <VBtn color="error" variant="outlined" @click="showCreateDialog = false">
+            {{ $t('common.cancel') }}
+          </VBtn>
+          <VBtn color="primary" variant="flat" @click="requestCreate">
+            {{ $t('common.save') }}
+          </VBtn>
         </VCardActions>
       </VCard>
     </VDialog>
@@ -509,19 +549,22 @@ const openDetails = async (g: GenotypeIndividuel) => {
             </VRow>
 
             <div class="text-subtitle-1 mb-2">{{ $t('genetique.individuel.details.sections.ascendance') }}</div>
-            <div class="mb-4" v-if="detailsData?.ascendance">{{ JSON.stringify(detailsData.ascendance) }}</div>
+            <div class="mb-4" v-if="(detailsData as any)?.ascendance">{{ JSON.stringify((detailsData as any).ascendance)
+            }}</div>
             <div class="mb-4" v-else>{{ $t('common.no_data') }}</div>
 
             <div class="text-subtitle-1 mb-2">{{ $t('genetique.individuel.details.sections.health') }}</div>
-            <div class="mb-4" v-if="detailsData?.sante">{{ JSON.stringify(detailsData.sante) }}</div>
+            <div class="mb-4" v-if="(detailsData as any)?.sante">{{ JSON.stringify((detailsData as any).sante) }}</div>
             <div class="mb-4" v-else>{{ $t('common.no_data') }}</div>
 
             <div class="text-subtitle-1 mb-2">{{ $t('genetique.individuel.details.sections.education') }}</div>
-            <div class="mb-4" v-if="detailsData?.education">{{ JSON.stringify(detailsData.education) }}</div>
+            <div class="mb-4" v-if="(detailsData as any)?.education">{{ JSON.stringify((detailsData as any).education)
+            }}</div>
             <div class="mb-4" v-else>{{ $t('common.no_data') }}</div>
 
             <div class="text-subtitle-1 mb-2">{{ $t('genetique.individuel.details.sections.plans') }}</div>
-            <div class="mb-2" v-if="detailsData?.plans_intervention?.length">{{ detailsData.plans_intervention.length }}
+            <div class="mb-2" v-if="(detailsData as any)?.plans_intervention?.length">{{ (detailsData as
+              any).plans_intervention.length }}
             </div>
             <div v-else>{{ $t('common.no_data') }}</div>
           </template>
@@ -607,14 +650,69 @@ const openDetails = async (g: GenotypeIndividuel) => {
       </VCard>
     </VDialog>
 
-    <!-- Confirm Dialog for create/edit/delete -->
-    <VDialog v-model="showConfirmDialog" max-width="420" persistent>
-      <VCard class="pa-4 rounded-lg">
-        <VCardTitle class="text-h6">{{ $t('genetique.individuel.confirm.title') }}</VCardTitle>
-        <VCardText>
-          {{ $t('genetique.individuel.confirm.message') }}
+    <!-- Confirm Dialog for create/edit/delete (enhanced) -->
+    <VDialog v-model="showConfirmDialog" max-width="520" persistent>
+      <VCard>
+        <VCardTitle class="text-h5 pa-6 pb-4">
+          <div class="d-flex align-center">
+            <VAvatar size="40" color="warning" variant="tonal" class="me-3">
+              <VIcon icon="ri-question-line" />
+            </VAvatar>
+            <div>
+              <div class="text-h5">{{ $t('genetique.individuel.confirm.title') }}</div>
+              <div class="text-body-2 text-medium-emphasis">{{ $t('genetique.individuel.confirm.message') }}</div>
+            </div>
+          </div>
+        </VCardTitle>
+
+        <VDivider />
+
+        <VCardText class="pa-6">
+          <template v-if="confirmAction === 'create'">
+            <VCard variant="tonal" color="secondary" class="mb-4">
+              <VCardText class="pa-4">
+                <div class="text-subtitle-2 mb-2">{{ $t('genetique.individuel.details.title') }}</div>
+                <div class="d-flex flex-column gap-2">
+                  <div><strong>{{ $t('genetique.individuel.form.type') }}:</strong> {{
+                    $t(`genetique.individuel.types.${createForm.type}`) }}</div>
+                  <div><strong>{{ $t('genetique.individuel.form.last_name') }}:</strong> {{ createForm.nom }}</div>
+                  <div><strong>{{ $t('genetique.individuel.form.first_name') }}:</strong> {{ createForm.prenom || '-' }}
+                  </div>
+                  <div v-if="createForm.sexe"><strong>{{ $t('system.users.details.gender') }}:</strong> {{
+                    $t(`system.users.gender.${createForm.sexe}`) }}</div>
+                  <div v-if="createForm.age"><strong>{{ $t('genetique.individuel.form.age') }}:</strong> {{
+                    createForm.age }}</div>
+                  <div v-if="createForm.profession"><strong>{{ $t('genetique.individuel.form.profession') }}:</strong>
+                    {{ createForm.profession }}</div>
+                  <div v-if="createForm.motif_detention"><strong>{{ $t('genetique.individuel.form.motif_detention')
+                      }}:</strong> {{ createForm.motif_detention }}</div>
+                  <div v-if="createForm.activite_avant_detention"><strong>{{
+                    $t('genetique.individuel.form.activite_avant_detention') }}:</strong> {{
+                        createForm.activite_avant_detention }}</div>
+                  <div v-if="createForm.pays_detention"><strong>{{ $t('genetique.individuel.form.pays_detention')
+                      }}:</strong> {{ createForm.pays_detention }}</div>
+                  <div v-if="createForm.maison_detention"><strong>{{ $t('genetique.individuel.form.maison_detention')
+                      }}:</strong> {{ createForm.maison_detention }}</div>
+                  <div v-if="createForm.date_debut_detention"><strong>{{
+                    $t('genetique.individuel.form.date_debut_detention') }}:</strong> {{
+                        createForm.date_debut_detention }}</div>
+                  <div v-if="createForm.duree_detention"><strong>{{ $t('genetique.individuel.form.duree_detention')
+                      }}:</strong> {{ createForm.duree_detention }}</div>
+                </div>
+              </VCardText>
+            </VCard>
+            <VAlert type="info" variant="tonal">
+              <template #text>
+                {{ $t('system.users.confirm.edit_message') }}
+              </template>
+            </VAlert>
+          </template>
         </VCardText>
-        <VCardActions class="justify-end">
+
+        <VDivider />
+
+        <VCardActions class="pa-6">
+          <VSpacer />
           <VBtn variant="outlined" color="secondary" @click="showConfirmDialog = false">{{ $t('common.cancel') }}</VBtn>
           <VBtn color="primary" :loading="confirming" @click="onConfirmYes">{{ $t('common.confirm') }}</VBtn>
         </VCardActions>
