@@ -7,8 +7,8 @@
             <VIcon icon="ri-article-line" />
           </VAvatar>
           <div>
-            <div class="text-h5">{{ t('actualites.details.title') }}</div>
-            <div class="text-body-2 text-medium-emphasis">{{ t('actualites.details.subtitle') }}</div>
+            <div class="text-h5">{{ t('actualites.modal.view.title') }}</div>
+            <div class="text-body-2 text-medium-emphasis">{{ t('actualites.modal.view.subtitle') }}</div>
           </div>
         </div>
         <VBtn icon variant="text" size="small" @click="closeDialog">
@@ -22,15 +22,15 @@
         <VTabs v-model="activeTab" color="primary" class="px-6">
           <VTab value="overview">
             <VIcon start icon="ri-eye-line" />
-            {{ t('actualites.details.tabs.overview') }}
+            {{ t('actualites.modal.view.tabs.overview') }}
           </VTab>
           <VTab value="content">
             <VIcon start icon="ri-file-text-line" />
-            {{ t('actualites.details.tabs.content') }}
+            {{ t('actualites.modal.view.tabs.content') }}
           </VTab>
           <VTab value="files">
             <VIcon start icon="ri-attachment-line" />
-            {{ t('actualites.details.tabs.files') }}
+            {{ t('actualites.modal.view.tabs.files') }}
           </VTab>
         </VTabs>
 
@@ -43,13 +43,7 @@
               <!-- Image de l'actualité -->
               <VCol v-if="actualite.image_url" cols="12" md="4">
                 <VCard variant="outlined">
-                  <VImg
-                    :src="actualite.image_url"
-                    :alt="actualite.titre"
-                    height="200"
-                    cover
-                    class="rounded"
-                  />
+                  <VImg :src="actualite.image_url" :alt="actualite.titre" height="200" cover class="rounded" />
                 </VCard>
               </VCol>
 
@@ -66,7 +60,7 @@
 
                   <!-- Chapeau -->
                   <div>
-                    <h3 class="text-h6 mb-2">{{ t('actualites.form.chapeau') }}</h3>
+                    <h3 class="text-h6 mb-2">{{ t('actualites.form.summary') }}</h3>
                     <p class="text-body-1">{{ actualite.chapeau }}</p>
                   </div>
 
@@ -76,23 +70,28 @@
                       <div class="d-flex flex-column gap-2">
                         <div class="d-flex align-center">
                           <VIcon icon="ri-user-line" class="me-2" size="16" />
-                          <span class="text-body-2"><strong>{{ t('actualites.form.auteur') }}:</strong> {{ actualite.auteur }}</span>
+                          <span class="text-body-2"><strong>{{ t('actualites.form.author') }}:</strong> {{
+                            actualite.auteur }}</span>
                         </div>
                         <div class="d-flex align-center">
                           <VIcon icon="ri-calendar-line" class="me-2" size="16" />
-                          <span class="text-body-2"><strong>{{ t('actualites.form.datePublication') }}:</strong> {{ formatDate(actualite.date_publication) }}</span>
+                          <span class="text-body-2"><strong>{{ t('actualites.form.publicationDate') }}:</strong> {{
+                            formatDate(actualite.date_publication) }}</span>
                         </div>
                         <div v-if="actualite.date_debut_formation" class="d-flex align-center">
                           <VIcon icon="ri-calendar-event-line" class="me-2" size="16" />
-                          <span class="text-body-2"><strong>{{ t('actualites.form.dateDebutFormation') }}:</strong> {{ formatDate(actualite.date_debut_formation) }}</span>
+                          <span class="text-body-2"><strong>{{ t('actualites.form.trainingStartDate') }}:</strong> {{
+                            formatDate(actualite.date_debut_formation) }}</span>
                         </div>
                         <div v-if="actualite.date_fin_formation" class="d-flex align-center">
                           <VIcon icon="ri-calendar-event-line" class="me-2" size="16" />
-                          <span class="text-body-2"><strong>{{ t('actualites.form.dateFinFormation') }}:</strong> {{ formatDate(actualite.date_fin_formation) }}</span>
+                          <span class="text-body-2"><strong>{{ t('actualites.form.trainingEndDate') }}:</strong> {{
+                            formatDate(actualite.date_fin_formation) }}</span>
                         </div>
                         <div class="d-flex align-center">
                           <VIcon icon="ri-link" class="me-2" size="16" />
-                          <span class="text-body-2"><strong>Slug:</strong> {{ actualite.slug }}</span>
+                          <span class="text-body-2"><strong>{{ t('actualites.form.slug') }}:</strong> {{ actualite.slug
+                            }}</span>
                         </div>
                       </div>
                     </VCardText>
@@ -118,7 +117,7 @@
           <!-- Content Tab -->
           <VTabsWindowItem value="content">
             <div class="content-preview">
-              <h3 class="text-h6 mb-4">{{ t('actualites.details.content.title') }}</h3>
+              <h3 class="text-h6 mb-4">{{ t('actualites.form.content') }}</h3>
               <VCard variant="outlined" class="pa-4">
                 <div v-html="actualite.contenu_html" class="content-html"></div>
               </VCard>
@@ -128,27 +127,21 @@
           <!-- Files Tab -->
           <VTabsWindowItem value="files">
             <div class="d-flex flex-column gap-4">
-              <h3 class="text-h6">{{ t('actualites.details.files.title') }}</h3>
-              
+              <h3 class="text-h6">{{ t('actualites.modal.view.files.title') }}</h3>
+
               <!-- Image -->
               <div v-if="actualite.image_url">
-                <h4 class="text-subtitle-1 mb-2">{{ t('actualites.details.files.image') }}</h4>
+                <h4 class="text-subtitle-1 mb-2">{{ t('actualites.modal.view.files.image') }}</h4>
                 <VCard variant="outlined" class="pa-4">
                   <div class="d-flex align-center gap-3">
                     <VAvatar size="40" color="primary" variant="tonal">
                       <VIcon icon="ri-image-line" />
                     </VAvatar>
                     <div class="flex-grow-1">
-                      <div class="text-subtitle-2">Image de l'actualité</div>
+                      <div class="text-subtitle-2">{{ t('actualites.modal.view.files.image') }}</div>
                       <div class="text-body-2 text-medium-emphasis">{{ getFileName(actualite.image_url) }}</div>
                     </div>
-                    <VBtn
-                      icon
-                      variant="text"
-                      size="small"
-                      :href="actualite.image_url"
-                      target="_blank"
-                    >
+                    <VBtn icon variant="text" size="small" :href="actualite.image_url" target="_blank">
                       <VIcon icon="ri-external-link-line" />
                     </VBtn>
                   </div>
@@ -157,23 +150,17 @@
 
               <!-- Document -->
               <div v-if="actualite.document_url">
-                <h4 class="text-subtitle-1 mb-2">{{ t('actualites.details.files.document') }}</h4>
+                <h4 class="text-subtitle-1 mb-2">{{ t('actualites.modal.view.files.document') }}</h4>
                 <VCard variant="outlined" class="pa-4">
                   <div class="d-flex align-center gap-3">
                     <VAvatar size="40" color="secondary" variant="tonal">
                       <VIcon icon="ri-file-pdf-line" />
                     </VAvatar>
                     <div class="flex-grow-1">
-                      <div class="text-subtitle-2">Document joint</div>
+                      <div class="text-subtitle-2">{{ t('actualites.modal.view.files.document') }}</div>
                       <div class="text-body-2 text-medium-emphasis">{{ getFileName(actualite.document_url) }}</div>
                     </div>
-                    <VBtn
-                      icon
-                      variant="text"
-                      size="small"
-                      :href="actualite.document_url"
-                      target="_blank"
-                    >
+                    <VBtn icon variant="text" size="small" :href="actualite.document_url" target="_blank">
                       <VIcon icon="ri-download-line" />
                     </VBtn>
                   </div>
@@ -183,7 +170,7 @@
               <!-- Aucun fichier -->
               <div v-if="!actualite.image_url && !actualite.document_url">
                 <VAlert type="info" variant="tonal">
-                  {{ t('actualites.details.files.none') }}
+                  {{ t('actualites.modal.view.files.none') }}
                 </VAlert>
               </div>
             </div>
@@ -265,25 +252,25 @@ const getFileName = (url: string) => {
 .content-html h4,
 .content-html h5,
 .content-html h6 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
   font-weight: 600;
+  margin-block: 1.5rem 0.5rem;
 }
 
 .content-html p {
-  margin-bottom: 1rem;
+  margin-block-end: 1rem;
 }
 
 .content-html ul,
 .content-html ol {
-  margin-bottom: 1rem;
-  padding-left: 2rem;
+  margin-block-end: 1rem;
+  padding-inline-start: 2rem;
 }
 
 .content-html img {
-  max-width: 100%;
-  height: auto;
   border-radius: 8px;
-  margin: 1rem 0;
+  block-size: auto;
+  margin-block: 1rem;
+  margin-inline: 0;
+  max-inline-size: 100%;
 }
 </style>

@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import RichTextEditor from '@/components/RichTextEditorSimple.vue'
 import type { CreateActualitePayload } from '@/composables/useActualites'
 import { useActualites } from '@/composables/useActualites'
+import { useAuthStore } from '@/stores/auth'
 
 interface Props {
   modelValue: boolean
@@ -19,6 +20,38 @@ const emit = defineEmits<Emits>()
 const { t } = useI18n()
 
 const { uploadFile, generateSlug } = useActualites()
+const authStore = useAuthStore()
+
+// Debug de l'authentification AVANT toute modification
+console.log('=== DEBUG AUTH STORE (AVANT) ===')
+console.log('User avant:', authStore.user)
+console.log('User ID avant:', authStore.userId)
+console.log('Is authenticated avant:', authStore.isAuthenticated)
+console.log('Token:', authStore.token)
+
+// Essayer de récupérer l'utilisateur connecté depuis l'API
+if (authStore.token && !authStore.user) {
+  console.log('Token présent mais pas d\'utilisateur, récupération depuis l\'API...')
+  authStore.fetchCurrentUser().then(() => {
+    console.log('=== UTILISATEUR RÉCUPÉRÉ DEPUIS L\'API ===')
+    console.log('User récupéré:', authStore.user)
+    console.log('User ID récupéré:', authStore.userId)
+  }).catch(error => {
+    console.error('Erreur lors de la récupération de l\'utilisateur:', error)
+    console.log('Utilisation de l\'utilisateur démo')
+    authStore.initDemoUser()
+  })
+}
+else if (!authStore.user && !authStore.token) {
+  console.log('Aucun utilisateur connecté, initialisation utilisateur démo')
+  authStore.initDemoUser()
+}
+
+// Debug de l'authentification APRÈS
+console.log('=== DEBUG AUTH STORE (APRÈS) ===')
+console.log('User après:', authStore.user)
+console.log('User ID après:', authStore.userId)
+console.log('Is authenticated après:', authStore.isAuthenticated)
 
 // Reactive state
 const isOpen = computed({
@@ -39,7 +72,15 @@ const form = ref<CreateActualitePayload>({
   date_fin_formation: '',
   document_url: '',
   auteur: '',
-  utilisateur_id: 1,
+  utilisateur_id: (() => {
+    const userId = authStore.userId || 1
+
+    console.log('=== INITIALISATION FORMULAIRE ===')
+    console.log('authStore.userId:', authStore.userId)
+    console.log('userId utilisé:', userId)
+
+    return userId
+  })(),
 })
 
 const formRef = ref()
@@ -53,7 +94,6 @@ const documentFile = ref<File[]>([])
 // Options
 const categorieOptions = [
   'Actualité',
-  'Formation',
   'Événement',
   'Annonce',
   'Information',
@@ -90,7 +130,7 @@ const resetForm = () => {
     date_fin_formation: '',
     document_url: '',
     auteur: '',
-    utilisateur_id: 1,
+    utilisateur_id: authStore.userId || 1,
   }
   imageFile.value = []
   documentFile.value = []
@@ -118,11 +158,21 @@ const onConfirmCreate = async () => {
 
   try {
     console.log('=== DONNÉES ENVOYÉES POUR CRÉATION ===')
-    console.log('Form data:', form.value)
-    console.log('Image URL:', form.value.image_url)
-    console.log('Document URL:', form.value.document_url)
+    console.log('Form data avant copie:', form.value)
+    console.log('Image URL avant copie:', form.value.image_url)
+    console.log('Document URL avant copie:', form.value.document_url)
 
-    emit('created', form.value)
+    // Créer une copie des données avant de réinitialiser le formulaire
+    const formData = { ...form.value }
+
+    console.log('=== COPIE DES DONNÉES ===')
+    console.log('Form data copié:', formData)
+    console.log('Image URL copié:', formData.image_url)
+    console.log('Document URL copié:', formData.document_url)
+
+    emit('created', formData)
+
+    // Réinitialiser le formulaire APRÈS avoir émis les données
     resetForm()
     showConfirmDialog.value = false
     isOpen.value = false
@@ -136,7 +186,10 @@ const onConfirmCreate = async () => {
 }
 
 const onImageUpload = async (event: Event) => {
-  const files = imageFile.value
+  // Récupérer les fichiers directement depuis l'événement
+  const target = event.target as HTMLInputElement
+  const files = target.files
+
   if (!files || files.length === 0)
     return
 
@@ -171,6 +224,7 @@ const onImageUpload = async (event: Event) => {
     // S'assurer que l'URL est complète
     form.value.image_url = response.url
     console.log('URL image sauvegardée:', form.value.image_url)
+    console.log('Form complet après upload image:', form.value)
   }
   catch (err: any) {
     console.error('Erreur upload image:', err)
@@ -182,7 +236,10 @@ const onImageUpload = async (event: Event) => {
 }
 
 const onDocumentUpload = async (event: Event) => {
-  const files = documentFile.value
+  // Récupérer les fichiers directement depuis l'événement
+  const target = event.target as HTMLInputElement
+  const files = target.files
+
   if (!files || files.length === 0)
     return
 
@@ -219,6 +276,7 @@ const onDocumentUpload = async (event: Event) => {
     // S'assurer que l'URL est complète
     form.value.document_url = response.url
     console.log('URL document sauvegardée:', form.value.document_url)
+    console.log('Form complet après upload document:', form.value)
   }
   catch (err: any) {
     console.error('Erreur upload document:', err)
@@ -311,20 +369,21 @@ watch(() => props.modelValue, newValue => {
 
             <!-- Dates de formation (optionnelles) -->
             <VCol cols="12" md="6">
-              <VTextField v-model="form.date_debut_formation" :label="t('actualites.form.dateDebutFormation')"
-                type="date" variant="outlined" density="compact" hint="Optionnel - pour les formations"
+              <VTextField v-model="form.date_debut_formation" :label="t('actualites.form.trainingStartDate')"
+                type="date" variant="outlined" density="compact" :hint="t('actualites.form.optional')"
                 persistent-hint />
             </VCol>
 
             <VCol cols="12" md="6">
-              <VTextField v-model="form.date_fin_formation" :label="t('actualites.form.dateFinFormation')" type="date"
-                variant="outlined" density="compact" hint="Optionnel - pour les formations" persistent-hint />
+              <VTextField v-model="form.date_fin_formation" :label="t('actualites.form.trainingEndDate')" type="date"
+                variant="outlined" density="compact" :hint="t('actualites.form.optional')" persistent-hint />
             </VCol>
 
             <!-- Upload d'image -->
             <VCol cols="12" md="6">
-              <VFileInput v-model="imageFile" :label="t('actualites.form.image')" accept="image/*" variant="outlined"
-                density="compact" prepend-icon="ri-image-line" :loading="uploading" @change="onImageUpload" />
+              <VFileInput v-model="imageFile" :label="t('actualites.form.mainImage')" accept="image/*"
+                variant="outlined" density="compact" prepend-icon="ri-image-line" :loading="uploading"
+                @change="onImageUpload" />
               <div v-if="form.image_url" class="mt-2">
                 <VImg :src="form.image_url" height="100" cover class="rounded mb-2" />
                 <VChip color="success" size="small">
@@ -336,7 +395,7 @@ watch(() => props.modelValue, newValue => {
 
             <!-- Upload de document -->
             <VCol cols="12" md="6">
-              <VFileInput v-model="documentFile" :label="t('actualites.form.document')" accept=".pdf,.doc,.docx"
+              <VFileInput v-model="documentFile" :label="t('actualites.form.attachedDocument')" accept=".pdf,.doc,.docx"
                 variant="outlined" density="compact" prepend-icon="ri-file-line" :loading="uploading"
                 @change="onDocumentUpload" />
               <div v-if="form.document_url" class="mt-2">
@@ -358,7 +417,7 @@ watch(() => props.modelValue, newValue => {
           {{ t('common.cancel') }}
         </VBtn>
         <VBtn color="primary" variant="flat" :loading="loading" @click="onSubmit">
-          {{ t('actualites.create.submit') }}
+          {{ t('actualites.actions.create') }}
         </VBtn>
       </VCardActions>
     </VCard>
@@ -396,15 +455,15 @@ watch(() => props.modelValue, newValue => {
                 {{ t('actualites.modal.create.confirm.summary') }}
               </div>
               <div class="d-flex flex-column gap-2">
-                <div><strong>{{ t('actualites.form.titre') }}:</strong> {{ form.titre }}</div>
-                <div><strong>{{ t('actualites.form.categorie') }}:</strong> {{ form.categorie }}</div>
-                <div><strong>{{ t('actualites.form.auteur') }}:</strong> {{ form.auteur }}</div>
+                <div><strong>{{ t('actualites.form.title') }}:</strong> {{ form.titre }}</div>
+                <div><strong>{{ t('actualites.form.category') }}:</strong> {{ form.categorie }}</div>
+                <div><strong>{{ t('actualites.form.author') }}:</strong> {{ form.auteur }}</div>
                 <div>
-                  <strong>{{ t('actualites.form.datePublication') }}:</strong> {{ formatDate(form.date_publication)
+                  <strong>{{ t('actualites.form.publicationDate') }}:</strong> {{ formatDate(form.date_publication)
                   }}
                 </div>
                 <div>
-                  <strong>{{ t('actualites.form.chapeau') }}:</strong> {{ form.chapeau.substring(0, 100) }}{{
+                  <strong>{{ t('actualites.form.summary') }}:</strong> {{ form.chapeau.substring(0, 100) }}{{
                     form.chapeau.length > 100 ? '...' : '' }}
                 </div>
                 <div v-if="form.image_url">
@@ -418,11 +477,11 @@ watch(() => props.modelValue, newValue => {
                   <small class="text-caption text-disabled">{{ form.document_url }}</small>
                 </div>
                 <div v-if="form.date_debut_formation">
-                  <strong>{{ t('actualites.form.dateDebutFormation') }}:</strong> {{
+                  <strong>{{ t('actualites.form.trainingStartDate') }}:</strong> {{
                     formatDate(form.date_debut_formation) }}
                 </div>
                 <div v-if="form.date_fin_formation">
-                  <strong>{{ t('actualites.form.dateFinFormation') }}:</strong> {{ formatDate(form.date_fin_formation)
+                  <strong>{{ t('actualites.form.trainingEndDate') }}:</strong> {{ formatDate(form.date_fin_formation)
                   }}
                 </div>
               </div>

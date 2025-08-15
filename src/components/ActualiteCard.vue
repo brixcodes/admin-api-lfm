@@ -1,110 +1,3 @@
-<template>
-  <VCard
-    class="actualite-card h-100"
-    :variant="variant"
-    hover
-    @click="$emit('click', actualite)"
-  >
-    <div class="position-relative">
-      <VImg
-        :src="getImageUrl(actualite)"
-        :height="imageHeight"
-        cover
-        class="card-image"
-      >
-        <template #placeholder>
-          <div class="d-flex align-center justify-center fill-height bg-grey-lighten-3">
-            <VIcon icon="ri-image-line" :size="placeholderIconSize" class="text-disabled" />
-          </div>
-        </template>
-      </VImg>
-      
-      <!-- Badge catégorie -->
-      <VChip
-        :color="getCategorieColor(actualite.categorie)"
-        size="small"
-        class="category-badge-small"
-      >
-        {{ actualite.categorie }}
-      </VChip>
-
-      <!-- Badge featured si applicable -->
-      <VChip
-        v-if="featured"
-        color="primary"
-        size="small"
-        class="featured-badge"
-        prepend-icon="ri-star-fill"
-      >
-        À la une
-      </VChip>
-
-      <!-- Actions -->
-      <div class="card-actions">
-        <VBtn
-          icon
-          size="small"
-          variant="elevated"
-          color="primary"
-          @click.stop="$emit('edit', actualite)"
-        >
-          <VIcon icon="ri-edit-line" />
-        </VBtn>
-        <VBtn
-          icon
-          size="small"
-          variant="elevated"
-          color="error"
-          @click.stop="$emit('delete', actualite)"
-        >
-          <VIcon icon="ri-delete-bin-line" />
-        </VBtn>
-      </div>
-    </div>
-
-    <VCardText :class="contentPadding">
-      <div class="d-flex align-center mb-2">
-        <VIcon icon="ri-calendar-line" :size="metaIconSize" class="me-1 text-disabled" />
-        <span class="text-caption text-disabled">{{ formatDate(actualite.date_publication) }}</span>
-        <VSpacer />
-        <VIcon icon="ri-eye-line" :size="metaIconSize" class="me-1 text-disabled" />
-        <span class="text-caption text-disabled">{{ actualite.vues || 0 }}</span>
-      </div>
-      
-      <h4 :class="titleClass">
-        {{ actualite.titre }}
-      </h4>
-      
-      <p :class="descriptionClass">
-        {{ actualite.chapeau }}
-      </p>
-    </VCardText>
-
-    <VCardActions v-if="showActions" :class="actionsPadding">
-      <VBtn
-        variant="text"
-        color="primary"
-        size="small"
-        append-icon="ri-arrow-right-line"
-        class="text-none"
-        @click.stop="$emit('click', actualite)"
-      >
-        Lire la suite
-      </VBtn>
-      <VSpacer />
-      <VBtn
-        icon
-        variant="text"
-        size="small"
-        color="grey"
-        @click.stop="$emit('share', actualite)"
-      >
-        <VIcon icon="ri-share-line" />
-      </VBtn>
-    </VCardActions>
-  </VCard>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Actualite } from '@/composables/useActualites'
@@ -135,7 +28,9 @@ defineEmits<Emits>()
 
 // Computed pour les tailles
 const imageHeight = computed(() => {
-  if (props.featured) return 200
+  if (props.featured)
+    return 200
+
   return props.size === 'large' ? 200 : props.size === 'small' ? 140 : 180
 })
 
@@ -157,6 +52,7 @@ const actionsPadding = computed(() => {
 
 const titleClass = computed(() => {
   const base = 'font-weight-bold mb-2 text-high-emphasis line-clamp-2'
+
   return props.size === 'large' ? `text-h6 ${base}` : `text-subtitle-1 ${base}`
 })
 
@@ -183,6 +79,7 @@ const getCategorieColor = (categorie: string) => {
     Certification: 'error',
     Communication: 'purple',
   }
+
   return colors[categorie] || 'default'
 }
 
@@ -191,17 +88,78 @@ const getImageUrl = (actualite: Actualite) => {
 }
 </script>
 
+<template>
+  <VCard class="actualite-card h-100" :variant="variant" hover @click="$emit('click', actualite)">
+    <div class="position-relative">
+      <VImg :src="getImageUrl(actualite)" :height="imageHeight" cover class="card-image">
+        <template #placeholder>
+          <div class="d-flex align-center justify-center fill-height bg-grey-lighten-3">
+            <VIcon icon="ri-image-line" :size="placeholderIconSize" class="text-disabled" />
+          </div>
+        </template>
+      </VImg>
+
+      <!-- Badge catégorie -->
+      <VChip :color="getCategorieColor(actualite.categorie)" size="small" class="category-badge-small">
+        {{ actualite.categorie }}
+      </VChip>
+
+      <!-- Badge featured si applicable -->
+      <VChip v-if="featured" color="primary" size="small" class="featured-badge" prepend-icon="ri-star-fill">
+        À la une
+      </VChip>
+
+      <!-- Actions -->
+      <div class="card-actions">
+        <VBtn icon size="small" variant="elevated" color="primary" @click.stop="$emit('edit', actualite)">
+          <VIcon icon="ri-edit-line" />
+        </VBtn>
+        <VBtn icon size="small" variant="elevated" color="error" @click.stop="$emit('delete', actualite)">
+          <VIcon icon="ri-delete-bin-line" />
+        </VBtn>
+      </div>
+    </div>
+
+    <VCardText :class="contentPadding">
+      <div class="d-flex align-center mb-2">
+        <VIcon icon="ri-calendar-line" :size="metaIconSize" class="me-1 text-disabled" />
+        <span class="text-caption text-disabled">{{ formatDate(actualite.date_publication) }}</span>
+        <VSpacer />
+      </div>
+
+      <h4 :class="titleClass">
+        {{ actualite.titre }}
+      </h4>
+
+      <p :class="descriptionClass">
+        {{ actualite.chapeau }}
+      </p>
+    </VCardText>
+
+    <VCardActions v-if="showActions" :class="actionsPadding">
+      <VBtn variant="text" color="primary" size="small" append-icon="ri-arrow-right-line" class="text-none"
+        @click.stop="$emit('click', actualite)">
+        Lire la suite
+      </VBtn>
+      <VSpacer />
+      <VBtn icon variant="text" size="small" color="grey" @click.stop="$emit('share', actualite)">
+        <VIcon icon="ri-share-line" />
+      </VBtn>
+    </VCardActions>
+  </VCard>
+</template>
+
 <style scoped>
 .actualite-card {
+  overflow: hidden;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  border-radius: 12px;
-  overflow: hidden;
 }
 
 .actualite-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 10%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .card-image {
@@ -210,27 +168,27 @@ const getImageUrl = (actualite: Actualite) => {
 
 .category-badge-small {
   position: absolute;
-  top: 8px;
-  right: 8px;
   z-index: 2;
+  inset-block-start: 8px;
+  inset-inline-end: 8px;
 }
 
 .featured-badge {
   position: absolute;
-  top: 12px;
-  left: 12px;
   z-index: 2;
+  inset-block-start: 12px;
+  inset-inline-start: 12px;
 }
 
 .card-actions {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
   display: flex;
   gap: 8px;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
 }
 
 .actualite-card:hover .card-actions {
@@ -256,7 +214,8 @@ const getImageUrl = (actualite: Actualite) => {
 /* Responsive */
 @media (max-width: 960px) {
   .card-actions {
-    opacity: 1; /* Toujours visible sur mobile */
+    opacity: 1;
+    /* Toujours visible sur mobile */
   }
 }
 </style>
