@@ -562,17 +562,17 @@ onMounted(async () => {
         </div>
 
         <!-- Bouton Nouvelle actualité -->
-        <div class="page-header-actions flex-shrink-0">
-          <VBtn color="primary" prepend-icon="ri-add-line" variant="elevated" class="text-none"
+        <div class="page-header-actions flex-shrink-0 mb-3 ">
+          <VBtn color="primary " prepend-icon="ri-add-line" variant="elevated" class="text-none"
             :class="{ 'w-100': $vuetify.display.xs }" @click="ouvrirCreateModal">
             <span class="d-none d-sm-inline">{{ t('actualites.newArticle') }}</span>
-            <span class="d-sm-none">{{ t('actualites.newArticle') }}</span>
+            <span class="d-sm-none ">{{ t('actualites.newArticle') }}</span>
           </VBtn>
         </div>
       </div>
 
       <!-- Filtres et recherche -->
-      <VCard class="pa-4" variant="outlined">
+      <VCard class="pa-4" variant="elevated">
         <VRow align="center" class="filters-row">
           <VCol cols="12" md="6">
             <VTextField v-model="searchQuery" :placeholder="t('actualites.search.placeholder')"
@@ -612,7 +612,7 @@ onMounted(async () => {
       <!-- Vue grille -->
       <VRow v-if="viewMode === 'grid'">
         <VCol v-for="actualite in actualitesPaginees" :key="actualite.id" cols="12" sm="6" lg="4" xl="3">
-          <VCard class="actualite-card h-100" variant="outlined" hover @click="voirActualite(actualite)">
+          <VCard class="actualite-card h-100" variant="elevated" hover @click="voirActualite(actualite)">
             <div class="position-relative">
               <VImg :src="getImageUrl(actualite)" height="180" cover class="card-image">
                 <template #placeholder>
@@ -670,7 +670,7 @@ onMounted(async () => {
       <!-- Vue liste -->
       <div v-else class="list-view">
         <VCard v-for="actualite in actualitesPaginees" :key="actualite.id" class="actualite-list-item mb-3"
-          variant="outlined" hover @click="voirActualite(actualite)">
+          variant="elevated" hover @click="voirActualite(actualite)">
           <VCardText class="pa-4">
             <VRow align="center">
               <VCol cols="12" md="3">
