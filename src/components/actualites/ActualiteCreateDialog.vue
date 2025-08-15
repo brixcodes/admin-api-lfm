@@ -369,20 +369,21 @@ watch(() => props.modelValue, newValue => {
 
             <!-- Dates de formation (optionnelles) -->
             <VCol cols="12" md="6">
-              <VTextField v-model="form.date_debut_formation" :label="t('actualites.form.dateDebutFormation')"
-                type="date" variant="outlined" density="compact" hint="Optionnel - pour les formations"
+              <VTextField v-model="form.date_debut_formation" :label="t('actualites.form.trainingStartDate')"
+                type="date" variant="outlined" density="compact" :hint="t('actualites.form.optional')"
                 persistent-hint />
             </VCol>
 
             <VCol cols="12" md="6">
-              <VTextField v-model="form.date_fin_formation" :label="t('actualites.form.dateFinFormation')" type="date"
-                variant="outlined" density="compact" hint="Optionnel - pour les formations" persistent-hint />
+              <VTextField v-model="form.date_fin_formation" :label="t('actualites.form.trainingEndDate')" type="date"
+                variant="outlined" density="compact" :hint="t('actualites.form.optional')" persistent-hint />
             </VCol>
 
             <!-- Upload d'image -->
             <VCol cols="12" md="6">
-              <VFileInput v-model="imageFile" :label="t('actualites.form.image')" accept="image/*" variant="outlined"
-                density="compact" prepend-icon="ri-image-line" :loading="uploading" @change="onImageUpload" />
+              <VFileInput v-model="imageFile" :label="t('actualites.form.mainImage')" accept="image/*"
+                variant="outlined" density="compact" prepend-icon="ri-image-line" :loading="uploading"
+                @change="onImageUpload" />
               <div v-if="form.image_url" class="mt-2">
                 <VImg :src="form.image_url" height="100" cover class="rounded mb-2" />
                 <VChip color="success" size="small">
@@ -394,7 +395,7 @@ watch(() => props.modelValue, newValue => {
 
             <!-- Upload de document -->
             <VCol cols="12" md="6">
-              <VFileInput v-model="documentFile" :label="t('actualites.form.document')" accept=".pdf,.doc,.docx"
+              <VFileInput v-model="documentFile" :label="t('actualites.form.attachedDocument')" accept=".pdf,.doc,.docx"
                 variant="outlined" density="compact" prepend-icon="ri-file-line" :loading="uploading"
                 @change="onDocumentUpload" />
               <div v-if="form.document_url" class="mt-2">
@@ -416,7 +417,7 @@ watch(() => props.modelValue, newValue => {
           {{ t('common.cancel') }}
         </VBtn>
         <VBtn color="primary" variant="flat" :loading="loading" @click="onSubmit">
-          {{ t('actualites.create.submit') }}
+          {{ t('actualites.actions.create') }}
         </VBtn>
       </VCardActions>
     </VCard>
@@ -454,15 +455,15 @@ watch(() => props.modelValue, newValue => {
                 {{ t('actualites.modal.create.confirm.summary') }}
               </div>
               <div class="d-flex flex-column gap-2">
-                <div><strong>{{ t('actualites.form.titre') }}:</strong> {{ form.titre }}</div>
-                <div><strong>{{ t('actualites.form.categorie') }}:</strong> {{ form.categorie }}</div>
-                <div><strong>{{ t('actualites.form.auteur') }}:</strong> {{ form.auteur }}</div>
+                <div><strong>{{ t('actualites.form.title') }}:</strong> {{ form.titre }}</div>
+                <div><strong>{{ t('actualites.form.category') }}:</strong> {{ form.categorie }}</div>
+                <div><strong>{{ t('actualites.form.author') }}:</strong> {{ form.auteur }}</div>
                 <div>
-                  <strong>{{ t('actualites.form.datePublication') }}:</strong> {{ formatDate(form.date_publication)
+                  <strong>{{ t('actualites.form.publicationDate') }}:</strong> {{ formatDate(form.date_publication)
                   }}
                 </div>
                 <div>
-                  <strong>{{ t('actualites.form.chapeau') }}:</strong> {{ form.chapeau.substring(0, 100) }}{{
+                  <strong>{{ t('actualites.form.summary') }}:</strong> {{ form.chapeau.substring(0, 100) }}{{
                     form.chapeau.length > 100 ? '...' : '' }}
                 </div>
                 <div v-if="form.image_url">
@@ -476,11 +477,11 @@ watch(() => props.modelValue, newValue => {
                   <small class="text-caption text-disabled">{{ form.document_url }}</small>
                 </div>
                 <div v-if="form.date_debut_formation">
-                  <strong>{{ t('actualites.form.dateDebutFormation') }}:</strong> {{
+                  <strong>{{ t('actualites.form.trainingStartDate') }}:</strong> {{
                     formatDate(form.date_debut_formation) }}
                 </div>
                 <div v-if="form.date_fin_formation">
-                  <strong>{{ t('actualites.form.dateFinFormation') }}:</strong> {{ formatDate(form.date_fin_formation)
+                  <strong>{{ t('actualites.form.trainingEndDate') }}:</strong> {{ formatDate(form.date_fin_formation)
                   }}
                 </div>
               </div>

@@ -81,6 +81,7 @@ const categories = computed(() => [
   t('actualites.categories.partnership'),
   t('actualites.categories.event'),
   t('actualites.categories.testimonial'),
+  t('actualites.categories.project'),
   t('actualites.categories.certification'),
   t('actualites.categories.communication'),
 ])
@@ -100,6 +101,8 @@ const actualitesFiltrees = computed(() => {
       [t('actualites.categories.partnership')]: 'Partenariat',
       [t('actualites.categories.event')]: 'Événement',
       [t('actualites.categories.testimonial')]: 'Témoignage',
+      [t('actualites.categories.project')]: 'Projet',
+      [t('actualites.categories.certification')]: 'Certification',
       [t('actualites.categories.communication')]: 'Communication',
     }
 
@@ -716,7 +719,7 @@ onMounted(async () => {
                   </span>
 
                   <VBtn variant="text" color="primary" size="small" append-icon="ri-arrow-right-line" class="text-none">
-                    Lire la suite
+                    {{ t('actualites.readMore') }}
                   </VBtn>
                 </div>
               </VCol>
