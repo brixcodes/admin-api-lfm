@@ -21,6 +21,15 @@ export interface Actualite {
   created_at?: string
   updated_at?: string
   vues?: number
+
+  // Format ancien (version locale) - objet utilisateur imbriqué
+  utilisateur?: {
+    id: number
+    nom: string
+    prenom: string
+    email: string
+    statut: string
+  }
 }
 
 export interface ActualitesPagination {
@@ -48,7 +57,33 @@ export interface CreateActualitePayload {
   utilisateur_id: number
 }
 
-// Supprimé - utilise maintenant le service API
+// Fonction utilitaire pour normaliser les données d'actualité
+const normalizeActualite = (data: any): Actualite => {
+  // Si l'objet utilisateur est présent (format ancien), extraire l'ID
+  const utilisateur_id = data.utilisateur?.id || data.utilisateur_id || 1
+
+  return {
+    id: data.id,
+    titre: data.titre,
+    slug: data.slug,
+    categorie: data.categorie,
+    chapeau: data.chapeau,
+    contenu_html: data.contenu_html,
+    image_url: data.image_url || '',
+    date_publication: data.date_publication,
+    date_debut_formation: data.date_debut_formation,
+    date_fin_formation: data.date_fin_formation,
+    document_url: data.document_url || '',
+    auteur: data.auteur,
+    utilisateur_id,
+    created_at: data.created_at,
+    updated_at: data.updated_at,
+    vues: data.vues || 0,
+
+    // Conserver l'objet utilisateur s'il existe (pour compatibilité)
+    ...(data.utilisateur && { utilisateur: data.utilisateur }),
+  }
+}
 
 export function useActualites() {
   // Store auth pour récupérer l'utilisateur connecté
@@ -86,7 +121,10 @@ export function useActualites() {
       const response = await actualitesApi.getActualites(params)
 
       // L'API retourne directement un tableau d'actualités
-      const newActualites = Array.isArray(response) ? response : []
+      const rawActualites = Array.isArray(response) ? response : []
+
+      // Normaliser les données pour gérer les deux formats d'API
+      const newActualites = rawActualites.map(normalizeActualite)
 
       if (reset) {
         actualites.value = newActualites
@@ -171,7 +209,10 @@ export function useActualites() {
       console.log('Clean payload:', cleanPayload)
       console.log('JSON stringifié:', JSON.stringify(cleanPayload, null, 2))
 
-      const newActualite = await actualitesApi.createActualite(cleanPayload) as Actualite
+      const response = await actualitesApi.createActualite(cleanPayload)
+
+      // Normaliser la réponse pour gérer les deux formats d'API
+      const newActualite = normalizeActualite(response)
 
       // Ajouter en début de liste
       actualites.value.unshift(newActualite)
@@ -231,7 +272,10 @@ export function useActualites() {
       console.log('Payload original:', payload)
       console.log('Payload nettoyé:', cleanPayload)
 
-      const updatedActualite = await actualitesApi.updateActualite(id, cleanPayload) as Actualite
+      const response = await actualitesApi.updateActualite(id, cleanPayload)
+
+      // Normaliser la réponse pour gérer les deux formats d'API
+      const updatedActualite = normalizeActualite(response)
 
       // Mettre à jour dans la liste
       const index = actualites.value.findIndex(a => a.id === id)

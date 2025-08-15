@@ -53,7 +53,6 @@ const documentFile = ref<File[]>([])
 // Options
 const categorieOptions = [
   'Actualité',
-  'Formation',
   'Événement',
   'Annonce',
   'Information',

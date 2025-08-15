@@ -81,7 +81,6 @@ const categories = computed(() => [
   t('actualites.categories.partnership'),
   t('actualites.categories.event'),
   t('actualites.categories.testimonial'),
-  t('actualites.categories.project'),
   t('actualites.categories.certification'),
   t('actualites.categories.communication'),
 ])
@@ -101,8 +100,6 @@ const actualitesFiltrees = computed(() => {
       [t('actualites.categories.partnership')]: 'Partenariat',
       [t('actualites.categories.event')]: 'Événement',
       [t('actualites.categories.testimonial')]: 'Témoignage',
-      [t('actualites.categories.project')]: 'Projet',
-      [t('actualites.categories.certification')]: 'Certification',
       [t('actualites.categories.communication')]: 'Communication',
     }
 
@@ -566,7 +563,7 @@ onMounted(async () => {
           <VBtn color="primary" prepend-icon="ri-add-line" variant="elevated" class="text-none"
             :class="{ 'w-100': $vuetify.display.xs }" @click="ouvrirCreateModal">
             <span class="d-none d-sm-inline">{{ t('actualites.newArticle') }}</span>
-            <span class="d-sm-none">Nouveau</span>
+            <span class="d-sm-none">{{ t('actualites.newArticle') }}</span>
           </VBtn>
         </div>
       </div>
@@ -763,7 +760,7 @@ onMounted(async () => {
       <!-- Debug info (à supprimer en production) -->
       <div v-if="actualitesFiltrees.length > 0" class="text-center mt-4 text-caption text-disabled">
         Page {{ currentPage }} sur {{ totalPages }} | {{ actualitesFiltrees.length }} actualités au total | {{
-        itemsPerPage }}
+          itemsPerPage }}
         par page
       </div>
     </div>
