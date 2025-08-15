@@ -25,103 +25,54 @@
           <VRow>
             <!-- Titre -->
             <VCol cols="12" md="6">
-              <VTextField 
-                v-model="form.titre" 
-                label="Titre"
-                placeholder="Entrez le titre de l'actualité" 
-                variant="outlined" 
-                prepend-inner-icon="ri-text" 
-                :rules="[rules.required]" 
-                required 
-                @input="generateSlugFromTitle"
-              />
+              <VTextField v-model="form.titre" :label="$t('actualites.form.title')"
+                :placeholder="$t('actualites.form.titleRequired')" variant="outlined" prepend-inner-icon="ri-text"
+                :rules="[rules.required]" required @input="generateSlugFromTitle" />
             </VCol>
 
             <!-- Slug -->
             <VCol cols="12" md="6">
-              <VTextField 
-                v-model="form.slug" 
-                label="Slug"
-                placeholder="slug-de-l-actualite" 
-                variant="outlined" 
-                prepend-inner-icon="ri-link" 
-                :rules="[rules.required]" 
-                required 
-              />
+              <VTextField v-model="form.slug" :label="$t('actualites.form.slug')"
+                :placeholder="$t('actualites.form.slugPlaceholder')" variant="outlined" prepend-inner-icon="ri-link"
+                :rules="[rules.required]" required />
             </VCol>
 
             <!-- Catégorie -->
             <VCol cols="12" md="6">
-              <VSelect 
-                v-model="form.categorie" 
-                label="Catégorie"
-                :items="categorieOptions" 
-                variant="outlined" 
-                prepend-inner-icon="ri-folder-line" 
-                :rules="[rules.required]" 
-                required 
-              />
+              <VSelect v-model="form.categorie" :label="$t('actualites.form.category')" :items="categorieOptions"
+                variant="outlined" prepend-inner-icon="ri-folder-line" :rules="[rules.required]" required />
             </VCol>
 
             <!-- Auteur -->
             <VCol cols="12" md="6">
-              <VTextField 
-                v-model="form.auteur" 
-                label="Auteur"
-                placeholder="Nom de l'auteur" 
-                variant="outlined" 
-                prepend-inner-icon="ri-user-line" 
-                :rules="[rules.required]" 
-                required 
-              />
+              <VTextField v-model="form.auteur" :label="$t('actualites.form.author')"
+                :placeholder="$t('actualites.form.authorPlaceholder')" variant="outlined"
+                prepend-inner-icon="ri-user-line" :rules="[rules.required]" required />
             </VCol>
 
             <!-- Date de publication -->
             <VCol cols="12" md="4">
-              <VTextField 
-                v-model="form.date_publication" 
-                label="Date de publication"
-                type="date" 
-                variant="outlined" 
-                prepend-inner-icon="ri-calendar-line" 
-                :rules="[rules.required]" 
-                required 
-              />
+              <VTextField v-model="form.date_publication" :label="$t('actualites.form.publicationDate')" type="date"
+                variant="outlined" prepend-inner-icon="ri-calendar-line" :rules="[rules.required]" required />
             </VCol>
 
             <!-- Date début formation (optionnel) -->
             <VCol cols="12" md="4">
-              <VTextField 
-                v-model="form.date_debut_formation" 
-                label="Date début formation"
-                type="date" 
-                variant="outlined" 
-                prepend-inner-icon="ri-calendar-event-line" 
-              />
+              <VTextField v-model="form.date_debut_formation" :label="$t('actualites.form.trainingStartDate')"
+                type="date" variant="outlined" prepend-inner-icon="ri-calendar-event-line" />
             </VCol>
 
             <!-- Date fin formation (optionnel) -->
             <VCol cols="12" md="4">
-              <VTextField 
-                v-model="form.date_fin_formation" 
-                label="Date fin formation"
-                type="date" 
-                variant="outlined" 
-                prepend-inner-icon="ri-calendar-event-line" 
-              />
+              <VTextField v-model="form.date_fin_formation" :label="$t('actualites.form.trainingEndDate')" type="date"
+                variant="outlined" prepend-inner-icon="ri-calendar-event-line" />
             </VCol>
 
             <!-- Chapeau -->
             <VCol cols="12">
-              <VTextarea 
-                v-model="form.chapeau" 
-                label="Chapeau"
-                placeholder="Résumé court de l'actualité" 
-                variant="outlined" 
-                rows="3" 
-                :rules="[rules.required]" 
-                required 
-              />
+              <VTextarea v-model="form.chapeau" :label="$t('actualites.form.summary')"
+                :placeholder="$t('actualites.form.summaryHint')" variant="outlined" rows="3" :rules="[rules.required]"
+                required />
             </VCol>
 
             <!-- Contenu HTML -->
@@ -134,15 +85,8 @@
 
             <!-- Upload Image -->
             <VCol cols="12" md="6">
-              <VFileInput
-                v-model="imageFile"
-                label="Image"
-                accept="image/*"
-                variant="outlined"
-                prepend-inner-icon="ri-image-line"
-                @change="onImageUpload"
-                :loading="uploading"
-              />
+              <VFileInput v-model="imageFile" :label="$t('actualites.form.mainImage')" accept="image/*"
+                variant="outlined" prepend-inner-icon="ri-image-line" @change="onImageUpload" :loading="uploading" />
               <div v-if="form.image_url" class="mt-2">
                 <VImg :src="form.image_url" max-height="200" class="rounded" />
               </div>
@@ -150,15 +94,9 @@
 
             <!-- Upload Document -->
             <VCol cols="12" md="6">
-              <VFileInput
-                v-model="documentFile"
-                label="Document"
-                accept=".pdf,.doc,.docx"
-                variant="outlined"
-                prepend-inner-icon="ri-file-line"
-                @change="onDocumentUpload"
-                :loading="uploading"
-              />
+              <VFileInput v-model="documentFile" :label="$t('actualites.form.attachedDocument')"
+                accept=".pdf,.doc,.docx" variant="outlined" prepend-inner-icon="ri-file-line" @change="onDocumentUpload"
+                :loading="uploading" />
               <div v-if="form.document_url" class="mt-2">
                 <VChip color="success" prepend-icon="ri-file-check-line">
                   Document uploadé
@@ -222,11 +160,11 @@
                 <strong>Chapeau:</strong> {{ form.chapeau }}
               </div>
               <div v-if="form.image_url" class="mb-3">
-                <strong>Image:</strong> 
+                <strong>Image:</strong>
                 <VChip color="success" size="small" class="ml-2">Incluse</VChip>
               </div>
               <div v-if="form.document_url" class="mb-3">
-                <strong>Document:</strong> 
+                <strong>Document:</strong>
                 <VChip color="success" size="small" class="ml-2">Inclus</VChip>
               </div>
             </VCardText>
@@ -328,7 +266,7 @@ const formatDate = (dateString: string) => {
 
 const onImageUpload = async () => {
   if (!imageFile.value?.[0]) return
-  
+
   try {
     uploading.value = true
     const response = await uploadFile(imageFile.value[0], 'image')
@@ -343,7 +281,7 @@ const onImageUpload = async () => {
 
 const onDocumentUpload = async () => {
   if (!documentFile.value?.[0]) return
-  
+
   try {
     uploading.value = true
     const response = await uploadFile(documentFile.value[0], 'document')

@@ -65,7 +65,7 @@ const rules = {
 // Fonction pour récupérer les détails de l'utilisateur
 const fetchUser = async () => {
   if (!userId.value) return
-  
+
   isLoading.value = true
   error.value = null
 
@@ -94,13 +94,14 @@ const fetchUser = async () => {
 // Fonction pour sauvegarder les modifications
 const saveUser = async () => {
   if (!userId.value) return
-  
+
   isSaving.value = true
   error.value = null
 
   try {
-    await UsersApi.update(userId.value, form.value)
-    
+    const payload = { ...form.value, role_id: form.value.role_id ?? undefined }
+    await UsersApi.update(userId.value, payload)
+
     // Rediriger vers la page de profil
     router.push(`/system/users/${userId.value}`)
   } catch (err: any) {
@@ -132,12 +133,8 @@ onMounted(() => {
           Modifiez les informations de l'utilisateur
         </p>
       </div>
-      
-      <VBtn
-        variant="text"
-        color="default"
-        @click="cancel"
-      >
+
+      <VBtn variant="text" color="default" @click="cancel">
         <VIcon start icon="ri-arrow-left-line" />
         Retour
       </VBtn>
@@ -145,115 +142,66 @@ onMounted(() => {
 
     <!-- Chargement -->
     <div v-if="isLoading" class="d-flex justify-center align-center" style="min-block-size: 400px;">
-      <VProgressCircular
-        indeterminate
-        color="primary"
-        size="64"
-      />
+      <VProgressCircular indeterminate color="primary" size="64" />
     </div>
 
     <!-- Erreur -->
-    <VAlert
-      v-else-if="error"
-      type="error"
-      variant="tonal"
-      class="mb-6"
-    >
+    <VAlert v-else-if="error" type="error" variant="tonal" class="mb-6">
       {{ error }}
     </VAlert>
 
     <!-- Formulaire -->
     <VCard v-else-if="user">
       <VCardTitle>Informations personnelles</VCardTitle>
-      
+
       <VCardText>
         <VForm @submit.prevent="saveUser">
           <VRow>
             <!-- Nom -->
             <VCol cols="12" md="6">
-              <VTextField
-                v-model="form.nom"
-                label="Nom *"
-                :rules="rules.nom"
-                variant="outlined"
-                required
-              />
+              <VTextField v-model="form.nom" :label="$t('system.users.edit.last_name')" :rules="rules.nom"
+                variant="outlined" required />
             </VCol>
 
             <!-- Prénom -->
             <VCol cols="12" md="6">
-              <VTextField
-                v-model="form.prenom"
-                label="Prénom *"
-                :rules="rules.prenom"
-                variant="outlined"
-                required
-              />
+              <VTextField v-model="form.prenom" :label="$t('system.users.edit.first_name')" :rules="rules.prenom"
+                variant="outlined" required />
             </VCol>
 
             <!-- Email -->
             <VCol cols="12" md="6">
-              <VTextField
-                v-model="form.email"
-                label="Email *"
-                :rules="rules.email"
-                variant="outlined"
-                type="email"
-                required
-              />
+              <VTextField v-model="form.email" :label="$t('system.users.edit.email')" :rules="rules.email"
+                variant="outlined" type="email" required />
             </VCol>
 
             <!-- Sexe -->
             <VCol cols="12" md="6">
-              <VSelect
-                v-model="form.sexe"
-                label="Sexe"
-                :items="sexeOptions"
-                variant="outlined"
-              />
+              <VSelect v-model="form.sexe" :label="$t('system.users.edit.gender')" :items="sexeOptions"
+                variant="outlined" />
             </VCol>
 
             <!-- Rôle -->
             <VCol cols="12" md="6">
-              <VSelect
-                v-model="form.role_id"
-                label="Rôle"
-                :items="roleOptions"
-                variant="outlined"
-                clearable
-              />
+              <VSelect v-model="form.role_id" :label="$t('system.users.edit.role')" :items="roleOptions"
+                variant="outlined" clearable />
             </VCol>
 
             <!-- Statut -->
             <VCol cols="12" md="6">
-              <VSelect
-                v-model="form.statut"
-                label="Statut"
-                :items="statutOptions"
-                variant="outlined"
-              />
+              <VSelect v-model="form.statut" :label="$t('system.users.details.status')" :items="statutOptions"
+                variant="outlined" />
             </VCol>
           </VRow>
 
           <!-- Actions -->
           <div class="d-flex gap-4 mt-6">
-            <VBtn
-              type="submit"
-              color="primary"
-              variant="flat"
-              :loading="isSaving"
-              :disabled="isSaving"
-            >
+            <VBtn type="submit" color="primary" variant="flat" :loading="isSaving" :disabled="isSaving">
               <VIcon start icon="ri-save-line" />
               Enregistrer les modifications
             </VBtn>
 
-            <VBtn
-              color="secondary"
-              variant="outlined"
-              @click="cancel"
-              :disabled="isSaving"
-            >
+            <VBtn color="secondary" variant="outlined" @click="cancel" :disabled="isSaving">
               <VIcon start icon="ri-close-line" />
               Annuler
             </VBtn>

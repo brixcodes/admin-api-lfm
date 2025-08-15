@@ -2,9 +2,6 @@ import { UsersApi } from '@/utils/services'
 import type { Utilisateur } from '@/utils/types/models'
 import { computed, ref } from 'vue'
 
-// Utiliser le proxy en développement, l'URL complète en production
-const API_BASE_URL = import.meta.env.DEV ? '/api' : 'https://lafaom-mao.vertex-cam.com'
-
 export const useUserProfile = () => {
   const user = ref<Utilisateur | null>(null)
   const isLoading = ref(false)
@@ -28,32 +25,16 @@ export const useUserProfile = () => {
    * Récupère les données de l'utilisateur connecté depuis l'API
    */
   const fetchUserProfile = async (): Promise<void> => {
-    const token = localStorage.getItem('authToken')
-    if (!token) {
-      error.value = 'Token d\'authentification manquant'
-      return
-    }
-
     isLoading.value = true
     error.value = null
 
     try {
-      // Utilisation de l'URL complète comme dans le code existant
-      const response = await fetch(`${API_BASE_URL}/users/me?token=${token}`, {
-        headers: {
-          'accept': 'application/json',
-        },
-      })
-
-      if (!response.ok) {
-        throw new Error(`Erreur HTTP: ${response.status}`)
-      }
-
-      const userData = await response.json()
+      const userData = await UsersApi.me()
       user.value = userData
     } catch (err: any) {
       error.value = err.message || 'Erreur lors de la récupération du profil'
       console.error('Erreur lors de la récupération du profil utilisateur:', err)
+      throw err
     } finally {
       isLoading.value = false
     }

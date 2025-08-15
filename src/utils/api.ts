@@ -23,12 +23,32 @@ $api.interceptors.request.use(config => {
 $api.interceptors.response.use(
   res => res,
   err => {
+    const status = err?.response?.status
     const msg = err?.response?.data?.detail || err?.message || 'Erreur réseau'
-    return Promise.reject({
+    const normalized = {
       message: msg,
-      status: err?.response?.status,
+      status,
       data: err?.response?.data,
-    })
+    }
+
+    // Light 401 handling to keep app state coherent
+    try {
+      if (status === 401) {
+        const hadToken = !!authService.getToken()
+        if (hadToken) {
+          localStorage.removeItem('authToken')
+          // Optionally redirect to login on auth loss
+          const current = window.location.pathname
+          if (!current.includes('/login')) {
+            // Preserve intended route for after login
+            localStorage.setItem('redirectAfterLogin', current)
+            window.location.assign('/login')
+          }
+        }
+      }
+    } catch {}
+
+    return Promise.reject(normalized)
   },
 )
 

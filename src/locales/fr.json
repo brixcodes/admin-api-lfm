@@ -15,7 +15,107 @@
   "common": {
     "cancel": "Annuler",
     "reset": "Réinitialiser",
-    "save": "Enregistrer"
+    "save": "Enregistrer",
+    "confirm": "Confirmer",
+    "loading": "Chargement..."
+  },
+  "genetique": {
+    "individuelPage": {
+      "title": "Profil génétique - Individuel",
+      "description": "Gérez les profils génétiques individuels (détenu ou proche) liés à l'utilisateur."
+    },
+    "individuel": {
+      "title": "Profil génétique individuel",
+      "stats": {
+        "total": "Total profils",
+        "detainees": "Profils détenus",
+        "relatives": "Profils proches",
+        "with_detention_info": "Avec infos détention"
+      },
+      "search": "Rechercher un profil...",
+      "filters": {
+        "type": "Type",
+        "gender": "Sexe"
+      },
+      "table": {
+        "full_name": "Nom complet",
+        "type": "Type",
+        "gender": "Sexe",
+        "age": "Âge",
+        "country": "Pays",
+        "facility": "Maison de détention",
+        "start_date": "Date début",
+        "actions": "Actions"
+      },
+      "actions": {
+        "add": "Ajouter un génotype"
+      },
+      "placeholders": {
+        "first_name": "Prénom",
+        "last_name": "Nom"
+      },
+      "form": {
+        "first_name": "Prénom",
+        "last_name": "Nom",
+        "type": "Type",
+        "age": "Âge",
+        "motif_detention": "Motif de détention",
+        "date_debut_detention": "Date de début de détention",
+        "duree_detention": "Durée de détention",
+        "pays_detention": "Pays de détention",
+        "maison_detention": "Maison de détention",
+        "profession": "Profession",
+        "activite_avant_detention": "Activité avant détention"
+      },
+      "types": {
+        "detenu": "Détenu",
+        "proche": "Proche"
+      },
+      "confirm": {
+        "title": "Confirmer l'enregistrement",
+        "message": "Voulez-vous vraiment enregistrer ces informations de génotype ?"
+      },
+      "notifications": {
+        "create_success": "Génotype créé avec succès",
+        "update_success": "Génotype mis à jour avec succès",
+        "action_error": "Erreur lors de l'action"
+      },
+      "details": {
+        "title": "Détails du génotype",
+        "sections": {
+          "general": "Informations générales",
+          "detention": "Informations de détention",
+          "ascendance": "Ascendance",
+          "health": "Santé",
+          "education": "Éducation",
+          "plans": "Plans d'intervention"
+        }
+      }
+    },
+    "ascendance": {
+      "title": "Ascendance génétique"
+    },
+    "sante": {
+      "title": "Santé génétique"
+    },
+    "education": {
+      "title": "Éducation"
+    },
+    "pii": {
+      "title": "Plan d'intervention individualisé"
+    }
+  },
+  "profile": {
+    "tabs": {
+      "profile": "Profil",
+      "security": "Sécurité",
+      "notifications": "Notifications",
+      "gen_individual": "Individuel",
+      "gen_ancestry": "Ascendance",
+      "gen_health": "Santé",
+      "gen_education": "Éducation",
+      "gen_pii": "PII"
+    }
   },
   "validation": {
     "required": "Ce champ est requis",
@@ -48,6 +148,79 @@
         "navigate": "Naviguez avec ↑↓",
         "select": "pour sélectionner",
         "close": "pour fermer"
+      }
+    },
+    "genetique": {
+      "individuelPage": {
+        "title": "Profil génétique - Individuel",
+        "description": "Gérez les profils génétiques individuels (détenu ou proche) liés à l'utilisateur."
+      },
+      "individuel": {
+        "stats": {
+          "total": "Total profils",
+          "detainees": "Profils détenus",
+          "relatives": "Profils proches",
+          "with_detention_info": "Avec infos détention"
+        },
+        "search": "Rechercher un profil...",
+        "filters": {
+          "type": "Type",
+          "gender": "Sexe"
+        },
+        "table": {
+          "full_name": "Nom complet",
+          "type": "Type",
+          "gender": "Sexe",
+          "age": "Âge",
+          "country": "Pays",
+          "facility": "Maison de détention",
+          "start_date": "Date début",
+          "actions": "Actions"
+        },
+        "actions": {
+          "add": "Ajouter un génotype"
+        },
+        "placeholders": {
+          "first_name": "Prénom",
+          "last_name": "Nom"
+        },
+        "form": {
+          "first_name": "Prénom",
+          "last_name": "Nom",
+          "type": "Type",
+          "age": "Âge",
+          "motif_detention": "Motif de détention",
+          "date_debut_detention": "Date de début de détention",
+          "duree_detention": "Durée de détention",
+          "pays_detention": "Pays de détention",
+          "maison_detention": "Maison de détention",
+          "profession": "Profession",
+          "activite_avant_detention": "Activité avant détention"
+        },
+        "types": {
+          "detenu": "Détenu",
+          "proche": "Proche"
+        },
+        "confirm": {
+          "title": "Confirmer l'enregistrement",
+          "message": "Voulez-vous vraiment enregistrer ces informations de génotype ?"
+        },
+        "notifications": {
+          "create_success": "Génotype créé avec succès",
+          "update_success": "Génotype mis à jour avec succès",
+          "action_error": "Erreur lors de l'action"
+        },
+        "details": {
+          "title": "Détails du génotype",
+          "sections": {
+            "general": "Informations générales",
+            "detention": "Informations de détention",
+            "ascendance": "Ascendance",
+            "health": "Santé",
+            "education": "Éducation",
+            "plans": "Plans d'intervention"
+          }
+        }
       }
     },
     "auth": {
@@ -151,7 +324,8 @@
         },
         "gender": {
           "homme": "Homme",
-          "femme": "Femme"
+          "femme": "Femme",
+          "autre": "Autre"
         },
         "actions": {
           "view": "Voir les détails",
@@ -657,23 +831,6 @@
       "invalid_email": "Email invalide",
       "invalid_format": "Format invalide"
     },
-    "genetique": {
-      "individuel": {
-        "title": "Profil génétique individuel"
-      },
-      "ascendance": {
-        "title": "Ascendance génétique"
-      },
-      "sante": {
-        "title": "Santé génétique"
-      },
-      "education": {
-        "title": "Éducation"
-      },
-      "pii": {
-        "title": "Plan d'intervention individualisé"
-      }
-    },
     "validation": {
       "required": "Ce champ est requis",
       "email": "Adresse email invalide",
@@ -793,6 +950,9 @@
       "organization": "Organisation",
       "phone": "Numéro de téléphone",
       "address": "Adresse",
+      "nationality": "Nationalité",
+      "region": "Région",
+      "city": "Ville",
       "state": "État/Province",
       "zipCode": "Code postal",
       "country": "Pays",
@@ -802,10 +962,13 @@
       "placeholders": {
         "firstName": "Jean",
         "lastName": "Dupont",
-        "email": "jean.dupont@example.com",
+        "email": "jean.dupont@@example.com",
         "organization": "Mon Organisation",
         "phone": "+33 1 23 45 67 89",
         "address": "123 Rue de la Paix, Paris",
+        "nationality": "Sénégalaise",
+        "region": "Ziguinchor",
+        "city": "Ziguinchor",
         "state": "Île-de-France",
         "zipCode": "75001",
         "selectCountry": "Sélectionner un pays",
@@ -814,6 +977,13 @@
         "selectCurrency": "Sélectionner une devise"
       },
       "allowedFormats": "Formats autorisés : JPG, GIF ou PNG. Taille max : 800Ko"
+    },
+    "accountNotifications": {
+      "update_success": "Profil mis à jour avec succès",
+      "update_error": "Erreur lors de la mise à jour du profil",
+      "avatar_upload_success": "Photo de profil mise à jour",
+      "avatar_upload_error": "Erreur lors de l'upload de la photo",
+      "avatar_reset_success": "Photo de profil réinitialisée"
     },
     "security": {
       "changePassword": "Changer le mot de passe",
@@ -848,7 +1018,15 @@
       "createKey": "Créer la clé",
       "apiKeyList": "Liste des clés API et accès",
       "apiKeyDescription": "Une clé API est une chaîne cryptée simple qui identifie une application sans principal. Elles sont utiles pour accéder aux données publiques de manière anonyme et sont utilisées pour associer les requêtes API à votre projet pour les quotas et la facturation.",
-      "recentDevicesTitle": "Appareils récents"
+      "recentDevicesTitle": "Appareils récents",
+      "confirm": {
+        "title": "Confirmer la modification du mot de passe",
+        "message": "Voulez-vous vraiment changer votre mot de passe ?"
+      }
+    },
+    "confirm": {
+      "title": "Confirmer la modification du mot de passe",
+      "message": "Voulez-vous vraiment changer votre mot de passe ?"
     },
     "notifications": {
       "title": "Notifications",
@@ -1102,6 +1280,7 @@
         "slug": "Slug",
         "slugRequired": "Le slug est requis",
         "slugHint": "URL de l'actualité (généré automatiquement)",
+        "slugPlaceholder": "slug-de-l-actualite",
         "category": "Catégorie",
         "categoryRequired": "La catégorie est requise",
         "summary": "Chapeau",
@@ -1110,6 +1289,7 @@
         "content": "Contenu HTML",
         "contentRequired": "Le contenu est requis",
         "author": "Auteur",
+        "authorPlaceholder": "Nom de l'auteur",
         "authorRequired": "L'auteur est requis",
         "publicationDate": "Date de publication",
         "publicationDateRequired": "La date de publication est requise",

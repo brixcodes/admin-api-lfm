@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useUserProfile } from '@/composables/useUserProfile'
 import AccountSettingsAccount from '@/views/pages/account-settings/AccountSettingsAccount.vue'
-import AccountSettingsNotification from '@/views/pages/account-settings/AccountSettingsNotification.vue'
 import AccountSettingsSecurity from '@/views/pages/account-settings/AccountSettingsSecurity.vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
@@ -23,7 +22,7 @@ const activeTab = ref(route.params.tab || 'profil')
 const tabs = computed(() => [
   { title: t('profile.tabs.profile'), icon: 'ri-group-line', tab: 'profil' },
   { title: t('profile.tabs.security'), icon: 'ri-lock-line', tab: 'security' },
-  { title: t('profile.tabs.notifications'), icon: 'ri-notification-3-line', tab: 'notification' },
+
   // Génétique intégrée
   { title: t('profile.tabs.gen_individual'), icon: 'ri-user-3-line', tab: 'gen-individuel' },
   { title: t('profile.tabs.gen_ancestry'), icon: 'ri-family-line', tab: 'gen-ascendance' },
@@ -58,10 +57,7 @@ onMounted(async () => {
         <AccountSettingsSecurity />
       </VWindowItem>
 
-      <!-- Notifications -->
-      <VWindowItem value="notification">
-        <AccountSettingsNotification />
-      </VWindowItem>
+
 
       <!-- Génétique: Individuel -->
       <VWindowItem value="gen-individuel">
@@ -90,4 +86,3 @@ onMounted(async () => {
     </VWindow>
   </div>
 </template>
-

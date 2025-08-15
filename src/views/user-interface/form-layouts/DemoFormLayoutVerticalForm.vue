@@ -7,63 +7,36 @@ const checkbox = ref(false)
 </script>
 
 <template>
-  <VForm @submit.prevent="() => {}">
+  <VForm @submit.prevent="() => { }">
     <VRow>
       <VCol cols="12">
-        <VTextField
-          v-model="firstName"
-          label="First Name"
-          placeholder="First Name"
-        />
+        <VTextField v-model="firstName" :label="$t('ui.forms.firstName')" :placeholder="$t('ui.forms.firstName')" />
       </VCol>
 
       <VCol cols="12">
-        <VTextField
-          v-model="email"
-          label="Email"
-          type="email"
-          placeholder="Email"
-        />
+        <VTextField v-model="email" :label="$t('ui.forms.email')" type="email" :placeholder="$t('ui.forms.email')" />
       </VCol>
 
       <VCol cols="12">
-        <VTextField
-          v-model="mobile"
-          label="Mobile"
-          type="number"
-          placeholder="Number"
-        />
+        <VTextField v-model="mobile" :label="$t('ui.forms.mobile')" type="number"
+          :placeholder="$t('ui.forms.mobile')" />
       </VCol>
 
       <VCol cols="12">
-        <VTextField
-          v-model="password"
-          label="Password"
-          type="password"
-          placeholder="password"
-        />
+        <VTextField v-model="password" :label="$t('ui.forms.password')" type="password"
+          :placeholder="$t('ui.forms.password')" />
       </VCol>
 
       <VCol cols="12">
-        <VCheckbox
-          v-model="checkbox"
-          label="Remember me"
-        />
+        <VCheckbox v-model="checkbox" :label="$t('login.remember')" />
       </VCol>
 
-      <VCol
-        cols="12"
-        class="d-flex gap-4"
-      >
+      <VCol cols="12" class="d-flex gap-4">
         <VBtn type="submit">
           Submit
         </VBtn>
 
-        <VBtn
-          type="reset"
-          color="secondary"
-          variant="outlined"
-        >
+        <VBtn type="reset" color="secondary" variant="outlined">
           Reset
         </VBtn>
       </VCol>

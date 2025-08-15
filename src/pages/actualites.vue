@@ -763,7 +763,7 @@ onMounted(async () => {
       <!-- Debug info (à supprimer en production) -->
       <div v-if="actualitesFiltrees.length > 0" class="text-center mt-4 text-caption text-disabled">
         Page {{ currentPage }} sur {{ totalPages }} | {{ actualitesFiltrees.length }} actualités au total | {{
-        itemsPerPage }}
+          itemsPerPage }}
         par page
       </div>
     </div>

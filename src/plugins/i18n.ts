@@ -16,8 +16,8 @@ for (const path in localeModules) {
   if (match) messages[match[1]] = localeModules[path].default
 }
 
-const saved = localStorage.getItem('locale')
-const locale = (saved || detectLocale()) as 'fr' | 'en'
+const savedRaw = localStorage.getItem('locale')?.toLowerCase() || ''
+const locale = (savedRaw.startsWith('fr') ? 'fr' : savedRaw.startsWith('en') ? 'en' : detectLocale()) as 'fr' | 'en'
 
 export const i18n = createI18n({
   legacy: false,

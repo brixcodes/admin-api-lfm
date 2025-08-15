@@ -3,6 +3,7 @@
 
 import type { Query } from '../apiClient';
 import apiClient from '../apiClient';
+import { authService } from '../auth';
 import type {
   AccreditationCreate,
   Accreditation as AccreditationT,
@@ -73,7 +74,30 @@ export const UsersApi = {
     apiClient.post<string, number[]>(`/users/${userId}/assign-permissions`, permission_ids),
   revokePermissions: (userId: number, permission_ids: number[]) =>
     apiClient.post<string, number[]>(`/users/${userId}/revoke-permissions`, permission_ids),
-  me: (token: string) => apiClient.get<Utilisateur>(`/users/me`, { token }),
+  me: async () => {
+    try {
+      return await apiClient.get<Utilisateur>(`/users/me`)
+    } catch (err: any) {
+      // Fallback for environments where /users/me is unavailable (returns 422/404):
+      const status = err?.status
+      if (status === 422 || status === 404) {
+        const token = authService.getToken()
+        if (token) {
+          try {
+            const payload = JSON.parse(atob(token.split('.')[1] || '')) as { sub?: string | number }
+            const sub = payload?.sub
+            if (sub !== undefined && sub !== null && sub !== '') {
+              const userId = typeof sub === 'string' ? parseInt(sub, 10) : sub
+              if (!Number.isNaN(userId as number)) {
+                return await apiClient.get<Utilisateur>(`/users/${userId}`)
+              }
+            }
+          } catch {}
+        }
+      }
+      throw err
+    }
+  },
   updateProfile: (userId: number, data: UtilisateurUpdate) => apiClient.put<Utilisateur>(`/users/${userId}`, data),
 }
 

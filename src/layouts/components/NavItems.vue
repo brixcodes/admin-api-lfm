@@ -3,6 +3,7 @@ import { useAuth } from '@/utils/auth'
 import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
 const { logout, isLoading: isLoggingOut } = useAuth()
 const router = useRouter()
@@ -60,7 +61,7 @@ const handleLogout = async () => {
   <!-- 👉 Déconnexion -->
   <VerticalNavLink
     :item="{
-      title: isLoggingOut ? $t('common.loading') : $t('userProfile.logout'),
+      title: isLoggingOut ? $t('common.loading') : $t('nav.logout'),
       icon: 'ri-logout-box-r-line'
     }"
     @click="confirmLogout"
@@ -98,7 +99,7 @@ const handleLogout = async () => {
           :loading="isLoggingOut"
           :disabled="isLoggingOut"
         >
-          {{ $t('userProfile.logout') }}
+          {{ $t('nav.logout') }}
         </VBtn>
       </VCardActions>
     </VCard>

@@ -115,7 +115,6 @@
       "title": "User management",
       "subtitle": "Manage user accounts, their roles and permissions",
       "add": "Add",
-      "edit": "Edit user",
       "delete": "Delete user",
       "search": "Search user",
       "total": "users",
@@ -142,7 +141,8 @@
       },
       "gender": {
         "homme": "Male",
-        "femme": "Female"
+        "femme": "Female",
+        "autre": "Other"
       },
       "actions": {
         "view": "View details",
@@ -686,12 +686,80 @@
     "error": "An error occurred",
     "required": "This field is required",
     "invalid_email": "Invalid email",
-    "invalid_format": "Invalid format",
-    "refresh": "Refresh"
+    "invalid_format": "Invalid format"
   },
   "genetique": {
+    "individuelPage": {
+      "title": "Genetic profile - Individual",
+      "description": "Manage individual genetic profiles (detainee or relative) linked to the user."
+    },
     "individuel": {
-      "title": "Individual genetic profile"
+      "title": "Individual genetic profile",
+      "stats": {
+        "total": "Total profiles",
+        "detainees": "Detainee profiles",
+        "relatives": "Relative profiles",
+        "with_detention_info": "With detention info"
+      },
+      "search": "Search a profile...",
+      "filters": {
+        "type": "Type",
+        "gender": "Gender"
+      },
+      "table": {
+        "full_name": "Full name",
+        "type": "Type",
+        "gender": "Gender",
+        "age": "Age",
+        "country": "Country",
+        "facility": "Detention facility",
+        "start_date": "Start date",
+        "actions": "Actions"
+      },
+      "actions": {
+        "add": "Add genotype"
+      },
+      "placeholders": {
+        "first_name": "First name",
+        "last_name": "Last name"
+      },
+      "form": {
+        "first_name": "First name",
+        "last_name": "Last name",
+        "type": "Type",
+        "age": "Age",
+        "motif_detention": "Detention reason",
+        "date_debut_detention": "Detention start date",
+        "duree_detention": "Detention duration",
+        "pays_detention": "Detention country",
+        "maison_detention": "Detention facility",
+        "profession": "Profession",
+        "activite_avant_detention": "Activity before detention"
+      },
+      "types": {
+        "detenu": "Detainee",
+        "proche": "Relative"
+      },
+      "confirm": {
+        "title": "Confirm save",
+        "message": "Do you really want to save these genotype details?"
+      },
+      "notifications": {
+        "create_success": "Genotype created successfully",
+        "update_success": "Genotype updated successfully",
+        "action_error": "Error performing action"
+      },
+      "details": {
+        "title": "Genotype details",
+        "sections": {
+          "general": "General information",
+          "detention": "Detention information",
+          "ascendance": "Ancestry",
+          "health": "Health",
+          "education": "Education",
+          "plans": "Intervention plans"
+        }
+      }
     },
     "ascendance": {
       "title": "Genetic ancestry"
@@ -825,6 +893,9 @@
     "organization": "Organization",
     "phone": "Phone Number",
     "address": "Address",
+    "nationality": "Nationality",
+    "region": "Region",
+    "city": "City",
     "state": "State",
     "zipCode": "Zip Code",
     "country": "Country",
@@ -834,10 +905,13 @@
     "placeholders": {
       "firstName": "John",
       "lastName": "Doe",
-      "email": "johndoe@example.com",
+      "email": "johndoe@@example.com",
       "organization": "My Organization",
       "phone": "+1 (917) 543-9876",
       "address": "123 Main St, New York, NY 10001",
+      "nationality": "Senegalese",
+      "region": "Ziguinchor",
+      "city": "Ziguinchor",
       "state": "New York",
       "zipCode": "10001",
       "selectCountry": "Select Country",
@@ -846,6 +920,13 @@
       "selectCurrency": "Select Currency"
     },
     "allowedFormats": "Allowed JPG, GIF or PNG. Max size of 800K"
+  },
+  "accountNotifications": {
+    "update_success": "Profile updated successfully",
+    "update_error": "Error updating profile",
+    "avatar_upload_success": "Profile photo updated",
+    "avatar_upload_error": "Error uploading photo",
+    "avatar_reset_success": "Profile photo reset"
   },
   "security": {
     "changePassword": "Change Password",
@@ -880,7 +961,11 @@
     "createKey": "Create Key",
     "apiKeyList": "API Key List & Access",
     "apiKeyDescription": "An API key is a simple encrypted string that identifies an application without any principal. They are useful for accessing public data anonymously, and are used to associate API requests with your project for quota and billing.",
-    "recentDevicesTitle": "Recent Devices"
+    "recentDevicesTitle": "Recent Devices",
+    "confirm": {
+      "title": "Confirm password change",
+      "message": "Do you really want to change your password?"
+    }
   },
   "notifications": {
     "title": "Notifications",
@@ -1134,6 +1219,7 @@
       "slug": "Slug",
       "slugRequired": "Slug is required",
       "slugHint": "Article URL (generated automatically)",
+      "slugPlaceholder": "article-slug",
       "category": "Category",
       "categoryRequired": "Category is required",
       "summary": "Summary",
@@ -1142,6 +1228,7 @@
       "content": "HTML Content",
       "contentRequired": "Content is required",
       "author": "Author",
+      "authorPlaceholder": "Author's name",
       "authorRequired": "Author is required",
       "publicationDate": "Publication date",
       "publicationDateRequired": "Publication date is required",

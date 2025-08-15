@@ -22,15 +22,10 @@ function setLang(code: 'fr' | 'en') {
       </IconBtn>
     </template>
     <VList density="compact">
-      <VListItem
-        v-for="l in languages"
-        :key="l.code"
-        :active="locale === l.code"
-        @click="setLang(l.code as 'fr' | 'en')"
-      >
+      <VListItem v-for="l in languages" :key="l.code" :active="locale.value === l.code"
+        @click="setLang(l.code as 'fr' | 'en')">
         <VListItemTitle>{{ l.label }}</VListItemTitle>
       </VListItem>
     </VList>
   </VMenu>
 </template>
-

@@ -248,8 +248,8 @@ defineExpose({
       <div class="search-header pa-4">
         <div class="d-flex align-center">
           <VIcon icon="ri-search-line" class="me-3 text-disabled" size="20" />
-          <VTextField ref="searchInput" v-model="searchQuery" placeholder="Rechercher..." variant="plain" hide-details
-            class="search-input" autofocus />
+          <VTextField ref="searchInput" v-model="searchQuery" :placeholder="$t('search.placeholder')" variant="plain"
+            hide-details class="search-input" autofocus />
           <div class="d-flex align-center gap-2 ms-3">
             <VChip size="x-small" variant="outlined" class="text-caption">[esc]</VChip>
             <VBtn icon variant="text" size="small" @click="closeSearch">
@@ -310,8 +310,8 @@ defineExpose({
   </VDialog>
 </template>
 
-<style scoped>
-.global-search-dialog :deep(.v-overlay__content) {
+<style lang="scss">
+.global-search-dialog .v-overlay__content {
   margin-block: 8vh auto;
 }
 
@@ -328,13 +328,13 @@ defineExpose({
   border-block-end: 1px solid rgba(var(--v-theme-outline), 0.12);
 }
 
-.search-input :deep(.v-field__input) {
+.search-input .v-field__input {
   padding: 0;
   font-size: 1.1rem;
   min-block-size: auto;
 }
 
-.search-input :deep(.v-field__input input) {
+.search-input .v-field__input input {
   padding: 0;
 }
 
@@ -359,7 +359,7 @@ defineExpose({
 .text-overline {
   font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.0892857143em;
+  letter-spacing: 0.0893em;
   line-height: 2.5;
   text-transform: uppercase;
 }

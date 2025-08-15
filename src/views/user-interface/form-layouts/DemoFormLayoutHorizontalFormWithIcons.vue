@@ -7,29 +7,18 @@ const checkbox = ref(false)
 </script>
 
 <template>
-  <VForm @submit.prevent="() => {}">
+  <VForm @submit.prevent="() => { }">
     <VRow>
       <!-- 👉 First Name -->
       <VCol cols="12">
         <VRow no-gutters>
-          <VCol
-            cols="12"
-            md="3"
-          >
+          <VCol cols="12" md="3">
             <label for="firstNameHorizontalIcons">{{ $t('ui.forms.firstName') }}</label>
           </VCol>
 
-          <VCol
-            cols="12"
-            md="9"
-          >
-            <VTextField
-              id="firstNameHorizontalIcons"
-              v-model="firstName"
-              prepend-inner-icon="ri-user-line"
-              placeholder="First Name"
-              persistent-placeholder
-            />
+          <VCol cols="12" md="9">
+            <VTextField id="firstNameHorizontalIcons" v-model="firstName" prepend-inner-icon="ri-user-line"
+              :placeholder="$t('ui.forms.firstName')" persistent-placeholder />
           </VCol>
         </VRow>
       </VCol>
@@ -37,24 +26,13 @@ const checkbox = ref(false)
       <!-- 👉 Email -->
       <VCol cols="12">
         <VRow no-gutters>
-          <VCol
-            cols="12"
-            md="3"
-          >
+          <VCol cols="12" md="3">
             <label for="emailHorizontalIcons">{{ $t('ui.forms.email') }}</label>
           </VCol>
 
-          <VCol
-            cols="12"
-            md="9"
-          >
-            <VTextField
-              id="emailHorizontalIcons"
-              v-model="email"
-              prepend-inner-icon="ri-mail-line"
-              placeholder="Email"
-              persistent-placeholder
-            />
+          <VCol cols="12" md="9">
+            <VTextField id="emailHorizontalIcons" v-model="email" prepend-inner-icon="ri-mail-line"
+              :placeholder="$t('ui.forms.email')" />
           </VCol>
         </VRow>
       </VCol>
@@ -62,25 +40,13 @@ const checkbox = ref(false)
       <!-- 👉 Mobile -->
       <VCol cols="12">
         <VRow no-gutters>
-          <VCol
-            cols="12"
-            md="3"
-          >
+          <VCol cols="12" md="3">
             <label for="mobileHorizontalIcons">{{ $t('ui.forms.mobile') }}</label>
           </VCol>
 
-          <VCol
-            cols="12"
-            md="9"
-          >
-            <VTextField
-              id="mobileHorizontalIcons"
-              v-model="mobile"
-              type="number"
-              prepend-inner-icon="ri-smartphone-line"
-              placeholder="Number"
-              persistent-placeholder
-            />
+          <VCol cols="12" md="9">
+            <VTextField id="mobileHorizontalIcons" v-model="mobile" type="number"
+              prepend-inner-icon="ri-smartphone-line" :placeholder="$t('ui.forms.mobile')" persistent-placeholder />
           </VCol>
         </VRow>
       </VCol>
@@ -88,56 +54,28 @@ const checkbox = ref(false)
       <!-- 👉 Password -->
       <VCol cols="12">
         <VRow no-gutters>
-          <VCol
-            cols="12"
-            md="3"
-          >
+          <VCol cols="12" md="3">
             <label for="passwordHorizontalIcons">{{ $t('ui.forms.password') }}</label>
           </VCol>
 
-          <VCol
-            cols="12"
-            md="9"
-          >
-            <VTextField
-              id="passwordHorizontalIcons"
-              v-model="password"
-              prepend-inner-icon="ri-lock-line"
-              type="password"
-              placeholder="Password"
-              persistent-placeholder
-            />
+          <VCol cols="12" md="9">
+            <VTextField id="passwordHorizontalIcons" v-model="password" type="password"
+              prepend-inner-icon="ri-lock-line" :placeholder="$t('ui.forms.password')" persistent-placeholder />
           </VCol>
         </VRow>
       </VCol>
 
       <!-- 👉 Checkbox -->
-      <VCol
-        offset-md="3"
-        cols="12"
-        md="9"
-      >
-        <VCheckbox
-          v-model="checkbox"
-          label="Remember me"
-        />
+      <VCol offset-md="3" cols="12" md="9">
+        <VCheckbox v-model="checkbox" :label="$t('login.remember')" />
       </VCol>
 
       <!-- 👉 submit and reset button -->
-      <VCol
-        offset-md="3"
-        cols="12"
-        md="9"
-        class="d-flex gap-4"
-      >
+      <VCol offset-md="3" cols="12" md="9" class="d-flex gap-4">
         <VBtn type="submit">
           Submit
         </VBtn>
-        <VBtn
-          color="secondary"
-          type="reset"
-          variant="outlined"
-        >
+        <VBtn color="secondary" type="reset" variant="outlined">
           Reset
         </VBtn>
       </VCol>
